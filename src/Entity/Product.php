@@ -55,7 +55,7 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?productionType $productionType = null;
+    private ?ProductionType $productionType = null;
 
     #[ORM\ManyToMany(targetEntity: BeerType::class, inversedBy: 'products')]
     private Collection $beerTypes;
@@ -214,12 +214,12 @@ class Product
         return $this;
     }
 
-    public function getProductionType(): ?productionType
+    public function getProductionType(): ?ProductionType
     {
         return $this->productionType;
     }
 
-    public function setProductionType(?productionType $productionType): static
+    public function setProductionType(?ProductionType $productionType): static
     {
         $this->productionType = $productionType;
 
