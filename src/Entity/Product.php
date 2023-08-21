@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -54,6 +56,14 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?productionType $productionType = null;
+
+    #[ORM\ManyToMany(targetEntity: BeerType::class, inversedBy: 'products')]
+    private Collection $beerTypes;
+
+    public function __construct()
+    {
+        $this->beerTypes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -212,6 +222,30 @@ class Product
     public function setProductionType(?productionType $productionType): static
     {
         $this->productionType = $productionType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BeerType>
+     */
+    public function getBeerTypes(): Collection
+    {
+        return $this->beerTypes;
+    }
+
+    public function addBeerType(BeerType $beerType): static
+    {
+        if (!$this->beerTypes->contains($beerType)) {
+            $this->beerTypes->add($beerType);
+        }
+
+        return $this;
+    }
+
+    public function removeBeerType(BeerType $beerType): static
+    {
+        $this->beerTypes->removeElement($beerType);
 
         return $this;
     }
