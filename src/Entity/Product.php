@@ -51,6 +51,10 @@ class Product
     #[ORM\Column]
     private ?float $bitterness = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?productionType $productionType = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -196,6 +200,18 @@ class Product
     public function setBitterness(float $bitterness): static
     {
         $this->bitterness = $bitterness;
+
+        return $this;
+    }
+
+    public function getProductionType(): ?productionType
+    {
+        return $this->productionType;
+    }
+
+    public function setProductionType(?productionType $productionType): static
+    {
+        $this->productionType = $productionType;
 
         return $this;
     }
