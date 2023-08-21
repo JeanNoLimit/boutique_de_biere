@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Provider;
+use App\Entity\ProductionType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -37,6 +38,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::subMenu('Catalogue', 'fa fa-book')->setSubItems([
                 MenuItem::linkToCrud('Brasseries', 'fa fa-handshake', Provider::class)
             ]),
+            MenuItem::linkToCrud('Type de production', 'fa fa-', ProductionType::class),
             
 
 
