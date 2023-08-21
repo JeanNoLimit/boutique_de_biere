@@ -60,6 +60,9 @@ class Product
     #[ORM\ManyToMany(targetEntity: BeerType::class, inversedBy: 'products')]
     private Collection $beerTypes;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->beerTypes = new ArrayCollection();
@@ -89,6 +92,7 @@ class Product
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
+
         $this->createdAt = $createdAt;
 
         return $this;
@@ -246,6 +250,18 @@ class Product
     public function removeBeerType(BeerType $beerType): static
     {
         $this->beerTypes->removeElement($beerType);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

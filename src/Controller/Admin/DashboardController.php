@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Product;
+use App\Entity\BeerType;
 use App\Entity\Provider;
 use App\Entity\ProductionType;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +37,12 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-            MenuItem::subMenu('Catalogue', 'fa fa-book')->setSubItems([
-                MenuItem::linkToCrud('Brasseries', 'fa fa-handshake', Provider::class)
+            MenuItem::subMenu('Catalogues', 'fa fa-book')->setSubItems([
+                MenuItem::linkToCrud('Brasseries', 'fa fa-handshake', Provider::class),
+                MenuItem::linkToCrud('Bières', 'fa fa-beer-mug-empty', Product::class)
             ]),
-            MenuItem::linkToCrud('Type de production', 'fa fa-', ProductionType::class),
+            MenuItem::linkToCrud('Type de production', 'fa fa-star', ProductionType::class),
+            MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class)
             
 
 
