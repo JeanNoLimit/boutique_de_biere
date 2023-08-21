@@ -34,7 +34,7 @@ class ProviderCrudController extends AbstractCrudController
             TextField::new('cp','Code Postal'),
             TextField::new('city', 'Ville'),
             UrlField::new('webSite', 'Site Web'),
-            UrlField::new('socialNetwork', 'Réseaux social')
+            UrlField::new('socialNetwork', 'Réseau social')
             
         ];
     }
