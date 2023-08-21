@@ -39,6 +39,18 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Provider $provider = null;
 
+    #[ORM\Column]
+    private ?float $volume = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $ingredients = null;
+
+    #[ORM\Column]
+    private ?float $alcoholLevel = null;
+
+    #[ORM\Column]
+    private ?float $bitterness = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +148,54 @@ class Product
     public function setProvider(?Provider $provider): static
     {
         $this->provider = $provider;
+
+        return $this;
+    }
+
+    public function getVolume(): ?float
+    {
+        return $this->volume;
+    }
+
+    public function setVolume(float $volume): static
+    {
+        $this->volume = $volume;
+
+        return $this;
+    }
+
+    public function getIngredients(): ?string
+    {
+        return $this->ingredients;
+    }
+
+    public function setIngredients(string $ingredients): static
+    {
+        $this->ingredients = $ingredients;
+
+        return $this;
+    }
+
+    public function getAlcoholLevel(): ?float
+    {
+        return $this->alcoholLevel;
+    }
+
+    public function setAlcoholLevel(float $alcoholLevel): static
+    {
+        $this->alcoholLevel = $alcoholLevel;
+
+        return $this;
+    }
+
+    public function getBitterness(): ?float
+    {
+        return $this->bitterness;
+    }
+
+    public function setBitterness(float $bitterness): static
+    {
+        $this->bitterness = $bitterness;
 
         return $this;
     }
