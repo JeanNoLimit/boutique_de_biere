@@ -6,8 +6,10 @@ use App\Repository\ProductionTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ProductionTypeRepository::class)]
+#[UniqueEntity('productionType')]
 class ProductionType
 {
     #[ORM\Id]
@@ -15,7 +17,13 @@ class ProductionType
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20)]
+    #[Assert\Length(
+        min: 2,
+        max: 20,
+        minMessage: 'Minimum 2 caractères',
+        maxMessage: 'Maximum 20 caractères',
+    )]
     private ?string $productionType = null;
 
     #[ORM\OneToMany(mappedBy: 'productionType', targetEntity: Product::class)]

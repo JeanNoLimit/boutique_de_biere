@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProviderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Assert\Url;
 
 #[ORM\Entity(repositoryClass: ProviderRepository::class)]
 class Provider
@@ -15,22 +17,54 @@ class Provider
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le nom de l\'entreprise doit contenir plus de 2 caractères',
+        maxMessage: 'Le nom de l\'entreprise ne peut pas contenir plus de 50 caractères',
+    )]
+    #[ORM\Column(length: 50)]
     private ?string $name = null;
-
-    #[ORM\Column(length: 255)]
+    
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'L\'adresse doit contenir plus de 2 caractères',
+        maxMessage: 'L\'adresse ne peut pas contenir plus de 50 caractères',
+    )]
+    #[ORM\Column(length: 150)]
     private ?string $adress = null;
 
+    #[Assert\Length(
+        min: 5,
+        max: 10,
+        minMessage: 'un code postal contient minimum 5 caractères',
+        maxMessage: 'Maximum 10 caractères',
+    )]
     #[ORM\Column(length: 10)]
     private ?string $cp = null;
 
-    #[ORM\Column(length: 100)]
+    #[Assert\Length(
+        min: 1,
+        max: 50,
+        minMessage: 'Le nom de ville ne peut être nul',
+        maxMessage: 'Maximum 50 caractères',
+    )]
+    #[ORM\Column(length: 50)]
     private ?string $city = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 200,
+        maxMessage: 'Maximum 200 caractères',
+    )]
+    #[ORM\Column(length: 200, nullable: true)]
     private ?string $website = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 200,
+        maxMessage: 'Maximum 200 caractères',
+    )]
+    #[ORM\Column(length: 200, nullable: true)]
     private ?string $socialNetwork = null;
 
     #[ORM\OneToMany(mappedBy: 'provider', targetEntity: Product::class, orphanRemoval: true)]

@@ -11,7 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -36,25 +36,37 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->onlyOnIndex(),
+            IdField::new('id')
+                ->onlyOnIndex(),
             TextField::new('designation', 'Designation'),
             NumberField::new('volume', 'Volume (cl)')
                 ->setNumDecimals(1),
-            SlugField::new('slug', 'Slug')->setTargetFieldName(['designation','volume']), 
-            TextEditorField::new('description', 'description du produit')->hideOnIndex(),
+            SlugField::new('slug', 'Slug')
+                ->setTargetFieldName(['designation','volume']),
+            AssociationField::new('beerTypes', 'Type de bière'),
+            AssociationField::new('provider', 'Brasserie'),  
+            TextareaField::new('description', 'description du produit')
+                ->hideOnIndex()
+                ->setNumOfRows(5),
             MoneyField::new('price', 'prix T.T.C')
                 ->setCurrency('EUR')
                 ->setNumDecimals(2),
             IntegerField::new('quantity', 'Unité de vente'),
             IntegerField::new('stock', 'Stock'),
-            BooleanField::new('available', 'Disponible à la vente'),
-            TextEditorField::new('ingredients', 'Liste des ingrédients'),
-            NumberField::new('alcoholLevel', 'Taux d\'alcool')->setNumDecimals(1),
-            Numberfield::new('bitterness', 'Amertume de la bière (I.B.U)')->setNumDecimals(1),
             Associationfield::new('productionType', 'Type de production'),
-            AssociationField::new('beerTypes', 'Type de bière'),
-            AssociationField::new('provider', 'Brasserie'), 
-            DateTimeField::new('createdAt', 'date de création')->onlyOnIndex(),
+            BooleanField::new('available', 'Disponible à la vente'),
+            TextareaField::new('ingredients', 'Liste des ingrédients')
+                ->hideOnIndex(),
+            NumberField::new('alcoholLevel', 'Taux d\'alcool')
+                ->setNumDecimals(1)
+                ->hideOnIndex(),
+            Numberfield::new('bitterness', 'Amertume de la bière (I.B.U)')
+                ->setNumDecimals(1)
+                ->hideOnIndex(),
+            DateTimeField::new('createdAt', 'date de création')
+                ->onlyOnIndex()
+                ->setFormat('dd.MM.YYYY à HH:mm:ss')
+                ->setTimezone('Europe/Paris'),
         ];
     }
     

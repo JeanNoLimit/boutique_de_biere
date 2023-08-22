@@ -6,8 +6,13 @@ use App\Repository\BeerTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BeerTypeRepository::class)]
+#[UniqueEntity(
+    fields: 'name',
+    message: "Ce style de bière existe déjà")]
 class BeerType
 {
     #[ORM\Id]
@@ -15,7 +20,13 @@ class BeerType
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 30)]
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: 'Minumum 2 caractères',
+        maxMessage: 'Maximum 30 caractères',
+    )]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'beerTypes')]

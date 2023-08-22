@@ -6,9 +6,11 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+
 class Product
 {
     #[ORM\Id]
@@ -16,7 +18,7 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $Designation = null;
 
     #[ORM\Column]
@@ -26,12 +28,15 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\LessThan(1001)]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Assert\LessThan(20)]
     private ?int $quantity = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\LessThan(1000)]
     private ?int $stock = null;
 
     #[ORM\Column]
@@ -48,9 +53,12 @@ class Product
     private ?string $ingredients = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
+    #[Assert\LessThan(90)]
     private ?float $alcoholLevel = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
+    #[Assert\LessThan(2600)]
     private ?float $bitterness = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -58,9 +66,16 @@ class Product
     private ?ProductionType $productionType = null;
 
     #[ORM\ManyToMany(targetEntity: BeerType::class, inversedBy: 'products')]
+    // #[Assert\NotBlank]
+    #[Assert\Count(
+        min: 1,
+        max: 5,
+        minMessage: 'Vous devez selectionner au moins un style de bière',
+        maxMessage: 'vous ne pouvez pas selectionner plus de 5 types de bières',
+    )]
     private Collection $beerTypes;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 150)]
     private ?string $slug = null;
 
     public function __construct()

@@ -28,7 +28,7 @@ class ProviderCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm()->onlyOnIndex(),
+            IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Brasserie'),
             TextField::new('adress', 'Adresse'),
             TextField::new('cp','Code Postal'),
