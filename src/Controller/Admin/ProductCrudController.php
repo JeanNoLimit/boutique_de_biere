@@ -68,8 +68,9 @@ class ProductCrudController extends AbstractCrudController
                 ->setFormat('dd.MM.YYYY à HH:mm:ss')
                 ->setTimezone('Europe/Paris'),
             ImageField::new('imagefile', 'Image')
-                ->hideOnIndex()
-                ->setUploadDir('public/uploads/images/products/'),
+                ->setUploadDir('public/upload/images/products/')
+                ->setBasePath('upload/images/products/')
+                ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];
     }
     

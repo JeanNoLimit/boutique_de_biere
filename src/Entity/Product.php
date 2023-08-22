@@ -28,11 +28,13 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\LessThan(1001)]
+    #[Assert\PositiveOrZero]
+    // #[Assert\LessThan(1000.00)]
     private ?float $price = null;
 
     #[ORM\Column]
     #[Assert\LessThan(20)]
+    #[Assert\Positive]
     private ?int $quantity = null;
 
     #[ORM\Column(nullable: true)]
@@ -66,7 +68,6 @@ class Product
     private ?ProductionType $productionType = null;
 
     #[ORM\ManyToMany(targetEntity: BeerType::class, inversedBy: 'products')]
-    // #[Assert\NotBlank]
     #[Assert\Count(
         min: 1,
         max: 5,
