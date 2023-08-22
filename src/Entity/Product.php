@@ -78,6 +78,9 @@ class Product
     #[ORM\Column(length: 150)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagefile = null;
+
     public function __construct()
     {
         $this->beerTypes = new ArrayCollection();
@@ -277,6 +280,18 @@ class Product
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getImagefile(): ?string
+    {
+        return $this->imagefile;
+    }
+
+    public function setImagefile(?string $imagefile): static
+    {
+        $this->imagefile = $imagefile;
 
         return $this;
     }
