@@ -4,30 +4,36 @@
 
 {% block body %}
 
-{# {{ dump(products) }} #}
-
-
-
-    <article class="article_product">
-        <a href="">
-            <div class="img_product_article">
-                <div class="production_type">
-                    <span>Ephémère</span>
-                </div>
-                <div class="more_info">plus d'infos</div>
-                <img src="upload/images/products/61526b5400c41bc45c78c9215c0da4590d2a2980.jpg" alt="image produit">
-            </div>
-        </a>
-        <div class="product_info">
-            <p class="product_title">Désignation du produit - 33cl</p>
-            <p class="product_price">2.95 € T.T.C.</p>
-        </div>
-        
-    </article>
-
-
-
-
+<div class="products_list_wrapper">
+    <div class="filters_container">
+        <span>je suis un conteneur temporaire, ici s'affichera les filtres</span>
+    </div>
+    
+    <div class="container_products">
+        {% for product in products %}
+            {% if product.available %}
+                <article class="article_product">
+                    <a href="">
+                        <div class="img_product_article">
+                            {% if product.productionType is defined and product.productionType.productionType != 'Permanente' %}
+                                <div class="production_type">
+                                <span> {{ product.productionType.productionType }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="more_info">plus d'infos</div>
+                            <img src="upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">
+                        </div>
+                    </a>
+                    <div class="product_info">
+                        <p class="product_title"><a href="">{{product.provider.name}} - {{ product.designation|capitalize }} - {{ product.volume|number_format }}cl</a></p>
+                        <p class="product_price">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
 
 
 {% endblock %}
