@@ -2,15 +2,24 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenue sur le site de l'échoppe{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
     </head>
     <body>
+
+        {% block header %}
+        {% include "partial/_header.html.twig" %}
+        {% endblock %}
+
+        <div class="container">
+            
         {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
