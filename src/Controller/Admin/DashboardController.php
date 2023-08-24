@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Entity\BeerType;
 use App\Entity\Provider;
 use App\Entity\ProductionType;
+use App\Entity\ShopParameters;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,10 +43,9 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Bières', 'fa fa-beer-mug-empty', Product::class)
             ]),
             MenuItem::linkToCrud('Type de production', 'fa fa-star', ProductionType::class),
-            MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class)
+            MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class),
+            MenuItem::linkToCrud('Paramètres du site', 'fa fa-screwdriver-wrench', ShopParameters::class)
             
-
-
         ];
     }
 }

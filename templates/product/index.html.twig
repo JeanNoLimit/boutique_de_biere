@@ -22,7 +22,11 @@
                             {% endif %}
                             
                             <div class="more_info">plus d'infos</div>
-                            <img src="upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">
+                            {% if product.imageFile is defined and product.imageFile is not null %}
+                                <img src="upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">     
+                            {% else %}
+                                <img src="upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
+                            {% endif %}
                         </div>
                     </a>
                     <div class="product_info">
