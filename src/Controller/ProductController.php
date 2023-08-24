@@ -14,9 +14,9 @@ class ProductController extends AbstractController
     #[Route('/products', name: 'app_product')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-
+        
         $products = $entityManager->getRepository(Product::class)->findAll();
-        $parameters = $entityManager->getRepository(ShopParameters::class)->findOneById(1);
+        $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
