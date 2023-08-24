@@ -17,7 +17,6 @@
     display : flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
     gap : 5px;
 }
 
@@ -26,11 +25,12 @@
 /* article de vente */
 .article_product{
     width: 290px;
-    height: 350px;
+    height: 355px;
+    margin: 3px;
     padding: 5px 0;
     /* Pour test */
-    border: solid 1px black;
-    /* box-shadow: 3px 3px 3px 3px #0568B3; */
+    /* border: solid 1px black; */
+    box-shadow: 0 0 3px 3px #bdbdbd;
     border-radius: 5px; 
 }
 
