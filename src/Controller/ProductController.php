@@ -35,7 +35,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/detail.html.twig', [
             'product' => $product,
-            'paramters' => $parameters
+            'parameters' => $parameters
         ]);
     }
 

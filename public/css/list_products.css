@@ -40,8 +40,8 @@
 /* zone image */
 .img_product_article {
     position:relative;
-    width: 260px;
-    height: 260px;
+    width: 250px;
+    height: 250px;
     margin: 10px auto 0;
     /* Pour test */
     /* border: solid 1px black; */
@@ -49,8 +49,8 @@
 
 
 .img_product_article img {
-    width: 260px;
-    height: 260px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -62,7 +62,7 @@
     /* COULEUR TEMPORAIRE, A MODIFIER!!! */
     background-color: burlywood;
     padding: 3px;
-    font-size: 12px;
+    font-size: 0.8rem;
     color:black;
     border-radius: 3px;
 }

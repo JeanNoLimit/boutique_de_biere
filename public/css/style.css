@@ -30,4 +30,19 @@ a {
 
 h2 {
    font-size: 24px;
+   margin-bottom: 20px;
+}
+
+
+.button_validation {
+    width: 180px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    color :white;
+    background-color: var(--secondary-color);
+}
+
+table, th, td {
+    border-collapse: collapse;
 }

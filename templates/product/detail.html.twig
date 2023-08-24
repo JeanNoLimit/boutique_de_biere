@@ -3,16 +3,19 @@
 {% block title %}la  Boutique{% endblock %}
 
 {% block body %}
-
 <div class="product_presention">
 
     <div class="img_detail_product">
-        <img src="" alt="" class="img_large_size">
+      {% if product.imageFile is defined and product.imageFile is not null %}
+        <img src="/upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">     
+      {% else %}
+        <img src="/upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
+      {% endif %}
     </div>
     <div class="product_informations">
-        <h1 class="product_designation">Désignation du produit - 33cl</h1>
-        <p class="description_product">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet consectetur elit. In velit est, tristique vitae fringilla ut, mollis in sapien. Nullam vitae consequat sem, ut semper turpis. Pellentesque porta, mauris nec vehicula scelerisque, lacus justo lacinia ante, vitae laoreet massa purus in nibh. Donec aliquam condimentum nunc, in suscipit ex vehicula in. Donec dignissim facilisis est, nec lacinia odio vestibulum sit amet. Vestibulum sed sem gravida, vestibulum est vestibulum, tempor ante. Suspendisse a vehicula velit. Duis vel venenatis lacus. Morbi feugiat iaculis molestie. Donec imperdiet condimentum ante, eget laoreet ipsum. Curabitur lacinia, justo ut vulputate rhoncus, sem est ullamcorper ligula, a sollicitudin nibh purus et urna. Integer rhoncus sem vel lorem mattis, vitae facilisis ante ornare. Vestibulum libero erat, molestie in ex a, hendrerit fringilla felis. Maecenas at efficitur ex. Nullam non semper mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce.</p>
-        <p class="product_price_detail_product"> 3.95 €</p>
+        <h1 class="product_designation">{{product.designation}} - {{ product.volume|number_format }}cl</h1>
+        <p class="description_product">{{ product.description }}</p>
+        <p class="product_price_detail_product">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
         <p class="product_liter_price"> (11.96 € le litre) </p>
         {% if product.stock >0 %}
             
@@ -42,28 +45,34 @@
 <div class="further_informations">
     <h2>Informations détaillées</h2>
 
-    <table>
+    <table class="table_futher_informations">
         <tbody>
             <tr>
               <td>Brasserie</td>
-              <td> Blabla </td>
+              <td> {{ product.provider.name }}</td>
             </tr>
             <tr>
               <td>Ingrédients</td>
-              <td> Ici insérer une liste d'ingrédients plutôt importante histoire que ça tienne sur plusieurs lignes. Malt d'orge (Pils, Munich 20), houblons (Pekko, Mistral, Triskel), levures (SafAle Us-05)
-            </td>
+              <td> {{ product.ingredients }}</td>
             </tr>
             <tr>
               <td>Taux d'alcool</td>
-              <td> 10 °C </td>
+              <td> {{product.alcoholLevel}} °C </td>
             </tr>
-            <tr>
-              <td>Amertume</td>
-              <td> Blabla </td>
-            </tr>
+            {% if product.bitterness is defined and product.bitterness is not null %}
+                  <tr>
+                    <td>Amertume</td>
+                    <td> {{ product.bitterness }} </td>
+                  </tr>
+            {% endif %}
+        
             <tr>
               <td>Style</td>
-              <td> Blabla </td>
+              <td> 
+                {% for beerType in product.beerTypes %}
+                  {{beerType.name}},       
+                {% endfor %} 
+              </td>
             </tr>
           </tbody>
     </table>
