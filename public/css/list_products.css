@@ -9,7 +9,7 @@
     min-width: 270px;
     border-right: 1px solid black;
     height: 1200px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 
@@ -17,7 +17,6 @@
     display : flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap : 5px;
 }
 
 
@@ -26,11 +25,11 @@
 .article_product{
     width: 290px;
     height: 355px;
-    margin: 3px;
+    margin: 10px 5px;
     padding: 5px 0;
     /* Pour test */
     /* border: solid 1px black; */
-    box-shadow: 0 0 3px 3px #bdbdbd;
+    box-shadow: 0 0 3px 3px #f1f1f1;
     border-radius: 5px; 
 }
 

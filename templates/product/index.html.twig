@@ -13,7 +13,7 @@
         {% for product in products %}
             {% if product.available %}
                 <article class="article_product">
-                    <a href="">
+                    <a href="{{path('detail_product', {'slug' : product.slug})}}">
                         <div class="img_product_article">
                             {% if product.productionType is defined and product.productionType.productionType != 'Permanente' %}
                                 <div class="production_type">
@@ -31,7 +31,7 @@
                     </a>
                     <div class="product_info">
                         <p class="product_title">
-                            <a href="">
+                            <a href="{{path('detail_product', {'slug' : product.slug})}}">
                                 {% if (product.provider.name ~ product.designation)|length >51 %}
                                     {{ (product.provider.name ~ ' - ' ~ product.designation)|slice(0,51) ~ ' ...'}}        
                                 {% else %}
