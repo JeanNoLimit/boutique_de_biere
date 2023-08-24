@@ -30,16 +30,18 @@
                         </div>
                     </a>
                     <div class="product_info">
-                        <p class="product_title">
-                            <a href="{{path('detail_product', {'slug' : product.slug})}}">
-                                {% if (product.provider.name ~ product.designation)|length >51 %}
-                                    {{ (product.provider.name ~ ' - ' ~ product.designation)|slice(0,51) ~ ' ...'}}        
-                                {% else %}
-                                    {{product.provider.name}} - {{ product.designation }}                 
-                                {% endif %}
-                             - {{ product.volume|number_format }}cl
+                       
+                            <a href="{{path('detail_product', {'slug' : product.slug})}}"> 
+                                <p class="product_title">
+                                    {% if (product.provider.name ~ product.designation)|length >51 %}
+                                        {{ (product.provider.name ~ ' - ' ~ product.designation)|slice(0,51) ~ ' ...'}}        
+                                    {% else %}
+                                        {{product.provider.name}} - {{ product.designation }}                 
+                                    {% endif %}
+                                    - {{ product.volume|number_format }}cl
+                                </p>
                             </a>
-                        </p>
+                        
                         <p class="product_price">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
                     </div>
                 </article>

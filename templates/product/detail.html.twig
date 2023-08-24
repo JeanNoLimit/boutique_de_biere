@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}la  Boutique{% endblock %}
+
+{% block body %}
+
+<div class="product_presention">
+
+    <div class="img_detail_product">
+        <img src="" alt="" class="img_large_size">
+    </div>
+    <div class="product_informations">
+        <h1 class="product_designation">Désignation du produit - 33cl</h1>
+        <p class="description_product">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet consectetur elit. In velit est, tristique vitae fringilla ut, mollis in sapien. Nullam vitae consequat sem, ut semper turpis. Pellentesque porta, mauris nec vehicula scelerisque, lacus justo lacinia ante, vitae laoreet massa purus in nibh. Donec aliquam condimentum nunc, in suscipit ex vehicula in. Donec dignissim facilisis est, nec lacinia odio vestibulum sit amet. Vestibulum sed sem gravida, vestibulum est vestibulum, tempor ante. Suspendisse a vehicula velit. Duis vel venenatis lacus. Morbi feugiat iaculis molestie. Donec imperdiet condimentum ante, eget laoreet ipsum. Curabitur lacinia, justo ut vulputate rhoncus, sem est ullamcorper ligula, a sollicitudin nibh purus et urna. Integer rhoncus sem vel lorem mattis, vitae facilisis ante ornare. Vestibulum libero erat, molestie in ex a, hendrerit fringilla felis. Maecenas at efficitur ex. Nullam non semper mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce.</p>
+        <p class="product_price_detail_product"> 3.95 €</p>
+        <p class="product_liter_price"> (11.96 € le litre) </p>
+        {% if product.stock >0 %}
+            
+        {% else %}
+            
+        {% endif %}
+        <form action="">
+            <div class="form_detail_product">
+                <div class="form_select_qte">
+                    <label for="" > Quantité </label>
+                    <div class="select_qte">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="minus" fill="var(--main-color)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+    
+                        <input type="number" name="" id="" class="input_number" min="1" max="99"> 
+    
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="plus" fill="var(--main-color)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg> 
+                    </div>   
+                </div>
+                <button class="button_validation"> Ajouter au panier</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+<div class="further_informations">
+    <h2>Informations détaillées</h2>
+
+    <table>
+        <tbody>
+            <tr>
+              <td>Brasserie</td>
+              <td> Blabla </td>
+            </tr>
+            <tr>
+              <td>Ingrédients</td>
+              <td> Ici insérer une liste d'ingrédients plutôt importante histoire que ça tienne sur plusieurs lignes. Malt d'orge (Pils, Munich 20), houblons (Pekko, Mistral, Triskel), levures (SafAle Us-05)
+            </td>
+            </tr>
+            <tr>
+              <td>Taux d'alcool</td>
+              <td> 10 °C </td>
+            </tr>
+            <tr>
+              <td>Amertume</td>
+              <td> Blabla </td>
+            </tr>
+            <tr>
+              <td>Style</td>
+              <td> Blabla </td>
+            </tr>
+          </tbody>
+    </table>
+</div>
+
+
+
+{# ....COMING SOON.... #}
+
+<div class="review">
+ <h2>Avis</h2>
+ <p style="text-align:center;"> ******* COMING SOON *******</p>
+</div>
+
+{% endblock %}
