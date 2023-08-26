@@ -79,7 +79,12 @@
               <td>Style</td>
               <td> 
                 {% for beerType in product.beerTypes %}
-                  {{beerType.name}},       
+                  {% if product.beerTypes|length == 1 or beerType == product.beerTypes|last %}
+                    {{beerType.name}}   
+                  {% else %}
+                    {{beerType.name}},       
+                  {% endif %}
+                  
                 {% endfor %} 
               </td>
             </tr>
