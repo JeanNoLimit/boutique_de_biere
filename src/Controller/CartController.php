@@ -37,10 +37,8 @@ class CartController extends AbstractController
             $total += $SsTotal ;
         }
 
-        
-
         return $this->render('cart/index.html.twig', [
-
+            'panier' => $panier,
             'elements' => $elements,
             'total' => $total
         ]);
@@ -75,8 +73,7 @@ class CartController extends AbstractController
                 }
                 else {
                     $panier[$id] = $quantity;
-                }
-                
+                }     
         }
         // On sauvegarde le panier en session pour continuer nos achats en boutique
         $session->set('panier', $panier);
@@ -85,4 +82,58 @@ class CartController extends AbstractController
         
         return new RedirectResponse($this->generateUrl('detail_product', ['slug' => $slug]));
     }
+
+
+    #[Route('/cart/delete/{id}', name: 'delete_product_cart')]
+    public function deleteProduct(Request $request, int $id) 
+    {
+        $panier = $request->getSession()->get('panier', []);
+        unset($panier[$id]);
+        $request->getSession()->set('panier', $panier);
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+
+    #[Route('/cart/decrement/{id}', name: 'decrement_product_cart')]
+    public function decrementProduct(Request $request, int $id) : Response
+    {
+        $panier = $request->getSession()->get('panier', []);
+        
+        if(!empty($panier[$id])){
+            if($panier[$id] > 1) {
+                $panier[$id]--;
+            }
+        }
+        $request->getSession()->set('panier', $panier);
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+
+    #[Route('/cart/increment/{id}', name: 'increment_product_cart')]
+    public function incrementProduct(Request $request, int $id) : Response
+    {
+        $panier = $request->getSession()->get('panier', []);
+        
+        if(!empty($panier[$id])){
+            if($panier[$id] > 1) {
+                $panier[$id]++;
+            }
+        }
+        $request->getSession()->set('panier', $panier);
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+    
+    #[Route('/cart/delete_cart', name: 'delete_cart')]
+    public function deleteCart(Request $request) 
+    {
+        $request->getSession()-> remove('panier');
+
+        return $this->redirectToRoute('cart_index');
+
+    }
+
 }
