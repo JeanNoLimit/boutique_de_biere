@@ -10,22 +10,38 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+// use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart_index')]
-    public function index(SessionInterface $session): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $session=$request->getSession();
         $panier = $session->get('panier', []);
+        $SsTotal=null;
         $total=null;
-        $element=[];
+        $elements=[];
+
+        foreach ($panier as $id => $quantity) 
+        {
+            $product = $entityManager->getRepository(Product::class)->findOneById($id);
+            $SsTotal = $product->getPrice() * $quantity;
+            $elements[] = [
+                'product' => $product,
+                'quantity' => $quantity,
+                'SsTotal' => $SsTotal
+            ];
+
+            $total += $SsTotal ;
+        }
 
         
 
         return $this->render('cart/index.html.twig', [
-            'panier' => $panier,
+
+            'elements' => $elements,
             'total' => $total
         ]);
     }
@@ -65,7 +81,7 @@ class CartController extends AbstractController
         // On sauvegarde le panier en session pour continuer nos achats en boutique
         $session->set('panier', $panier);
 
-        dd($session->get('panier'));
+        // dd($session->get('panier'));
         
         return new RedirectResponse($this->generateUrl('detail_product', ['slug' => $slug]));
     }

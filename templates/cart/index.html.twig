@@ -6,6 +6,40 @@
 
 <h1>C'est mon panier!!!!</h1>
 
-{{ dump(panier) }}
+{{ dump(elements) }}
+{{ dump(total) }}
+
+<table style="min-width:600px;">
+    <thead>
+        <tr>
+            <th>Désignation du produit</th>
+            <th>Quantité</th>
+            <th>Sous-total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for element in elements %}
+        <tr>
+            <td> {{ element.product.designation }} </td>
+            <td> {{ element.quantity }} </td>
+            <td> {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} € </td>
+            
+        </tr>
+        {% endfor %}
+        <tr>
+            <th colspan='2'>TOTAL</th>
+            <td> {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+        </tr>
+    </tbody>
+
+
+
+</table>
+
+
+
+
+    
+
 
 {% endblock %}
