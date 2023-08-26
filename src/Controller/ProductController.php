@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     // Affichage de la liste des produits
-    #[Route('/products', name: 'app_product')]
+    #[Route('/products', name: 'products_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         
