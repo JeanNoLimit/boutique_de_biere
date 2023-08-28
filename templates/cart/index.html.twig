@@ -13,6 +13,7 @@
             <tr>
                 <th>Désignation du produit</th>
                 <th>Quantité</th>
+                <th>Prix</th>
                 <th>Sous-total</th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
                     {{ element.quantity }} 
                     <a href="{{ path('increment_product_cart', {'id' : element.product.id})}}">++</a>
                 </td>
+                <td> {{ (element.product.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
                 <td> {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} € </td>
                 <td>  
                     <a href="{{ path('delete_product_cart', {"id" : element.product.id})}}"> 
@@ -41,11 +43,15 @@
         </tbody>
 
     </table>
-    <a href="{{ path('delete_cart')}}">Supprimer le panier</a>
+
+    <a href="{{path('products_index')}}" style="color:palevioletred"> Retour boutique</a>
+    <a href="{{ path('delete_cart')}}" style="color:red">Supprimer le panier</a>
+
+    <a href="" class="button_validation">Valider le panier</a>
 {% else %}
 
     <p>Malheuresement votre panier est vide! </p>
-
+    <a href="{{path('products_index')}}" style="color:palevioletred"> Retour boutique</a>
 {% endif %}
 
 {% endblock %}
