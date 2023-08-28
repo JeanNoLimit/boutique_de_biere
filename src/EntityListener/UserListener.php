@@ -14,7 +14,6 @@ class UserListener
         $this->hasher = $hasher;
     }
 
-// REPRENDRE A 21:50
     public function prePersist(User $user)
     {
         $this->encodePassword($user);
