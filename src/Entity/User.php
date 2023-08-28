@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+
+#[UniqueEntity('email')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -14,39 +18,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Length(min:2, max: 180)]
+    #[Assert\Email()]
     private ?string $email = null;
+    
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2, max: 50)]
+    private ?string $pseudo = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private array $roles = [];
 
+    // Variable qui ne sera pas enregistré en BDD
+    private ?string $plainPassword = null;
+    
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2, max: 50)]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2, max: 50)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 150)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2, max: 150)]
     private ?string $adress = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:5, max: 10)]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2, max: 50)]
     private ?string $city = null;
 
     #[ORM\Column(length: 14)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:10)]
     private ?string $tel = null;
 
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
+
 
     public function getId(): ?int
     {
@@ -198,6 +228,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
