@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\BeerType;
 use App\Entity\Provider;
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
             ]),
             MenuItem::linkToCrud('Type de production', 'fa fa-star', ProductionType::class),
             MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class),
+            MenuItem::linkToCrud('Liste des Utilisateurs', 'fa-regular fa-user', User::class),
             MenuItem::linkToCrud('Paramètres du site', 'fa fa-screwdriver-wrench', ShopParameters::class)
             
         ];
