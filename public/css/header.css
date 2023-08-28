@@ -1,0 +1,13 @@
+nav {
+    height: 80px;
+    width: 100%;
+    background-color: grey;
+
+   
+} 
+
+nav a {
+    color: black;
+    font-size: 1.3rem;
+    padding: 20px;
+    }
