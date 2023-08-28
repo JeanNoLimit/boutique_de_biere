@@ -19,7 +19,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $Designation = null;
+    private ?string $designation = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -84,6 +84,7 @@ class Product
 
     public function __construct()
     {
+        $this->createdAt = new \DatetimeImmutable();
         $this->beerTypes = new ArrayCollection();
     }
 
@@ -94,12 +95,12 @@ class Product
 
     public function getDesignation(): ?string
     {
-        return $this->Designation;
+        return $this->designation;
     }
 
     public function setDesignation(string $Designation): static
     {
-        $this->Designation = $Designation;
+        $this->designation = $Designation;
 
         return $this;
     }

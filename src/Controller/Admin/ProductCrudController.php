@@ -27,7 +27,6 @@ class ProductCrudController extends AbstractCrudController
     public function createEntity(string $entityFqcn)
     {
         $product = new Product();
-        $product->setCreatedAt(new \DatetimeImmutable());
 
         return $product;
 
