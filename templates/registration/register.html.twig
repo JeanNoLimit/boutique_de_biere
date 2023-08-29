@@ -9,21 +9,44 @@
 
     <h1>Inscription</h1>
 
+    <div class="formContainer">
     {{ form_errors(registrationForm) }}
-
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword.first) }}
-        {{ form_row(registrationForm.plainPassword.second) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.adress) }}
-        {{ form_row(registrationForm.zipCode) }}
-        {{ form_row(registrationForm.city) }}
-        {{ form_row(registrationForm.tel) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="row">
+             {{ form_row(registrationForm.email) }}
+        </div>
+       <div class="row">
+           {{ form_row(registrationForm.pseudo) }}
+       </div>
+       <div class="row">
+           {{ form_row(registrationForm.plainPassword.first) }}
+       </div>
+       <div class="row">
+           {{ form_row(registrationForm.plainPassword.second) }}
+       </div>
+       <div class="row">
+           {{ form_row(registrationForm.lastName) }}
+       </div>
+       <div class="row">
+            {{ form_row(registrationForm.firstName) }}
+       </div>
+       <div class="row">
+            {{ form_row(registrationForm.adress) }}
+       </div>
+        <div class="row">
+            {{ form_row(registrationForm.zipCode) }}
+        </div>
+        <div class="row">
+            {{ form_row(registrationForm.city) }}
+        </div>
+        <div class="row">
+            {{ form_row(registrationForm.tel) }}
+        </div>
+        <div class="row">
+            {{ form_row(registrationForm.agreeTerms) }}
+        </div>
 
-        <button type="submit" class="btn">Je m'inscris</button>
+        <button type="submit" class="btn_register button_validation">Je m'inscris</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

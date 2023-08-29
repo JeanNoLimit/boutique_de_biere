@@ -12,7 +12,6 @@
     margin-right: 5px;
 }
 
-
 .container_products {
     display : flex;
     flex-direction: row;
@@ -21,7 +20,7 @@
 
 
 
-/* article de vente */
+/************* article de vente ***********************/
 .article_product{
     width: 290px;
     height: 355px;
@@ -37,7 +36,7 @@
     color: black;
 }
 
-/* zone image */
+/**************** zone image **************************/
 .img_product_article {
     position:relative;
     width: 250px;
@@ -54,7 +53,7 @@
     object-fit: cover;
 }
 
-    /* informations sur l'image */
+    /******* informations sur l'image *******/
 .production_type {
     position: absolute;
     right: 10px;
@@ -85,7 +84,7 @@
 }
 
 
-/* Informations sous l'image */
+/****************** Informations sous l'image *****************/
 .product_info{
     margin: 5px;
     display: flex;

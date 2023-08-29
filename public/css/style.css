@@ -3,6 +3,7 @@
 @import url(list_products.css);
 @import url(detail_product.css);
 @import url(header.css);
+@import url(form.css);
 
 
 :root {
@@ -38,6 +39,7 @@ h2 {
 
 
 .button_validation {
+    cursor: pointer;
     width: 180px;
     height: 60px;
     padding: 10px;

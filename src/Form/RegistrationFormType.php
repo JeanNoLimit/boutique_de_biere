@@ -25,18 +25,22 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-
+                'attr' => ['class' => 'input']
             ])
             ->add('pseudo', TextType::class, [
-
+                'attr' => ['class' => 'input']
             ])
             // mapped => false signifie que le champ ne sera pas stocké en bdd (le mot de passe sera hashé)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'required' =>true,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répétez le mot de passe'],
+                'first_options' => ['label' => 'Mot de passe',
+                                    'attr' => ['class' => 'input']
+                ],
+                'second_options' => ['label' => 'Répétez le mot de passe',
+                                    'attr' => ['class' => 'input']
+                ],
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'Nouveau mot de passe'],
                 'constraints' => [
@@ -52,22 +56,28 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class,[
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'attr' => ['class' => 'input']
             ])
             ->add('firstName', TextType::class,[
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'attr' => ['class' => 'input']
             ])
             ->add('adress', TextType::class,[
-                'label' => 'Adresse'
+                'label' => 'Adresse',
+                'attr' => ['class' => 'input']
             ])
             ->add('zipCode', TextType::class, [
-                'label' => 'Code postal'
+                'label' => 'Code postal',
+                'attr' => ['class' => 'input']
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ville'
+                'label' => 'Ville',
+                'attr' => ['class' => 'input']
             ])
             ->add('tel', TelType::class,[
                 'label' => 'Num. de téléphone',
+                'attr' => ['class' => 'input']
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Acceptez les conditions générales d\'utilisation',
