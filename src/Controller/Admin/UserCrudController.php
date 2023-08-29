@@ -7,8 +7,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -41,6 +43,13 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle('index','Administration des utilisateurs');
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
     
     public function configureFields(string $pageName): iterable
     {
@@ -60,12 +69,16 @@ class UserCrudController extends AbstractCrudController
             ArrayField::new('roles'),
             TextField::new('firstName'),
             TextField::new('lastName'),
-            TextField::new('adress'),
-            TextField::new('zipCode'),
+            TextField::new('adress')
+                ->hideOnIndex(),
+            TextField::new('zipCode')
+                ->hideOnIndex(),
             TextField::new('city'),
             TelephoneField::new('tel'),
             DateTimeField::new('createdAt')
-                ->onlyOnIndex(),
+                ->onlyOnIndex()
+                ->setFormat("'le 'dd.MM.yyyy ' à '  HH'h'mm:ss")
+                ->setTimezone('Europe/Paris'),
         ];
     }
 
