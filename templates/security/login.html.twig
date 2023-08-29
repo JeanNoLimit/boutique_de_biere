@@ -11,12 +11,12 @@
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
+        <div class="">
             Vous êtes connecté(e) au compte : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Vous déconnecter</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Me connecter</h1>
+    <h1 class="">Me connecter</h1>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Mot de passe</label>

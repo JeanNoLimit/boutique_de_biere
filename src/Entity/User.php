@@ -24,13 +24,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
     
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Length(min:2, max: 180)]
-    #[Assert\Email()]
+    #[Assert\Length([
+        'min'=>'2',
+        'max'=> '180',
+        'minMessage' => 'Veuillez renseigner une adresse mail valide',
+        'maxMessage' => 'Veuillez renseigner une adresse mail valide'
+    ])]
+    #[Assert\Email([
+        'message'=> 'Veuillez renseigner une adresse mail valide'
+        ])
+    ]
     private ?string $email = null;
     
-    #[ORM\Column(length: 50, unique: true)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max: 50)]
+    #[ORM\Column(length: 15, unique: true)]
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner un pseudo'
+    ])]
+    #[Assert\Length([
+        'min'=>'2',
+        'max'=> '15',
+        'minMessage' => 'Veuillez selectionner un pseudo de plus de {{ limit }} caractères',
+        'maxMessage' => 'Veuillez selectionner un pseudo de moins de {{ limit }} caractères'
+    ])]
     private ?string $pseudo = null;
 
     #[ORM\Column]
@@ -47,33 +62,72 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max: 50)]
+    #[Assert\NotBlank([
+        'message' => 'Veuillez renseigner votre nom'
+    ])]
+    #[Assert\Length([
+        'min' => '2', 
+        'max' => '50',
+        'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
+        'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max: 50)]
+    #[Assert\NotBlank([
+        'message' => 'Veuillez renseigner votre prénom'
+    ])]
+    #[Assert\Length([
+        'min' => '2', 
+        'max' => '50',
+        'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
+        'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 150)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max: 150)]
+    #[Assert\NotBlank([
+        'message' => 'Veuillez renseigner une adresse'
+    ])]
+    #[Assert\Length([
+        'min'=>'2',
+        'max'=> '150',
+        'minMessage' => 'Veuillez entrer une adresse valide',
+        'maxMessage' => 'Veuillez entrer une adresse valide'
+    ])]
     private ?string $adress = null;
 
-    #[ORM\Column(length: 10)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:5, max: 10)]
+    #[ORM\Column(length: 5)]
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner un code postal'
+    ])]
+    #[Assert\Length(
+        min:5, 
+        max: 5,
+        exactMessage: 'Veuillez entrer un code postal valide, {{ limit }} caractères',
+    )]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max: 50)]
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner votre ville'
+    ])]
+    #[Assert\Length([
+        'min'=>'2',
+        'max'=> '50',
+        'minMessage' => 'Veuillez entrer un nom de ville valide',
+        'maxMessage' => 'Veuillez entrer un nom de ville valide'
+    ])]
     private ?string $city = null;
 
     #[ORM\Column(length: 14)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:10)]
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner un numéro de téléphone'
+    ])]
+    #[Assert\Length([
+        'min'=>'10',
+        'max'=> '14',
+        'minMessage' => 'Veuillez entrer un numéro de téléphone valide',
+        'maxMessage' => 'Veuillez entrer un numéro de téléphone valide'
+    ])]
     private ?string $tel = null;
 
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
