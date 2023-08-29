@@ -4,8 +4,14 @@
 <nav>
     <a href="{{ path('products_index')}}">La boutique</a>
     <a href="">Qui sommes nous?</a>
-    <a href="">Profil</a>
-    <a href="{{ path('app_login')}}">connexion</a>
+    
+    {% if app.user %}
+        <a href="">Profil</a>
+        <a href="{{ path('app_logout')}}">déconnexion</a>
+    {% else %}
+        <a href="{{ path('app_login')}}">connexion</a>
+    {% endif %}
+    
     <a href="{{ path('cart_index')}}">Panier</a>
 </nav>
     

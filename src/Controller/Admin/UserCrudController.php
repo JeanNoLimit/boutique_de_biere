@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -21,6 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
@@ -79,6 +81,8 @@ class UserCrudController extends AbstractCrudController
                 ->onlyOnIndex()
                 ->setFormat("'le 'dd.MM.yyyy ' à '  HH'h'mm:ss")
                 ->setTimezone('Europe/Paris'),
+            BooleanField::new('isVerified')
+                ->OnlyOnIndex()
         ];
     }
 

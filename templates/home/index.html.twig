@@ -4,9 +4,16 @@
 
 {% block body %}
 
+{# ATTENTION POUR TEST A SUPPRIMER #}
+
+{% if app.user %}
+Vous êtes connecté(e) au compte : {{ app.user.pseudo }}, <a href="{{ path('app_logout') }}">Vous déconnecter</a>
+    
+{% endif %}
+
 <h1>Bienvenue sur le site de l'échoppe</h1>
 
 <p>Ici bientôt une page d'accueil...</p>
 
-<a href="">Inscription</a>
+<a href="{{ path('app_register')}}">Inscription</a>
 {% endblock %}
