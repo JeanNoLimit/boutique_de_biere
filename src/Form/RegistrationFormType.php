@@ -77,7 +77,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('tel', TelType::class,[
                 'label' => 'Num. de téléphone',
-                'attr' => ['class' => 'input'], 'min' => '10', 'maxlength' => '14'
+                'attr' => ['class' => 'input', 'min' => '10', 'maxlength' => '14']
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Acceptez les conditions générales d\'utilisation',
