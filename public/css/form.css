@@ -41,6 +41,15 @@ label{
     font-weight: 500;
 }
 
+/* messages d'erreurs */
+
+.row ul li {
+    list-style: none;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: red;
+}
+
 .aggreeTerms div{
     display: flex;
     flex-direction: row;

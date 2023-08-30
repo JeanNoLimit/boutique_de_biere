@@ -25,10 +25,10 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '180']
             ])
             ->add('pseudo', TextType::class, [
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '15' ]
             ])
             // mapped => false signifie que le champ ne sera pas stocké en bdd (le mot de passe sera hashé)
             ->add('plainPassword', RepeatedType::class, [
@@ -57,27 +57,27 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lastName', TextType::class,[
                 'label' => 'Nom',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
             ->add('firstName', TextType::class,[
                 'label' => 'Prénom',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
             ->add('adress', TextType::class,[
                 'label' => 'Adresse',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '150']
             ])
             ->add('zipCode', TextType::class, [
                 'label' => 'Code postal',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '5', 'maxlength' => '5']
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
             ->add('tel', TelType::class,[
                 'label' => 'Num. de téléphone',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input'], 'min' => '10', 'maxlength' => '14'
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Acceptez les conditions générales d\'utilisation',
