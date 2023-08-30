@@ -82,10 +82,14 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagefile = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetails::class, orphanRemoval: true)]
+    private Collection $orderDetails;
+
     public function __construct()
     {
         $this->createdAt = new \DatetimeImmutable();
         $this->beerTypes = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,6 +298,36 @@ class Product
     public function setImagefile(?string $imagefile): static
     {
         $this->imagefile = $imagefile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetails $orderDetail): static
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->add($orderDetail);
+            $orderDetail->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetails $orderDetail): static
+    {
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getProduct() === $this) {
+                $orderDetail->setProduct(null);
+            }
+        }
 
         return $this;
     }
