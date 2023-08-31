@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Form\CheckInformationsType;
+use App\Entity\Product;
 use App\Repository\UserRepository;
+use App\Form\CheckInformationsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,11 +54,31 @@ class SecurityController extends AbstractController
         //On récupère le panier et l'utilisateur
         $session=$request->getSession();
         $panier = $session->get('panier', []);
+        $SsTotal=null;
+        $total=null;
+        $elements=[];
         $idUser = $this->getUser()->getId();
         $user = $userRepo->find($idUser);
+
+
         if($user->isVerified()){
             if($panier !== []){
-                //création du formulaire
+
+                /********** Récupération des informations du panier ***********/
+                foreach ($panier as $id => $quantity) 
+                {
+                    $product = $em->getRepository(Product::class)->findOneById($id);
+                    $SsTotal = $product->getPrice() * $quantity;
+                    $elements[] = [
+                        'product' => $product,
+                        'quantity' => $quantity,
+                        'SsTotal' => $SsTotal
+                    ];
+        
+                    $total += $SsTotal ;
+                }
+
+                /******* création du formulaire *************/
                 $form = $this->createForm(CheckInformationsType::class, $user);
 
                 $form->handleRequest($request);
@@ -85,6 +106,8 @@ class SecurityController extends AbstractController
 
         
         return $this->render('security/check_address.html.twig', [
+            'elements' => $elements,
+            'total' => $total,
             'form' => $form
         ]);
     }
