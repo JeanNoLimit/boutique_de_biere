@@ -13,7 +13,7 @@
         {% for element in elements %}
    
             <tr>
-                <th colspan="3" style="text-align: left;font-size:1.3rem;">{{ element.product.designation }}</th>
+                <th colspan="3" style="text-align: left;font-size:1.3rem;">{{ element.product.designation }} {{ element.product.volume|number_format }}cl - {{element.product.provider}}</th>
             </tr>
             <tr style="height:30px;">
                 <td>
@@ -36,9 +36,12 @@
         <p> Nombre d'acticles : {{ elements|length }} </p>
         <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
     </div>
-   
-    {# Bouton retour panier #}
 
+{# Bouton retour panier #}
+
+    <a href="{{path('cart_index')}}" style="color:palevioletred"> Retour Panier</a>
+   
+    
 
     <h2>Mes informations personnelles </h2>
 

@@ -20,7 +20,7 @@
         <tbody>
             {% for element in elements %}
             <tr>
-                <td> {{ element.product.designation }} </td>
+                <td> {{ element.product.designation }} {{ element.product.volume|number_format }}cl </td>
                 <td> 
                     <a href="{{ path('decrement_product_cart', {'id' : element.product.id})}}">--</a>
                     {{ element.quantity }} 
