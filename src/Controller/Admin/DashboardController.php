@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\BeerType;
 use App\Entity\Provider;
@@ -38,14 +39,14 @@ class DashboardController extends AbstractDashboardController
 
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
-            // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+            MenuItem::linkToCrud('Gestion des commandes', 'fa fa-star', Order::class),
+            MenuItem::linkToCrud('Liste des Utilisateurs', 'fa-regular fa-user', User::class),
             MenuItem::subMenu('Catalogues', 'fa fa-book')->setSubItems([
                 MenuItem::linkToCrud('Brasseries', 'fa fa-handshake', Provider::class),
                 MenuItem::linkToCrud('Bières', 'fa fa-beer-mug-empty', Product::class)
             ]),
             MenuItem::linkToCrud('Type de production', 'fa fa-star', ProductionType::class),
             MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class),
-            MenuItem::linkToCrud('Liste des Utilisateurs', 'fa-regular fa-user', User::class),
             MenuItem::linkToCrud('Paramètres du site', 'fa fa-screwdriver-wrench', ShopParameters::class)
             
         ];
