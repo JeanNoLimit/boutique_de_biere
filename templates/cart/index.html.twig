@@ -47,7 +47,7 @@
     <a href="{{path('products_index')}}" style="color:palevioletred"> Retour boutique</a>
     <a href="{{ path('delete_cart')}}" style="color:red">Supprimer le panier</a>
 
-    <a href="" class="button_validation">Valider le panier</a>
+    <a href="{{ path ('app_order_summary')}}" class="button_validation">Valider le panier</a>
 {% else %}
 
     <p>Malheuresement votre panier est vide! </p>

@@ -9,9 +9,9 @@
 
     <div class="img_detail_product">
       {% if product.imageFile is defined and product.imageFile is not null %}
-        <img src="/upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">     
+        <img src="{{ asset('upload/images/products/'~ product.imageFile) }}" alt="image {{product.designation}}">     
       {% else %}
-        <img src="/upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
+        <img src="{{ asset('upload/images/site/' ~ parameters.defaultImageProduct) }}" alt="image par défaut">
       {% endif %}
     </div>
     <div class="product_informations">
