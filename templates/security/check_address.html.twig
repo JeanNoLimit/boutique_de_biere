@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification des informations{% endblock %}
+
+{% block body %}
+
+    <h1>Vérification des informations</h1>
+
+
+    <h2>Récapitulatif de la commande</h2>
+
+    {# ICI TABLEAU RECAPITULATIF COMMANDE (ne pouvant être modifié) #}
+    
+
+
+    {# Bouton retour panier #}
+
+
+    <h2>Vérifier mes informations</h2>
+
+    {# ICI LE FORMULAIRE UTILISATEUR #}
+    <div class="formContainer">
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+        
+        <div class="row">
+            {{ form_row(form.lastName) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.firstName) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.adress) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.zipCode) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.city) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.tel) }}
+        </div>
+            
+        <p>Valider ma commande et passer au paiement</p>
+        <p>Attention : action irreversible!</p>
+        <button type="submit" class="btn_register button_validation">Valider ma commande</button>
+
+        {{ form_end(form) }}
+    </div>
+
+{# VALIDATION ET PASSER AU PAIMENT #}
+
+{% endblock %}

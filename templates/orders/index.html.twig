@@ -4,5 +4,8 @@
 
 {% block body %}
 
-
+{{ dump(app.user) }}
+<pre>
+    {{ dump(app.flashes) }}
+</pre>
 {% endblock %}

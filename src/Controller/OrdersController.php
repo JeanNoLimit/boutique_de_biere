@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrdersController extends AbstractController
 {
-    #[Route('/orders_summary', name: 'app_order_summary')]
+    #[Route('/add_order', name: 'add_order')]
     public function index(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
     {
         //On vérifie si l'utilisateur est connecté
@@ -27,60 +27,64 @@ class OrdersController extends AbstractController
         $user = $this->getUser();
         
 
-        if($user->isVerified()){
-           if($panier !== []){
+        // if($user->isVerified()){
+        //    if($panier !== []){
 
-                //Création objet commande et insertion des données
-                $order = new Order();
-                //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
-                $time=new \DateTimeImmutable();
-                $reference = $user->getId().$time->format('Ymdhm');
+        //         //Création objet commande et insertion des données
+        //         $order = new Order();
+        //         //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
+        //         $time=new \DateTimeImmutable();
+        //         $reference = $user->getId().$time->format('Ymdhm');
 
-                $order->setUser($user);
-                $order->setReference($reference);
+        //         $order->setUser($user);
+        //         $order->setReference($reference);
 
-                //Création du détail de commande insertion des données
-                foreach($panier as $id => $qte) {
-                    $orderDetails = new OrderDetails();
+        //         //Création du détail de commande insertion des données
+        //         foreach($panier as $id => $qte) {
+        //             $orderDetails = new OrderDetails();
 
-                    //On récupère le produit
-                    $product = $productRepository->find($id);
-                    $price = $product->getPrice();
+        //             //On récupère le produit
+        //             $product = $productRepository->find($id);
+        //             // if (!$product) {
+        //             //     throw $this->createNotFoundException(
+        //             //         'No product found for id '.$id
+        //             //     );
+        //             // }
+        //             $price = $product->getPrice();
+                    
+        //             //On remplit orderDetails
+        //             $orderDetails->setProduct($product);
+        //             $orderDetails->setPrice($price);
+        //             $orderDetails->setQuantity($qte);
 
-                    //On remplit orderDetails
-                    $orderDetails->setProduct($product);
-                    $orderDetails->setPrice($price);
-                    $orderDetails->setQuantity($qte);
-
-                    $order->addOrderDetail($orderDetails);
+        //             $order->addOrderDetail($orderDetails);
                    
-                }
+        //         }
 
-                $em->persist($order);
-                $em->flush();
+        //         $em->persist($order);
+        //         $em->flush();
 
-                $session->remove('panier');
+        //         $session->remove('panier');
 
-                $this->addFlash('succes', 'Votre commande a été créée');
+        //         $this->addFlash('success', 'Votre commande a été créée');
 
-                //On  récupère la commande créé pour l'affichage :
 
-                // $displayOrder = 
+        //    }else{
+        //     $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
-           }else{
-            $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
+        //     return $this->redirectToRoute('cart_index');
+        //    }
+        // }else{
+        //     $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
 
-            return $this->redirectToRoute('cart_index');
-           }
-        }else{
-            $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
+        //     return $this->redirectToRoute('cart_index');
+        // }
 
-            return $this->redirectToRoute('cart_index');
-        }
-
-        
         return $this->render('orders/index.html.twig', [
-            'order' => $order
+            // 'order' => $order
         ]);
     }
+
+    
+
 }
