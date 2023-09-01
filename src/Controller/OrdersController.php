@@ -33,7 +33,7 @@ class OrdersController extends AbstractController
                 $order = new Order();
                 //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
                 $time=new \DateTimeImmutable();
-                $reference = $user->getId().$time->format('Ymdhms');
+                $reference = $user->getId().$time->format('Ymdhis');
 
                 $order->setUser($user);
                 $order->setReference($reference);

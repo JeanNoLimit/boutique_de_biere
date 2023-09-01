@@ -200,7 +200,7 @@ class CartController extends AbstractController
     
                     $this->addFlash('success', 'Informations de facturation validées');
 
-                    return $this->redirectToRoute('add_order');
+                    // return $this->redirectToRoute('add_order');
                 }
             }else{
             $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
