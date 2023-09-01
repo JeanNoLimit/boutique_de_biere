@@ -15,12 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
+
+    /************* GESTION VUE PANIER ************/
     #[Route('/cart', name: 'cart_index')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $session=$request->getSession();
         $panier = $session->get('panier', []);
         $SsTotal=null;
+        $stockTemp=null;
         $total=null;
         $elements=[];
 
@@ -28,9 +31,11 @@ class CartController extends AbstractController
         {
             $product = $entityManager->getRepository(Product::class)->findOneById($id);
             $SsTotal = $product->getPrice() * $quantity;
+            $stockTemp = $product->getStock() - $quantity;
             $elements[] = [
                 'product' => $product,
                 'quantity' => $quantity,
+                'stockTemp' => $stockTemp,
                 'SsTotal' => $SsTotal
             ];
 
@@ -44,7 +49,7 @@ class CartController extends AbstractController
         ]);
     }
 
-
+    /************************ Fonction gestion du formulaire ajout vue détail produit************************/
     #[Route('/cart/add/{id}', name: 'cart_add')]
     public function add(int $id = null, int $quantity=null, Request $request, EntityManagerInterface $em): Response
     {
@@ -83,6 +88,9 @@ class CartController extends AbstractController
         return new RedirectResponse($this->generateUrl('detail_product', ['slug' => $slug]));
     }
 
+
+
+    /*************************************** FONCTIONS DU PANIER ************************************/
 
     #[Route('/cart/delete/{id}', name: 'delete_product_cart')]
     public function deleteProduct(Request $request, int $id) 

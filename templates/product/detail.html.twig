@@ -19,7 +19,15 @@
         <p class="description_product">{{ product.description }}</p>
         <p class="product_price_detail_product">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
         <p class="product_liter_price"> (11.96 € le litre) </p>
-
+      {% if product.stock <= 10 and product.stock > 0 %}
+        {% if product.stock == 1 %}
+           <p> Il reste 1 article en stock</p
+        {% else %}
+            <p> Il reste {{product.stock }} articles en stock</p
+        {% endif %}
+      {% elseif product.stock <= 0 %}
+        <p> Rupture de stock - Commande possible mais délais de livraison allongé </p>
+      {% endif %}
 
         {# FORMULAIRE AJOUT PRODUIT AU PANIER #}
         {# <form action="" method="post">

@@ -35,6 +35,12 @@
                 </td>
                 
             </tr>
+            {% if element.stockTemp < 0 %}
+                <tr>
+                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongée de quelques jours</td>
+                </tr>
+            {% endif %}
+           
             {% endfor %}
             <tfoot>
                 <td colspan='2'>TOTAL</td>
