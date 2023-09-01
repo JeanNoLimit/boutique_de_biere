@@ -13,12 +13,14 @@ class UserController extends AbstractController
     #[Route('/user', name: 'app_userProfile')]
     public function index(OrderRepository $orderRepository): Response
     {
-        $userID=$this->getUser()->getId();
+        $userId=$this->getUser()->getId();
 
-
-
+        $ordersArchives = $orderRepository->findOrdersPreparedByUserId($userId);
+        $ordersInProcess = $orderRepository->findOrdersInProccessByUserId($userId);
 
         return $this->render('user/view_profile.html.twig', [
+            'ordersInProcess' => $ordersInProcess,
+            'ordersArchives' => $ordersArchives,
         ]);
     }
 

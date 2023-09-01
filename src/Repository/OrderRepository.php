@@ -23,11 +23,30 @@ class OrderRepository extends ServiceEntityRepository
 
 
 
-    public function findOrdersPaidByUserId($userId)
+    public function findOrdersPreparedByUserId($userId)
     {
-        
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.user = :id')
+            ->andWhere('o.isPaid = true')
+            ->andWhere('o.isProcessed = true')
+            ->setParameter('id', $userId)
+            ->orderBy('o.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
+
+    public function findOrdersInProccessByUserId($userId)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.user = :id')
+            ->andWhere('o.isPaid = true')
+            ->andWhere('o.isProcessed = false')
+            ->setParameter('id', $userId)
+            ->orderBy('o.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

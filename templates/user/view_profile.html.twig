@@ -4,31 +4,77 @@
 
 {% block body %}
 
-{{ dump(app.user) }}
 
+    <div style="text-align:center;margin:50px 0">
 
-<div style="text-align:center;margin:50px 0">
+        <h1>Vos informations</h1>
 
-    <h1>Vos informations</h1>
+        <p><span style="font-weight:600;">Email : </span>{{ app.user.email }}</p>
+        <p><span style="font-weight:600;">Pseudo : </span>{{ app.user.pseudo }}</p>
+        <p><span style="font-weight:600;">Nom : </span>{{ app.user.lastName }}</p>
+        <p><span style="font-weight:600;">Prénom :</span> {{ app.user.firstName }}</p>
+        <p><span style="font-weight:600;">Adresse : </span>{{ app.user.adress }}</p>
+        <p><span style="font-weight:600;">Code Postal : </span>{{ app.user.zipCode }}</p>
+        <p><span style="font-weight:600;">Ville : </span>{{ app.user.city }}</p>
+        <p><span style="font-weight:600;">Téléphone : </span>{{ app.user.tel }}</p>
 
-    <p><span style="font-weight:600;">Email : </span>{{ app.user.email }}</p>
-    <p><span style="font-weight:600;">Pseudo : </span>{{ app.user.pseudo }}</p>
-    <p><span style="font-weight:600;">Nom : </span>{{ app.user.lastName }}</p>
-    <p><span style="font-weight:600;">Prénom :</span> {{ app.user.firstName }}</p>
-    <p><span style="font-weight:600;">Adresse : </span>{{ app.user.adress }}</p>
-    <p><span style="font-weight:600;">Code Postal : </span>{{ app.user.zipCode }}</p>
-    <p><span style="font-weight:600;">Ville : </span>{{ app.user.city }}</p>
-    <p><span style="font-weight:600;">Téléphone : </span>{{ app.user.tel }}</p>
+    </div>
 
-</div>
+    <div style="text-align:center;">
+    <h1>Mon historique de commandes</h1>
 
-    <h1>Votre historique de commandes</h1>
+    {% if ordersInProcess is not defined or ordersInProcess is empty and ordersArchives is not defined or ordersArchives is empty %}
+        <p>Aucune commande dans votre historique</p>
+    {% endif %}
 
+    {% if ordersInProcess is defined and ordersInProcess is not empty %}
+        <h2>Mes commandes en cours de traitement</h2>
 
-    <h2>Mes commandes en cours de traitement</h2>
+        <table style="margin: 50px auto;">
+            <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Date de la commande</th>
+                    <th>Voir Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in ordersInProcess %}
+                    
+                <tr>
+                    <td>{{ order.reference }}</td>
+                    <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                    <td><a href="">Voir détail</a></td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
+    {% if ordersArchives is defined and ordersArchives is not empty %}
 
-    <h2>Mes commandes traités </h2>
+        <h2>Mes commandes traités </h2>
 
+        <table style="margin: 50px auto;">
+            <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Date de la commande</th>
+                    <th>Voir Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in ordersArchives %}
+                    
+                <tr>
+                    <td>{{ order.reference }}</td>
+                    <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                    <td><a href="">Voir détail</a></td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
 
+    {% endif %}
+    </div>
 {% endblock %}
