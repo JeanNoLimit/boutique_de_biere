@@ -37,11 +37,11 @@
             </tr>
             {% if element.product.stock <= 0 %}
                 <tr>
-                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongée de quelques jours</td>
+                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                 </tr>
             {% elseif element.stockTemp < 0 %}
                 <tr>
-                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongée de quelques jours</td>
+                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                 </tr>
             {% endif %}
            

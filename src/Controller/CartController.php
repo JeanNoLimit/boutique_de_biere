@@ -5,18 +5,20 @@ namespace App\Controller;
 
 use App\Form\CartType;
 use App\Entity\Product;
+use App\Repository\UserRepository;
+use App\Form\CheckInformationsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-// use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
 
-    /************* GESTION VUE PANIER ************/
+    /***************************** GESTION VUE PANIER *****************************************/
+
     #[Route('/cart', name: 'cart_index')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -49,7 +51,8 @@ class CartController extends AbstractController
         ]);
     }
 
-    /************************ Fonction gestion du formulaire ajout vue détail produit************************/
+    /************************ Fonction gestion du formulaire ajout au panier - VUE DETAIL PRODUIT************************/
+
     #[Route('/cart/add/{id}', name: 'cart_add')]
     public function add(int $id = null, int $quantity=null, Request $request, EntityManagerInterface $em): Response
     {
@@ -142,6 +145,80 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('cart_index');
 
+    }
+
+
+    /*************************************** VERIFICATION ADRESSE DE FACTURATION AVANT VALIDATION COMMANDE ************************************/
+
+    #[Route('/cart/check_Address', name: 'checkBillingAddress')]
+    public function checkBillingAddress(Request $request, EntityManagerInterface $em, UserRepository $userRepo):Response
+    {
+
+        //On vérifie si l'utilisateur est connecté
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        //On récupère le panier et l'utilisateur
+        $session=$request->getSession();
+        $panier = $session->get('panier', []);
+        $SsTotal=null;
+        $total=null;
+        $stockTemp=null;
+        $elements=[];
+        $idUser = $this->getUser()->getId();
+        $user = $userRepo->find($idUser);
+
+
+        if($user->isVerified()){
+            if($panier !== []){
+
+                /********** Récupération des informations du panier ***********/
+                foreach ($panier as $id => $quantity) 
+                {
+                    $product = $em->getRepository(Product::class)->findOneById($id);
+                    $SsTotal = $product->getPrice() * $quantity;
+                    $stockTemp = $product->getStock() - $quantity;
+                    $elements[] = [
+                        'product' => $product,
+                        'quantity' => $quantity,
+                        'stockTemp' => $stockTemp,
+                        'SsTotal' => $SsTotal
+                    ];
+        
+                    $total += $SsTotal ;
+                }
+
+                /******* création du formulaire *************/
+                $form = $this->createForm(CheckInformationsType::class, $user);
+
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                   
+                    $user = $form->getData();
+
+                    $em->persist($user);
+                    $em->flush();
+    
+                    $this->addFlash('success', 'Informations de facturation validées');
+
+                    return $this->redirectToRoute('add_order');
+                }
+            }else{
+            $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
+
+            return $this->redirectToRoute('cart_index');
+           }
+        }else{
+            $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
+
+            return $this->redirectToRoute('cart_index');
+        }
+
+        
+        return $this->render('cart/check_address.html.twig', [
+            'elements' => $elements,
+            'total' => $total,
+            'form' => $form
+        ]);
     }
 
 }
