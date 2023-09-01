@@ -200,6 +200,8 @@ class CartController extends AbstractController
     
                     $this->addFlash('success', 'Informations de facturation validées');
 
+
+                    //GERER LA REDIRECTION VERS SITE PAIMENT !! 
                     // return $this->redirectToRoute('add_order');
                 }
             }else{

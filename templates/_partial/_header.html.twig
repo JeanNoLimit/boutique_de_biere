@@ -6,7 +6,7 @@
     <a href="">Qui sommes nous?</a>
     
     {% if app.user %}
-        <a href="">Profil</a>
+        <a href="{{ path('app_userProfile')}}">Profil</a>
         <a href="{{ path('app_logout')}}">déconnexion</a>
     {% else %}
         <a href="{{ path('app_login')}}">connexion</a>

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+
+{{ dump(app.user) }}
+
+
+<div style="text-align:center;margin:50px 0">
+
+    <h1>Vos informations</h1>
+
+    <p><span style="font-weight:600;">Email : </span>{{ app.user.email }}</p>
+    <p><span style="font-weight:600;">Pseudo : </span>{{ app.user.pseudo }}</p>
+    <p><span style="font-weight:600;">Nom : </span>{{ app.user.lastName }}</p>
+    <p><span style="font-weight:600;">Prénom :</span> {{ app.user.firstName }}</p>
+    <p><span style="font-weight:600;">Adresse : </span>{{ app.user.adress }}</p>
+    <p><span style="font-weight:600;">Code Postal : </span>{{ app.user.zipCode }}</p>
+    <p><span style="font-weight:600;">Ville : </span>{{ app.user.city }}</p>
+    <p><span style="font-weight:600;">Téléphone : </span>{{ app.user.tel }}</p>
+
+</div>
+
+    <h1>Votre historique de commandes</h1>
+
+
+    <h2>Mes commandes en cours de traitement</h2>
+
+
+    <h2>Mes commandes traités </h2>
+
+
+{% endblock %}

@@ -21,6 +21,13 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+
+
+    public function findOrdersPaidByUserId($userId)
+    {
+        
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

@@ -23,7 +23,7 @@
         {% if product.stock == 1 %}
            <p> Il reste 1 article en stock</p
         {% else %}
-            <p> Il reste {{product.stock }} articles en stock</p
+            <p> Il reste {{product.stock }} articles en stock</p>
         {% endif %}
       {% elseif product.stock <= 0 %}
         <p> Rupture de stock - Commande possible mais délais de livraison allongé </p>
