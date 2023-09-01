@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrdersController extends AbstractController
@@ -27,58 +26,60 @@ class OrdersController extends AbstractController
         $user = $this->getUser();
         
 
-        // if($user->isVerified()){
-        //    if($panier !== []){
+        if($user->isVerified()){
+           if($panier !== []){
 
-        //         //Création objet commande et insertion des données
-        //         $order = new Order();
-        //         //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
-        //         $time=new \DateTimeImmutable();
-        //         $reference = $user->getId().$time->format('Ymdhm');
+                //Création objet commande et insertion des données
+                $order = new Order();
+                //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
+                $time=new \DateTimeImmutable();
+                $reference = $user->getId().$time->format('Ymdhms');
 
-        //         $order->setUser($user);
-        //         $order->setReference($reference);
+                $order->setUser($user);
+                $order->setReference($reference);
 
-        //         //Création du détail de commande insertion des données
-        //         foreach($panier as $id => $qte) {
-        //             $orderDetails = new OrderDetails();
+                //Création du détail de commande insertion des données
+                foreach($panier as $id => $qte) {
+                    $orderDetails = new OrderDetails();
+                    //On récupère le produit
+                    $product = $productRepository->find($id);
+                    if (!$product) {
+                        throw $this->createNotFoundException(
+                            'No product found for id '.$id
+                        );
+                    }
 
-        //             //On récupère le produit
-        //             $product = $productRepository->find($id);
-        //             // if (!$product) {
-        //             //     throw $this->createNotFoundException(
-        //             //         'No product found for id '.$id
-        //             //     );
-        //             // }
-        //             $price = $product->getPrice();
+                    $price = $product->getPrice();
                     
-        //             //On remplit orderDetails
-        //             $orderDetails->setProduct($product);
-        //             $orderDetails->setPrice($price);
-        //             $orderDetails->setQuantity($qte);
-
-        //             $order->addOrderDetail($orderDetails);
+                    //On remplit orderDetails
+                    $orderDetails->setProduct($product);
+                    $orderDetails->setPrice($price);
+                    $orderDetails->setQuantity($qte);
+                    //On rajoute OrderDetails à la commande
+                    $order->addOrderDetail($orderDetails);
+                    //On retire du stock la quantité commandé
+                    $newStock = $product->getStock() - $qte;
+                    $product->setStock($newStock);
                    
-        //         }
+                }
+                $em->persist($order);
+                $em->flush();
 
-        //         $em->persist($order);
-        //         $em->flush();
+                $session->remove('panier');
 
-        //         $session->remove('panier');
-
-        //         $this->addFlash('success', 'Votre commande a été créée');
+                $this->addFlash('success', 'Votre commande a été créée');
 
 
-        //    }else{
-        //     $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
+           }else{
+            $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
-        //     return $this->redirectToRoute('cart_index');
-        //    }
-        // }else{
-        //     $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
+            return $this->redirectToRoute('cart_index');
+           }
+        }else{
+            $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
 
-        //     return $this->redirectToRoute('cart_index');
-        // }
+            return $this->redirectToRoute('cart_index');
+        }
 
         return $this->render('orders/index.html.twig', [
             // 'order' => $order
