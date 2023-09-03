@@ -20,7 +20,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-    
+
 
         return $this->render('admin/dashboard.html.twig');
     }
@@ -30,8 +30,6 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('L\'Echoppe - Administration')
             ->renderContentMaximized();
-
-
     }
 
     public function configureMenuItems(): iterable
@@ -48,7 +46,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Type de production', 'fa fa-star', ProductionType::class),
             MenuItem::linkToCrud('Type de bière', 'fa fa-wheat-awn', BeerType::class),
             MenuItem::linkToCrud('Paramètres du site', 'fa fa-screwdriver-wrench', ShopParameters::class)
-            
+
         ];
     }
 }

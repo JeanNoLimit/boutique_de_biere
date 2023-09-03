@@ -18,7 +18,7 @@ class ProductController extends AbstractController
     #[Route('/products', name: 'products_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        
+
         $products = $entityManager->getRepository(Product::class)->findAll();
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
@@ -30,15 +30,15 @@ class ProductController extends AbstractController
 
     // Affichage d'un produit
     #[Route('/products/{slug}', name: 'detail_product')]
-    public function show(EntityManagerInterface $entityManager, string $slug=null, Request $request): Response
+    public function show(EntityManagerInterface $entityManager, string $slug = null, Request $request): Response
     {
-        $product=$entityManager->getRepository(Product::class)->findOneBySlug($slug);
+        $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
-        
+
         $form = $this->createForm(CartType::class);
         // $form->setData(['idProduct' => $product->getId()]);
         $form->handleRequest($request);
-        
+
 
         // J'ai basculé la gestion du formulaire dans le cartController
         // if ($form->isSubmitted() && $form->isValid()) {
@@ -48,8 +48,9 @@ class ProductController extends AbstractController
         //     $productId = $product->getId();
 
         //     // Solution 1 :
-        //     // return new RedirectResponse($this->generateUrl('cart_add', ['id' => $productId, 'quantity' => $quantity]));
-        //     // Solution 2 : 
+        //     // return new RedirectResponse($this->generateUrl('cart_add',
+                    //  ['id' => $productId, 'quantity' => $quantity]));
+        //     // Solution 2 :
         //     $response = $this->forward('App\Controller\CartController::add', [
         //         'id' => $productId,
         //         'quantity' => $quantity
@@ -65,5 +66,4 @@ class ProductController extends AbstractController
             'form' => $form
         ]);
     }
-
 }

@@ -11,14 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
-
 class CartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('quantity', IntegerType::class, [
-                'attr' => ['class' => "input_number", 'min' => "1", 'max' =>"99", 'step' => "1", 'value' =>"1"],
+                'attr' => ['class' => "input_number", 'min' => "1", 'max' => "99", 'step' => "1", 'value' => "1"],
                 'label' => 'Quantité',
                 'invalid_message' => "Veuillez rentrer une quantité valide (commprise entre 1 et 99)",
                 'required' => true,

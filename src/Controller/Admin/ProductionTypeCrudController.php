@@ -19,7 +19,6 @@ class ProductionTypeCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Type de production')
             ->setEntityLabelInPlural('Types de production');
-
     }
 
     public function configureFields(string $pageName): iterable
@@ -28,5 +27,4 @@ class ProductionTypeCrudController extends AbstractCrudController
             TextField::new('productionType', 'type de production')
         ];
     }
-
 }

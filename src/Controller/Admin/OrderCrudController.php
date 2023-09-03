@@ -26,7 +26,7 @@ class OrderCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Commandes')
             ->setEntityLabelInSingular('Commande')
-            ->setPageTitle('index','Administration des commandes');
+            ->setPageTitle('index', 'Administration des commandes');
     }
 
     public function configureActions(Actions $actions): Actions
@@ -35,7 +35,7 @@ class OrderCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -43,7 +43,7 @@ class OrderCrudController extends AbstractCrudController
             ->hideOnform(),
             TextField::new('reference', 'Réference'),
             BooleanField::new('isPaid', 'Commande payée'),
-            booleanField::new('isProcessed','Commande Préparée'),
+            booleanField::new('isProcessed', 'Commande Préparée'),
             AssociationField::new('user', 'Utilisateur'),
             CollectionField::new('orderDetails', 'Détails de la commande')
                 ->useEntryCrudForm(OrderDetailsCrudController::class)
@@ -52,8 +52,7 @@ class OrderCrudController extends AbstractCrudController
             ->hideOnForm()
             ->setFormat('dd.MM.YYYY à HH:mm:ss')
             ->setTimezone('Europe/Paris'),
-           
+
         ];
     }
-    
 }

@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: BeerTypeRepository::class)]
 #[UniqueEntity(
     fields: 'name',
-    message: "Ce style de bière existe déjà")]
+    message: "Ce style de bière existe déjà"
+)]
 class BeerType
 {
     #[ORM\Id]

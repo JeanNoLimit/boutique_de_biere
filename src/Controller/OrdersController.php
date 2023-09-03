@@ -21,36 +21,35 @@ class OrdersController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         //On récupère le panier et l'utilisateur
-        $session=$request->getSession();
+        $session = $request->getSession();
         $panier = $session->get('panier', []);
         $user = $this->getUser();
-        
 
-        if($user->isVerified()){
-           if($panier !== []){
 
+        if ($user->isVerified()) {
+            if ($panier !== []) {
                 //Création objet commande et insertion des données
                 $order = new Order();
                 //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
-                $time=new \DateTimeImmutable();
-                $reference = $user->getId().$time->format('Ymdhis');
+                $time = new \DateTimeImmutable();
+                $reference = $user->getId() . $time->format('Ymdhis');
 
                 $order->setUser($user);
                 $order->setReference($reference);
 
                 //Création du détail de commande insertion des données
-                foreach($panier as $id => $qte) {
+                foreach ($panier as $id => $qte) {
                     $orderDetails = new OrderDetails();
                     //On récupère le produit
                     $product = $productRepository->find($id);
                     if (!$product) {
                         throw $this->createNotFoundException(
-                            'No product found for id '.$id
+                            'No product found for id ' . $id
                         );
                     }
 
                     $price = $product->getPrice();
-                    
+
                     //On remplit orderDetails
                     $orderDetails->setProduct($product);
                     $orderDetails->setPrice($price);
@@ -60,7 +59,6 @@ class OrdersController extends AbstractController
                     //On retire du stock la quantité commandé
                     $newStock = $product->getStock() - $qte;
                     $product->setStock($newStock);
-                   
                 }
                 $em->persist($order);
                 $em->flush();
@@ -68,14 +66,12 @@ class OrdersController extends AbstractController
                 $session->remove('panier');
 
                 $this->addFlash('success', 'Votre commande a été créée');
+            } else {
+                $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
-
-           }else{
-            $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
-
-            return $this->redirectToRoute('cart_index');
-           }
-        }else{
+                return $this->redirectToRoute('cart_index');
+            }
+        } else {
             $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
 
             return $this->redirectToRoute('cart_index');
@@ -85,7 +81,4 @@ class OrdersController extends AbstractController
             // 'order' => $order
         ]);
     }
-
-    
-
 }

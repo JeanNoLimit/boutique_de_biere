@@ -23,14 +23,14 @@ class ShopParametersCrudController extends AbstractCrudController
           ->setPageTitle('edit', 'Modification des paramètres de la boutique');
     }
 
-   public function configureActions(Actions $actions) : Actions
-   {
+    public function configureActions(Actions $actions): Actions
+    {
         return parent::configureActions($actions)
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ->disable(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER);
-   } 
+    }
 
-   
+
 
     public function configureFields(string $pageName): iterable
     {
@@ -45,5 +45,4 @@ class ShopParametersCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];
     }
-    
 }

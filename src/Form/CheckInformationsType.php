@@ -17,15 +17,15 @@ class CheckInformationsType extends AbstractType
 
         $builder
 
-        ->add('lastName', TextType::class,[
+        ->add('lastName', TextType::class, [
             'label' => 'Nom',
             'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
         ])
-        ->add('firstName', TextType::class,[
+        ->add('firstName', TextType::class, [
             'label' => 'Prénom',
             'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
         ])
-        ->add('adress', TextType::class,[
+        ->add('adress', TextType::class, [
             'label' => 'Adresse',
             'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '150']
         ])
@@ -37,7 +37,7 @@ class CheckInformationsType extends AbstractType
             'label' => 'Ville',
             'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
         ])
-        ->add('tel', TelType::class,[
+        ->add('tel', TelType::class, [
             'label' => 'Num. de téléphone',
             'attr' => ['class' => 'input', 'min' => '10', 'maxlength' => '14']
         ])

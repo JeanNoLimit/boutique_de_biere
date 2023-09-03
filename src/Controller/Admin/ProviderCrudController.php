@@ -21,22 +21,20 @@ class ProviderCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Brasserie')
             ->setEntityLabelInPlural('Brasseries');
-
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Brasserie'),
             TextField::new('adress', 'Adresse'),
-            TextField::new('cp','Code Postal'),
+            TextField::new('cp', 'Code Postal'),
             TextField::new('city', 'Ville'),
             UrlField::new('webSite', 'Site Web'),
             UrlField::new('socialNetwork', 'Réseau social')
-            
+
         ];
     }
-    
 }

@@ -23,15 +23,14 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
-    
+
     public function createEntity(string $entityFqcn)
     {
         $product = new Product();
 
         return $product;
-
     }
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -43,7 +42,7 @@ class ProductCrudController extends AbstractCrudController
             SlugField::new('slug', 'Slug')
                 ->setTargetFieldName(['designation','volume']),
             AssociationField::new('beerTypes', 'Type de bière'),
-            AssociationField::new('provider', 'Brasserie'),  
+            AssociationField::new('provider', 'Brasserie'),
             TextareaField::new('description', 'description du produit')
                 ->hideOnIndex()
                 ->setNumOfRows(5),
@@ -72,5 +71,4 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];
     }
-    
 }

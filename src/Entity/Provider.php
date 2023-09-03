@@ -25,7 +25,7 @@ class Provider
     )]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
-    
+
     #[Assert\Length(
         min: 2,
         max: 50,

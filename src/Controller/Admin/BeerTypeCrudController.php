@@ -19,14 +19,12 @@ class BeerTypeCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Types de bière')
             ->setEntityLabelInPlural('Type de bière');
-
     }
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
             TextField::new('name', 'Nom'),
         ];
     }
-    
 }

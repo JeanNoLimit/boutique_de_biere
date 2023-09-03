@@ -12,10 +12,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-
 #[UniqueEntity(
     fields: ['email', 'pseudo'],
-    message: '{{ label }} déjà utilisé')]
+    message: '{{ label }} déjà utilisé'
+)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\EntityListeners([UserListener::class])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -24,27 +24,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Length([
-        'min'=>'2',
-        'max'=> '180',
+        'min' => '2',
+        'max' => '180',
         'minMessage' => 'Veuillez renseigner une adresse mail valide',
         'maxMessage' => 'Veuillez renseigner une adresse mail valide'
     ])]
     #[Assert\Email([
-        'message'=> 'Veuillez renseigner une adresse mail valide'
+        'message' => 'Veuillez renseigner une adresse mail valide'
         ])
     ]
     private ?string $email = null;
-    
+
     #[ORM\Column(length: 15, unique: true)]
     #[Assert\NotBlank([
         'message' => 'veuillez renseigner un pseudo'
     ])]
     #[Assert\Length([
-        'min'=>'2',
-        'max'=> '15',
+        'min' => '2',
+        'max' => '15',
         'minMessage' => 'Veuillez selectionner un pseudo de plus de {{ limit }} caractères',
         'maxMessage' => 'Veuillez selectionner un pseudo de moins de {{ limit }} caractères'
     ])]
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Variable qui ne sera pas enregistré en BDD
     private ?string $plainPassword = null;
-    
+
     /**
      * @var string The hashed password
      */
@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'Veuillez renseigner votre nom'
     ])]
     #[Assert\Length([
-        'min' => '2', 
+        'min' => '2',
         'max' => '50',
         'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
         'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
@@ -79,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'Veuillez renseigner votre prénom'
     ])]
     #[Assert\Length([
-        'min' => '2', 
+        'min' => '2',
         'max' => '50',
         'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
         'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
@@ -90,8 +90,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'Veuillez renseigner une adresse'
     ])]
     #[Assert\Length([
-        'min'=>'2',
-        'max'=> '150',
+        'min' => '2',
+        'max' => '150',
         'minMessage' => 'Veuillez entrer une adresse valide',
         'maxMessage' => 'Veuillez entrer une adresse valide'
     ])]
@@ -102,7 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'veuillez renseigner un code postal'
     ])]
     #[Assert\Length(
-        min:5, 
+        min:5,
         max: 5,
         exactMessage: 'Veuillez entrer un code postal valide, {{ limit }} caractères',
     )]
@@ -113,8 +113,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'veuillez renseigner votre ville'
     ])]
     #[Assert\Length([
-        'min'=>'2',
-        'max'=> '50',
+        'min' => '2',
+        'max' => '50',
         'minMessage' => 'Veuillez entrer un nom de ville valide',
         'maxMessage' => 'Veuillez entrer un nom de ville valide'
     ])]
@@ -125,8 +125,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'veuillez renseigner un numéro de téléphone'
     ])]
     #[Assert\Length([
-        'min'=>'10',
-        'max'=> '14',
+        'min' => '10',
+        'max' => '14',
         'minMessage' => 'Veuillez entrer un numéro de téléphone valide',
         'maxMessage' => 'Veuillez entrer un numéro de téléphone valide'
     ])]
@@ -144,7 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable;
+        $this->createdAt = new \DateTimeImmutable();
         $this->orders = new ArrayCollection();
     }
 
@@ -192,11 +192,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
-    }   
-    
+    }
+
     /**
      * Get the value of plainPassword
-     */ 
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
@@ -206,7 +206,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Set the value of plainPassword
      *
      * @return  self
-     */ 
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
@@ -380,5 +380,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->firstName . ' ' . $this->lastName;
     }
-
 }

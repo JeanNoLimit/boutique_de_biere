@@ -42,7 +42,7 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Utilisateurs')
             ->setEntityLabelInSingular('Utilisateur')
-            ->setPageTitle('index','Administration des utilisateurs');
+            ->setPageTitle('index', 'Administration des utilisateurs');
     }
 
     public function configureActions(Actions $actions): Actions
@@ -52,7 +52,7 @@ class UserCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [

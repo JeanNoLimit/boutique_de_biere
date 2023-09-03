@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
-                'required' =>true,
+                'required' => true,
                 'first_options' => ['label' => 'Mot de passe',
                                     'attr' => ['class' => 'input']
                 ],
@@ -55,15 +55,15 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('lastName', TextType::class,[
+            ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
-            ->add('firstName', TextType::class,[
+            ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
-            ->add('adress', TextType::class,[
+            ->add('adress', TextType::class, [
                 'label' => 'Adresse',
                 'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '150']
             ])
@@ -75,7 +75,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Ville',
                 'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
             ])
-            ->add('tel', TelType::class,[
+            ->add('tel', TelType::class, [
                 'label' => 'Num. de téléphone',
                 'attr' => ['class' => 'input', 'min' => '10', 'maxlength' => '14']
             ])
@@ -84,7 +84,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'Vous devez accepter nos conditions générales afin d\'être inscrit(e) sur le site. ',
+                        'message' => 'Vous devez accepter nos conditions générales afin d\'être inscrit(e) sur le site.'
                     ]),
                 ],
             ])
