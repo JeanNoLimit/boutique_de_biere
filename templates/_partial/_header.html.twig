@@ -1,20 +1,46 @@
 
 
 <header>
-<nav>
-    <a href="{{ path('products_index')}}">La boutique</a>
-    <a href="">Qui sommes nous?</a>
-    
-    {% if app.user %}
-        <a href="{{ path('app_userProfile')}}">Profil</a>
-        <a href="{{ path('app_logout')}}">déconnexion</a>
-    {% else %}
-        <a href="{{ path('app_login')}}">connexion</a>
-    {% endif %}
-    
-    <a href="{{ path('cart_index')}}">Panier</a>
-</nav>
-    
+
+    <div id="header_echoppe">
+        <img src="{{ asset('upload/images/site/nature-plant-sky-flower-ripe-food-491021-pxhere.jpg')}}" alt="image en-tête - champ de houblon" id="img_header">
+        <div id="container_logo_header">
+            <div id="container_logo">
+                <a href="{{ path('app_home')}}">
+                    <img src="{{ asset('upload/images/site/bbdc0cbb7b63d8316d9d1ec608a7e721df93322b.png') }}" alt="logo du site" id="logo_header">
+                </a>
+            </div>
+           
+        </div>
+    </div>
 </header>
+    <div class="nav_bar">
+        <nav id="nav1" class="navBar">
+            <div class="left_navBar" id="left_nav">
+                <a href="javascript:void(0);" class="icon" onclick="myNavBarFunction()">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <a href="{{ path('products_index')}}">La boutique</a>
+                <a href="">Qui sommes nous?</a>
+            </div>
+           
+            <div id="right_navBar">
+                {# {% if app.user %}
+                    <a href="{{ path('app_userProfile')}}">
+                        Profil</a>
+                    <a href="{{ path('app_logout')}}">déconnexion</a>
+                {% else %} #}
+                    <a href="{{ path('app_login')}}">
+                        <svg height="35"  width="35" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m16 8a5 5 0 1 0 5 5 5 5 0 0 0 -5-5zm0 8a3 3 0 1 1 3-3 3.0034 3.0034 0 0 1 -3 3z" stroke="black" stroke-width="1"/><path d="m16 2a14 14 0 1 0 14 14 14.0158 14.0158 0 0 0 -14-14zm-6 24.3765v-1.3765a3.0033 3.0033 0 0 1 3-3h6a3.0033 3.0033 0 0 1 3 3v1.3765a11.8989 11.8989 0 0 1 -12 0zm13.9925-1.4507a5.0016 5.0016 0 0 0 -4.9925-4.9258h-6a5.0016 5.0016 0 0 0 -4.9925 4.9258 12 12 0 1 1 15.985 0z" stroke="black" stroke-width="1" /><path d="m0 0h32v32h-32z" fill="none"  /></svg>
+                    </a>
+                {# {% endif %} #}
+                    <a href="{{ path('cart_index')}}">
+                        <svg  height="35"  width="35" viewBox="0 0 1024 1066.744" xmlns="http://www.w3.org/2000/svg"><path d="M745.25 967.42H278.3c-79.58 0-145.646-57.87-158.406-133.825l-.13-.942L46.08 388.638h931.84l-73.683 444.015C891.347 909.55 825.28 967.42 745.7 967.42h-.474.024zM279.06 900.637h466.432c46.61 0 85.304-33.898 92.772-78.386l.076-.55 60.995-366.28H124.66l60.995 366.28c7.545 45.04 46.238 78.937 92.85 78.937h.26-.014zM1024 455.42H0v-66.783h1024zm-691.868 52.09H265.35v-92.338L395.84 110.376l61.395 26.312L332.13 428.884zm426.518 0h-66.783v-78.625L566.805 137.09l61.35-26.713L758.65 415.173zM545.39 806.25H478.61V592.993h66.783zm-170.517 0H308.09V592.993h66.783zm341.037 0h-66.783V592.993h66.783z" stroke="black" stroke-width="20" /></svg>
+                    </a>
+            </div>
+        </nav>
+    </div>
     
+
+
 

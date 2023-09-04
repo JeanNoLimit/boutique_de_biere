@@ -11,9 +11,7 @@
         {% endblock %}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-        {% block javascripts %}
-        {% endblock %}
-        <script src="{{ asset('js/script.js')}}"></script>
+       
     </head>
     <body>
 
@@ -41,5 +39,9 @@
         {% include "_partial/_footer.html.twig" %}
        
         </div>
+
+        {% block javascripts %}
+            <script src=" {{ asset('js/script.js')}}"></script>
+        {% endblock %}
     </body>
 </html>
