@@ -1,5 +1,4 @@
 // Fonction affichage menu responsive
-
 function myNavBarFunction() {
     let y = document.getElementById("nav1");
     let x = document.getElementById("left_nav");

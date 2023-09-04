@@ -14,7 +14,6 @@
 
 }
 
-
 *{
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -23,21 +22,37 @@
 
 .container {
     max-width: 1180px;
-    margin: 50px auto;
+    margin: 0px auto;
+    padding: 90px 0;
 }
 
 a {
     text-decoration: none;
     color:black;
+}
 
+h1 {
+    font-size: 2.2rem;
 }
 
 h2 {
-   font-size: 24px;
-   margin-bottom: 20px;
+   font-size: 1.8rem;
 }
 
+p {
+    font-size: 1.2rem;
+}
 
+.button_links {
+    cursor: pointer;
+    padding: 20px 45px;
+    clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
+    /* border-radius: 30px; */
+    background-color: #BF4E24;
+    font-weight: 500;
+    color :white;
+    font-size: 1.2rem;
+}
 .button_validation {
     cursor: pointer;
     width: 180px;
@@ -47,8 +62,108 @@ h2 {
     border-radius: 10px;
     color :white;
     background-color: var(--secondary-color);
+    font-size: 1rem;
 }
 
 table, th, td {
     border-collapse: collapse;
+}
+
+
+/****************** PAGE HOME ************/
+
+.main_title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.main_title_complement {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+.secondary_title {
+    padding: 0 190px 55px;
+
+}
+
+/***  Partie présentation association ***/
+
+.container_presentation {
+    background-color:#ffb13b9f;
+    padding: 100px 0 100px 0;
+    clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
+}
+
+.home_presentation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.img_home_presentation{
+    width: 400px ;
+    height: 400px ;
+    object-fit: cover;
+}
+
+.section_presentation {
+    text-align: justify;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text_presentation {
+    padding-bottom: 20px;
+}
+
+.button_div{
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+}
+.button_register {
+    background-color: #AFAF4B;
+}
+
+@media screen and (min-width: 805px) and  (max-width: 1000px){
+    .home_presentation {
+        align-items: flex-start;
+    }
+
+    .img_home_presentation{
+        height: 350px;
+        width: 350px;
+    }
+
+    .section_presentation{
+        max-width: 360px;
+    }
+}
+@media screen and (max-width: 805px){
+    .secondary_title {
+        padding: 0 0 30px 0;
+        text-align: center;
+    }
+
+    .home_presentation{
+        flex-direction: column;
+        align-items: center;
+       
+    }
+
+    .img_home_presentation{
+        height: 350px;
+        width: 350px;
+        padding-bottom: 30px;
+    }
+
+    .section_presentation{
+        max-width: 500px;
+        margin: 0 10px;
+    }
+
 }

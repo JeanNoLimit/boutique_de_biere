@@ -4,16 +4,42 @@
 
 {% block body %}
 
-{# ATTENTION POUR TEST A SUPPRIMER #}
 
-{% if app.user %}
-Vous êtes connecté(e) au compte : {{ app.user.pseudo }}, <a href="{{ path('app_logout') }}">Vous déconnecter</a>
+
+<h1 class="main_title">Bienvenue sur le site de l'association l'échoppe</h1>
+<p class="main_title_complement"> - Bar associatif et vente de bières locales -</p>
+
+
+<div class="container_presentation">
+    <h2 class="secondary_title">Présentation</h2>
     
-{% endif %}
+    <div class="home_presentation">
+        <img src="{{ asset("upload/images/site/fotor-ai-bar-associatif-home.png")}}" alt="photo de présentation du bar" class="img_home_presentation">
+        <div class="section_presentation">
+            <div class="text_presentation">
+                <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.<br> 
+                    <br>
+                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam?"
+                </p>
+            </div>
+            <a href="" class="button_links" >En savoir plus...</a>
+        </div>
+    </div>
+</div>
+<div class="button_div">
+    <a href="{{ path('app_register')}}" class="button_links button_register">Rejoingnez nous!</a>
+</div>
 
-<h1>Bienvenue sur le site de l'échoppe</h1>
 
-<p>Ici bientôt une page d'accueil...</p>
+<h2 class="secondary_title">Les nouveautés</h2>
 
-<a href="{{ path('app_register')}}">Inscription</a>
+<p>  ICI BIENTOT LA LISTE DES DERNIERS ARTICLES AJOUTES</p>
+<div class="button_div">
+    <a href="{{ path('products_index')}}" class="button_links button_register">La boutique</a>
+</div>
+<h2 class="secondary_title">Le fonctionnement </h2>
+
+<p> ICI BIENTOT LE BANDEAU FONCTIONNEMENT EN 3 ETAPES : COMMANDE, PREPARATION, RETRAIT EN MAGASIN</p>
+
 {% endblock %}

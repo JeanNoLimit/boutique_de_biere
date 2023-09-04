@@ -10,8 +10,8 @@
     height: 250px;
     object-fit: cover;
     object-position: 0% 90%;
-    
 }
+
 #container_logo_header {
 
     height: 250px;
@@ -86,6 +86,7 @@ nav a {
 }
 
 .dropdown .dropBtn {
+    cursor: pointer;
     font-size: 14px;
     border: none;
     outline: none;
