@@ -64,7 +64,7 @@ nav a {
     margin-left: 30px;
 }
 
-/* Left_navBar + responsive */
+/* Left_navBar */
 
 
 
@@ -76,6 +76,48 @@ nav a {
 
 .left_navBar .icon {
     display:none;
+}
+
+/*  PARTIE DROPDOWN */
+
+.dropdown {
+    float: left;
+    position: relative;
+}
+
+.dropdown .dropBtn {
+    font-size: 14px;
+    border: none;
+    outline: none;
+    background-color: #F2A03D;
+  }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right:0px;top:45px;
+    background-color: #F2A03D;
+    max-width: 200px;
+    z-index: 1;
+    text-align: center;
+}
+
+.dropdown-content a {
+
+    padding: 12px 16px;
+    margin: 0!important;
+    display: block;
+    text-align: center;
+}
+
+.nav-separator {
+    border: 1px solid #A66619;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dropdown-content .nav-separator {
+    width: 90%;
 }
 
 @media screen and (max-width: 1230px){
@@ -105,6 +147,11 @@ nav a {
     .left_navBar a.icon {
     float: left;
     display: block;
+    }
+
+    .dropdown-content{
+        border: 2px solid #A66619;
+        right: -75px;
     }
 }
 

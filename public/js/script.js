@@ -1,3 +1,5 @@
+// Fonction affichage menu responsive
+
 function myNavBarFunction() {
     let y = document.getElementById("nav1");
     let x = document.getElementById("left_nav");
@@ -9,3 +11,15 @@ function myNavBarFunction() {
     y.className = "navBar";
     }
 }
+
+
+//  Fonction affichage sous menu profil
+function myNavBarFunctionProfil() {
+    let x = document.getElementById("contentProfil");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    }else{
+        x.style.display = "none";
+    }
+}
+
