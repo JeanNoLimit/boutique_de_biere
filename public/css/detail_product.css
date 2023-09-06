@@ -11,7 +11,7 @@
     width: 350px;
     min-width: 350px;
     height: 350px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-right: 65px;
 }
 .img_detail_product img {
@@ -89,11 +89,13 @@ input::-webkit-inner-spin-button {
 }
 
 .minus {
+    cursor: pointer;
     height: 25px;
     margin-right: 10px;
 }
 
 .plus {
+    cursor: pointer;
     height: 25px;
     margin-left: 10px;
     color: var(--main-color);
