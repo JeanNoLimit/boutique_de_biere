@@ -28,7 +28,7 @@ class CartType extends AbstractType
                     new LessThan(99)
                 ]
             ])
-            ->add('Envoyer', SubmitType::class, [
+            ->add('envoyer', SubmitType::class, [
                 'attr' => ['class' => "button_validation"],
                 'label' => 'Ajouter au panier'
             ])

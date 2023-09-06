@@ -45,8 +45,8 @@ p {
 
 .button_links {
     cursor: pointer;
-    padding: 20px 45px;
-    clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
+    padding: 15px 45px;
+    /* clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%); */
     /* border-radius: 30px; */
     background-color: #BF4E24;
     font-weight: 500;
@@ -61,7 +61,8 @@ p {
     border: none;
     border-radius: 10px;
     color :white;
-    background-color: var(--secondary-color);
+    font-weight: 600;
+    background-color: #BF4E24;
     font-size: 1rem;
 }
 
@@ -126,7 +127,7 @@ table, th, td {
     text-align: center;
 }
 .button_register {
-    background-color: #AFAF4B;
+    background-color: #BF4E24;
 }
 
 @media screen and (min-width: 805px) and  (max-width: 1000px){
