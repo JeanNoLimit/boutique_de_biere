@@ -8,7 +8,8 @@
 
 :root {
     --main-color: #FFAF3B ;
-    --secondary-color: #0568B3;
+    --secondary-color: #A66619;
+    --tertiary-color: #0872A6;
     --dark-grey: #505050;
     --light-grey: 
 
@@ -48,7 +49,7 @@ p {
     padding: 15px 45px;
     /* clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%); */
     /* border-radius: 30px; */
-    background-color: #BF4E24;
+    background-color: var(--tertiary-color);
     font-weight: 500;
     color :white;
     font-size: 1.2rem;
@@ -62,7 +63,7 @@ p {
     border-radius: 10px;
     color :white;
     font-weight: 600;
-    background-color: #BF4E24;
+    background-color: var(--tertiary-color);
     font-size: 1rem;
 }
 
@@ -127,7 +128,7 @@ table, th, td {
     text-align: center;
 }
 .button_register {
-    background-color: #BF4E24;
+    background-color: var(--tertiary-color);
 }
 
 @media screen and (min-width: 805px) and  (max-width: 1000px){
