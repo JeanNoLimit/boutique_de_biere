@@ -1,0 +1,91 @@
+.profil_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.main_title_profil {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.secondary_title_profile {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+/********** Mes informations ************/
+
+.user_informations {
+    min-width: 340px;
+    max-width: 400px;
+    box-shadow: 0 0 3px 3px #f1f1f1;
+    padding: 25px 25px;
+}
+
+.text_informations {
+    padding-bottom: 40px;
+}
+
+.button_links.modify_profil {
+    display:block;
+    text-align: center;
+   margin: 30px auto 0 auto;
+}
+
+.user_information {
+    padding-bottom: 5px;
+}
+
+
+/************* Historique des commandes ****************/
+
+
+.orders_history {
+    padding: 0 10px;
+    border-left: solid 2px #f1f1f1;
+}
+
+.orders_history .secondary_title_profile {
+    padding-top: 25px;
+}
+.tertary_title_profil {
+    font-size: 1.4rem;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.table_order_history {
+    margin: 0 auto 40px;
+}
+
+.table_order_history th{
+    padding-bottom: 5px;
+}
+.table_order_history td {
+    border-top: solid 1px black;
+    padding: 10px 25px;
+    text-align: center;
+}
+
+.see_more{
+    color: var(--dark-grey);
+}
+/*************** Update profil *********************/
+
+
+.btn_updateProfil {
+    display: block;
+    margin: 50px auto;;
+}
+
+@media screen and (max-width: 1200px){
+    .profil_container {
+        flex-direction: column;
+        align-items: center;
+        max-width: 95%;
+        margin: 0 auto;
+    }
+}

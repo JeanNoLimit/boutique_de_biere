@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Form\CartType;
 use App\Entity\Product;
+use App\Form\UpdateProfilType;
 use App\Repository\UserRepository;
-use App\Form\CheckInformationsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -187,7 +187,7 @@ class CartController extends AbstractController
                 }
 
                 /******* création du formulaire *************/
-                $form = $this->createForm(CheckInformationsType::class, $user);
+                $form = $this->createForm(UpdateProfilType::class, $user);
 
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {

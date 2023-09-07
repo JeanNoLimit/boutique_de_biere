@@ -5,76 +5,84 @@
 {% block body %}
 
 
-    <div style="text-align:center;margin:50px 0">
+<h1 class="main_title_profil">Mon profil utilisateur</h1>
 
-        <h1>Vos informations</h1>
+<div class="profil_container">
 
-        <p><span style="font-weight:600;">Email : </span>{{ app.user.email }}</p>
-        <p><span style="font-weight:600;">Pseudo : </span>{{ app.user.pseudo }}</p>
-        <p><span style="font-weight:600;">Nom : </span>{{ app.user.lastName }}</p>
-        <p><span style="font-weight:600;">Prénom :</span> {{ app.user.firstName }}</p>
-        <p><span style="font-weight:600;">Adresse : </span>{{ app.user.adress }}</p>
-        <p><span style="font-weight:600;">Code Postal : </span>{{ app.user.zipCode }}</p>
-        <p><span style="font-weight:600;">Ville : </span>{{ app.user.city }}</p>
-        <p><span style="font-weight:600;">Téléphone : </span>{{ app.user.tel }}</p>
+    <div class="user_informations">
 
+        <h2 class="secondary_title_profile">Mes informations</h2>
+
+            <p class="user_information"><span style="font-weight:600;">Email : </span><span style="color:var(--dark-grey);" >{{ app.user.email }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Pseudo : </span><span style="color:var(--dark-grey);" >{{ app.user.pseudo }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Nom : </span><span style="color:var(--dark-grey);">{{ app.user.lastName }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Prénom :</span><span style="color:var(--dark-grey);">{{ app.user.firstName }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Adresse : </span><span style="color:var(--dark-grey);" >{{ app.user.adress }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Code Postal : </span><span style="color:var(--dark-grey);">{{ app.user.zipCode }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Ville : </span><span style="color:var(--dark-grey);">{{ app.user.city }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Téléphone : </span><span style="color:var(--dark-grey);">{{ app.user.tel }}</span></p>
+        
+        <a href="{{ path("app_updateProfile") }}" class="button_links modify_profil">Modifier mon profil</a>
     </div>
 
-    <div style="text-align:center;">
-    <h1>Mon historique de commandes</h1>
+    <div class="orders_history">
 
-    {% if ordersInProcess is not defined or ordersInProcess is empty and ordersArchives is not defined or ordersArchives is empty %}
-        <p>Aucune commande dans votre historique</p>
-    {% endif %}
+        <h2 class="secondary_title_profile">Mon historique de commandes</h2>
 
-    {% if ordersInProcess is defined and ordersInProcess is not empty %}
-        <h2>Mes commandes en cours de traitement</h2>
+        {% if ordersInProcess is not defined or ordersInProcess is empty and ordersArchives is not defined or ordersArchives is empty %}
+            <p>Aucune commande dans votre historique</p>
+        {% endif %}
 
-        <table style="margin: 50px auto;">
-            <thead>
-                <tr>
-                    <th>Référence</th>
-                    <th>Date de la commande</th>
-                    <th>Voir Détails</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in ordersInProcess %}
-                    
-                <tr>
-                    <td>{{ order.reference }}</td>
-                    <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
-                    <td><a href="">Voir détail</a></td>
-                </tr> 
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+        {% if ordersInProcess is defined and ordersInProcess is not empty %}
+            <h3 class="tertary_title_profil">Mes commandes en cours de traitement</h3>
 
-    {% if ordersArchives is defined and ordersArchives is not empty %}
+            <table class="table_order_history">
+                <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Date de la commande</th>
+                        <th>Voir Détails</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in ordersInProcess %}
+                        
+                    <tr>
+                        <td>{{ order.reference }}</td>
+                        <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                        <td ><a href="" class="see_more">Voir détails</a></td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
-        <h2>Mes commandes traités </h2>
+        {% if ordersArchives is defined and ordersArchives is not empty %}
 
-        <table style="margin: 50px auto;">
-            <thead>
-                <tr>
-                    <th>Référence</th>
-                    <th>Date de la commande</th>
-                    <th>Voir Détails</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in ordersArchives %}
-                    
-                <tr>
-                    <td>{{ order.reference }}</td>
-                    <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
-                    <td><a href="">Voir détail</a></td>
-                </tr> 
-                {% endfor %}
-            </tbody>
-        </table>
+            <h3 class="tertary_title_profile">Mes commandes traités </h3>
 
-    {% endif %}
+            <table class="table_order_history">
+                <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Date de la commande</th>
+                        <th>Voir Détails</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in ordersArchives %}
+                        
+                    <tr>
+                        <td>{{ order.reference }}</td>
+                        <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                        <td><a href="" class="see_more">Voir détails</a></td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
     </div>
+
+</div>
 {% endblock %}

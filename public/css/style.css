@@ -4,6 +4,7 @@
 @import url(detail_product.css);
 @import url(header.css);
 @import url(form.css);
+@import url(profil.css);
 
 
 :root {
@@ -53,7 +54,9 @@ p {
     font-weight: 500;
     color :white;
     font-size: 1.2rem;
+    text-align: center;
 }
+
 .button_validation {
     cursor: pointer;
     width: 180px;
@@ -126,9 +129,6 @@ table, th, td {
     width: 100%;
     padding: 50px 0;
     text-align: center;
-}
-.button_register {
-    background-color: var(--tertiary-color);
 }
 
 @media screen and (min-width: 805px) and  (max-width: 1000px){

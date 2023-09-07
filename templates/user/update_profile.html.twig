@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+
+
+
+
+<div class="profil_container">
+
+    <div>
+        <h2 class="secondary_title_profile">Modifier mes coordonnées</h2>
+    
+    {# ICI LE FORMULAIRE UTILISATEUR #}
+        <div class="formContainer">
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+            
+            <div class="row">
+                {{ form_row(form.lastName) }}
+            </div>
+            <div class="row">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="row">
+                {{ form_row(form.adress) }}
+            </div>
+            <div class="row">
+                {{ form_row(form.zipCode) }}
+            </div>
+            <div class="row">
+                {{ form_row(form.city) }}
+            </div>
+            <div class="row">
+                {{ form_row(form.tel) }}
+            </div>
+                
+            <button type="submit" class="btn_register button_validation">Modifier mes informations</button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="additionnal_actions">
+        <h2 class="secondary_title_profile">Actions supplémentaires</h2>
+
+        <a href="" class="button_links btn_updateProfil">Modifier mon mot de passe</a>
+        <a href="" class="button_links btn_updateProfil"> Supprimer mon compte</a>
+    </div>
+
+</div>
+
+{% endblock %}

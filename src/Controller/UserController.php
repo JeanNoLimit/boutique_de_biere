@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\UpdateProfilType;
 use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +28,27 @@ class UserController extends AbstractController
 
 
     #[Route('/user/update_profil', name: 'app_updateProfile')]
-    public function updateProfil(): Response
+    public function updateProfil(EntityManagerInterface $em, Request $request): Response
     {
 
+        $user= $this->getUser();
 
+        $form = $this->createForm(UpdateProfilType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre profil a été modifié');
+
+        }
 
         return $this->render('user/update_profile.html.twig', [
+            'form' =>$form,
         ]);
     }
 }
