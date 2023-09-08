@@ -6,40 +6,84 @@
 
 
 
-<h1 class="main_title">Bienvenue sur le site de l'association l'échoppe</h1>
-<p class="main_title_complement"> - Bar associatif et vente de bières locales -</p>
+    <h1 class="main_title">Bienvenue sur le site de l'association l'échoppe</h1>
+    <p class="main_title_complement"> - Bar associatif et vente de bières locales -</p>
 
 
-<div class="container_presentation">
-    <h2 class="secondary_title">Présentation</h2>
-    
-    <div class="home_presentation">
-        <img src="{{ asset("upload/images/site/fotor-ai-bar-associatif-home.png")}}" alt="photo de présentation du bar" class="img_home_presentation">
-        <div class="section_presentation">
-            <div class="text_presentation">
-                <p>
-                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.<br> 
-                    <br>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam?"
-                </p>
+    <div class="container_presentation">
+        <h2 class="secondary_title">Présentation</h2>
+        
+        <div class="home_presentation">
+            <img src="{{ asset("upload/images/site/fotor-ai-bar-associatif-home.png")}}" alt="photo de présentation du bar" class="img_home_presentation">
+            <div class="section_presentation">
+                <div class="text_presentation">
+                    <p>
+                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.<br> 
+                        <br>
+                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam?"
+                    </p>
+                </div>
+                <a href="" class="button_links" >En savoir plus...</a>
             </div>
-            <a href="" class="button_links" >En savoir plus...</a>
         </div>
     </div>
-</div>
-<div class="button_div">
-    <a href="{{ path('app_register')}}" class="button_links">Rejoingnez nous!</a>
-</div>
+    <div class="button_div">
+        <a href="{{ path('app_register')}}" class="button_links">Rejoingnez nous!</a>
+    </div>
 
 
-<h2 class="secondary_title">Les nouveautés</h2>
+    <div class="container_nouveautes">
+        <h2 class="secondary_title">Les nouveautés</h2>
+    
+        <div class="newProducts">
+    
+            {% for product in products %}
+            {% if product.available %}
+                <article class="article_product">
+                    <a href="{{path('detail_product', {'slug' : product.slug})}}">
+                        <div class="img_product_article">
+                            {% if product.productionType is defined and product.productionType.productionType != 'Permanente' %}
+                                <div class="production_type">
+                                <span> {{ product.productionType.productionType }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="more_info">plus d'infos</div>
+                            {% if product.imageFile is defined and product.imageFile is not null %}
+                                <img src="upload/images/products/{{product.imageFile}}" alt="image {{product.designation}}">     
+                            {% else %}
+                                <img src="upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
+                            {% endif %}
+                        </div>
+                    </a>
+                    <div class="product_info">
+                    
+                            <a href="{{path('detail_product', {'slug' : product.slug})}}"> 
+                                <p class="product_title">
+                                    {% if (product.provider.name ~ product.designation)|length >51 %}
+                                        {{ (product.provider.name ~ ' - ' ~ product.designation)|slice(0,51) ~ ' ...'}}        
+                                    {% else %}
+                                        {{product.provider.name}} - {{ product.designation }}                 
+                                    {% endif %}
+                                    - {{ product.volume|number_format }}cl
+                                </p>
+                            </a>
+                        
+                        <p class="product_price">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
+                    </div>
+                </article>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
-<p>  ICI BIENTOT LA LISTE DES DERNIERS ARTICLES AJOUTES</p>
-<div class="button_div">
-    <a href="{{ path('products_index')}}" class="button_links">La boutique</a>
-</div>
-<h2 class="secondary_title">Le fonctionnement </h2>
 
-<p> ICI BIENTOT LE BANDEAU FONCTIONNEMENT EN 3 ETAPES : COMMANDE, PREPARATION, RETRAIT EN MAGASIN</p>
+    <div class="button_div">
+        <a href="{{ path('products_index')}}" class="button_links">La boutique</a>
+    </div>
+
+    <h2 class="secondary_title">Le fonctionnement </h2>
+
+    <p> ICI BIENTOT LE BANDEAU FONCTIONNEMENT EN 3 ETAPES : COMMANDE, PREPARATION, RETRAIT EN MAGASIN</p>
 
 {% endblock %}

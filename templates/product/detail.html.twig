@@ -29,32 +29,19 @@
         <p> Rupture de stock - Commande possible mais délais de livraison allongé </p>
       {% endif %}
 
-        {# FORMULAIRE AJOUT PRODUIT AU PANIER #}
-        {# <form action="" method="post">
-            <div class="form_detail_product">
-                <div class="form_select_qte">
-                    <label for="quantity" > Quantité </label>
-                    <div class="select_qte">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="minus" fill="var(--main-color)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
-    
-                        <input type="number" name="quantity" id="quantity" class="input_number" min="1" max="99" step="1" > 
-    
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="plus" fill="var(--main-color)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg> 
-                    </div>   
-                </div>
-                <button class="button_validation"> Ajouter au panier</button>
-            </div>
-        </form> #}
 
-       
         {{ form_start(form,  {'action': path('cart_add', {'id' : product.id})} )}}
             <div class="form_detail_product"> 
                 <div class="form_select_qte">
                     {{ form_label(form.quantity)}}
                     <div class="select_qte">
+                      <div>
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="minus" fill="var(--main-color)" id="minusForm"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+                      </div>
                         {{ form_widget(form.quantity)}}
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="plus" fill="var(--main-color)" id="plusForm"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg> 
+                        <div>
+                          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="plus" fill="var(--main-color)" id="plusForm"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg> 
+                        </div>
                     </div>   
                 </div>
                 {{ form_row(form.envoyer) }}

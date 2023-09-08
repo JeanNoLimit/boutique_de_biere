@@ -21,6 +21,18 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+
+        public function findNewProducts(int $limit)
+        {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.available = true')
+                ->orderBy('p.createdAt', 'DESC')
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
