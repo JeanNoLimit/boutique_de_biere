@@ -6,8 +6,11 @@ use App\Entity\User;
 use App\Form\UpdateProfilType;
 use App\Form\UpdatePasswordType;
 use App\Repository\OrderRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,7 +65,8 @@ class UserController extends AbstractController
     public function updatePassword(
         EntityManagerInterface $em,
         Request $request,
-        UserPasswordHasherInterface $hasher
+        UserPasswordHasherInterface $hasher,
+        MailerInterface $mailer
         ): Response {
         
         $userID= $this->getUser()->getId();
@@ -87,8 +91,18 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
-                return $this->redirectToRoute('app_userProfile');
+                // Envoie email de confirmation changement de mot de passe
+                $email = (new TemplatedEmail())
+                ->from(new Address('admin@exemple.com', 'Admin - Boutique l\'échoppe'))
+                ->to($user->getEmail())
+                ->subject('Boutique l\'échoppe - Votre nouveau mot de passe a bien été enregistré')
+                ->htmlTemplate('reset_password/email_confirmation.html.twig');
+
+                $mailer->send($email);
+                
+
+                return $this->redirectToRoute('app_logout');
+
             }else{
                 $this->addFlash('alert', 'Mot de passe érroné');
             }

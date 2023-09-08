@@ -74,7 +74,7 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      */
     #[Route('/reset/{token}', name: 'app_reset_password')]
-    public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
+    public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator,MailerInterface $mailer, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -120,6 +120,16 @@ class ResetPasswordController extends AbstractController
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
+
+            // // Envoie email 
+
+            $email = (new TemplatedEmail())
+                ->from(new Address('admin@exemple.com', 'Admin - Boutique l\'échoppe'))
+                ->to($user->getEmail())
+                ->subject("Boutique l\'échoppe - Votre nouveau mot de passe a bien été enregistré")
+                ->htmlTemplate('reset_password/email_confirmation.html.twig');
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('app_login');
         }
