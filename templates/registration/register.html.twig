@@ -7,6 +7,12 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
+    {% if app.user %}
+        <div class="">
+            Vous êtes connecté(e) au compte : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Vous déconnecter</a>
+        </div>
+    {% endif %}
+
     <h1>Inscription</h1>
 
     <div class="formContainer">
