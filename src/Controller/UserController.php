@@ -38,9 +38,9 @@ class UserController extends AbstractController
     public function updateProfil(
         EntityManagerInterface $em,
         Request $request
-        ): Response{
+    ): Response {
 
-        $user= $this->getUser();
+        $user = $this->getUser();
 
         $form = $this->createForm(UpdateProfilType::class, $user);
 
@@ -53,11 +53,10 @@ class UserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Votre profil a été modifié');
-
         }
 
         return $this->render('user/update_profile.html.twig', [
-            'form' =>$form,
+            'form' => $form,
         ]);
     }
 
@@ -67,10 +66,10 @@ class UserController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $hasher,
         MailerInterface $mailer
-        ): Response {
-        
-        $userID= $this->getUser()->getId();
-        
+    ): Response {
+
+        $userID = $this->getUser()->getId();
+
         $user = $em->getRepository(User::class)->find($userID);
 
         $form = $this->createForm(UpdatePasswordType::class);
@@ -79,8 +78,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if($hasher->isPasswordValid($user, $form->getData()["oldPlainPassword"])){
+            if ($hasher->isPasswordValid($user, $form->getData()["oldPlainPassword"])) {
                 $user->setPassword(
                     $hasher->hashPassword(
                         $user,
@@ -99,19 +97,15 @@ class UserController extends AbstractController
                 ->htmlTemplate('reset_password/email_confirmation.html.twig');
 
                 $mailer->send($email);
-                
+
 
                 return $this->redirectToRoute('app_logout');
-
-            }else{
+            } else {
                 $this->addFlash('alert', 'Mot de passe érroné');
             }
-
         }
         return $this->render('user/update_password.html.twig', [
-            'form' =>$form,
+            'form' => $form,
         ]);
-
     }
-
 }

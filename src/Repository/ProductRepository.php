@@ -22,16 +22,16 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-        public function findNewProducts(int $limit)
-        {
-            return $this->createQueryBuilder('p')
-                ->andWhere('p.available = true')
-                ->orderBy('p.createdAt', 'DESC')
-                ->setMaxResults($limit)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
+    public function findNewProducts(int $limit)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.available = true')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

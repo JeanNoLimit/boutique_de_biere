@@ -22,7 +22,7 @@ class UpdatePasswordType extends AbstractType
                 'invalid_message' => 'Le mot de passe ne correspond pas',
                 'label' => 'Mot de passe actuel',
                 'attr' => ['class' => 'input'],
-                
+
                 'constraints' => [new Assert\NotBlank()]
             ])
             // mapped => false signifie que le champ ne sera pas stocké en bdd (le mot de passe sera hashé)
@@ -36,7 +36,7 @@ class UpdatePasswordType extends AbstractType
                 'second_options' => ['label' => 'Répétez le mot de passe',
                                     'attr' => ['class' => 'input']
                 ],
-                
+
                 'attr' => ['autocomplete' => 'Nouveau mot de passe'],
                 'constraints' => [
                     new NotBlank([
