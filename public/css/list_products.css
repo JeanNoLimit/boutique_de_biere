@@ -4,6 +4,37 @@
     flex-direction: row;
 }
 
+.container_products {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.list_products_empty {
+    text-align: center;
+    width: 100%;
+    margin: 100px auto;
+    font-size: 1.2rem;
+    color: var(--dark-grey);
+    font-weight: 600;
+}
+
+.list_products_empty p {
+    padding-bottom: 30px;
+}
+.list_products_empty a {
+    text-decoration:underline;
+}
+
+.filters_wrapper{
+    width: 100%;
+    height: 80px;
+    border: solid 1px black;
+}
+
+
+
+/****************conteneur de filtres *********************/
 .filters_container{
     width: 270px;
     min-width: 270px;
@@ -12,10 +43,64 @@
     margin-right: 5px;
 }
 
-.container_products {
-    display : flex;
+.filters_container form {
+    padding-left: 5px;
+}
+
+.searchProducts {
+    width: 90%;
+    margin: 10px auto;
+    height: 1.8rem;
+    font-size: 1.2rem;
+    color: var(--dark-grey);
+}
+
+.title_section_filter {
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 10px 0 5px 0;
+
+}
+
+.filters_checkbox {
+    padding-top: 5px;
+}
+
+.filters_checkbox input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.filters_checkbox label {
+    display: inline;
+    font-weight: 500;
+    color: var(--dark-grey); 
+}
+
+.filters_range {
+    display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    margin: 5px 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--dark-grey);
+}
+
+.filters_range input {
+    height: 1.5rem;
+    width: 40px;
+    margin: 0 15px 0 5px;
+    font-size: 1.2rem;
+}
+
+.btn_form_filter {
+    width: 100%;
+}
+
+.btn_form_filter div{
+    margin: auto;
+    padding-top: 40px;
+    text-align: center;
 }
 
 

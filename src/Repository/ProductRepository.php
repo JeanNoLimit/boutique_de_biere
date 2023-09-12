@@ -90,7 +90,7 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('p.alcoholLevel >= :tauxMin')
                 ->setParameter('tauxMin', $filters->tauxMin);
         }
-        if (!empty($filters->max)) {
+        if (!empty($filters->tauxMax)) {
             $query = $query
                 ->andWhere('p.alcoholLevel <= :tauxMax')
                 ->setParameter('tauxMax', $filters->tauxMax);

@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FiltersType extends AbstractType
 {
@@ -29,14 +28,20 @@ class FiltersType extends AbstractType
         $builder
             ->add('searchProduct', TextType::class, [
                 'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Rechercher',
+                    'class' => 'searchProducts'
+                ]
             ])
             ->add('providers', EntityType::class, [
                'class' => Provider::class,
-               'label' => 'Brasseries',
+               'label' => false,
                'choice_label' => 'name',
                'expanded' => true,
                'multiple' => true,
                'required' => false,
+               'attr' => ['class' => 'filters_checkbox']
             ])
             ->add('beerTypes', EntityType::class, [
                 'class' => BeerType::class,
@@ -50,24 +55,30 @@ class FiltersType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
-                'label' => 'Styles de bière'
+                'label' => false
             ])
             ->add('min', MoneyType::class, [
                 'required' => false,
+                'currency' => false,
+                'label' => false,
                 'divisor' => 100,
-                'attr' => ['min' => '0', 'max' => '100']
+                'attr' => ['min' => '0', 'max' => '100'],
             ])
             ->add('max', MoneyType::class, [
                 'required' => false,
+                'currency' => false,
+                'label' => false,
                 'divisor' => 100,
                 'attr' => ['min' => '0', 'max' => '100']
             ])
             ->add('tauxMin', NumberType::class, [
                 'required' => false,
+                'label' => false,
                 'attr' => ['min' => '0', 'max' => '90']
             ])
             ->add('tauxMax', NumberType::class, [
                 'required' => false,
+                'label' => false,
                 'attr' => ['min' => '0', 'max' => '90']
             ])
 

@@ -4,15 +4,70 @@
 
 {% block body %}
 
+<div class="filters_wrapper">
+
+</div>
 <div class="products_list_wrapper">
     <div class="filters_container">
-        <span>je suis un conteneur temporaire, ici s'affichera les filtres</span>
-        {{ form(formFilter)}}
 
-    
+        {{ form_start(formFilter)}}
+            {{ form_errors(formFilter) }}
+            
+            {{ form_row(formFilter.searchProduct) }}
+
+            <p class="title_section_filter">Brasseries</p>
+                {% for provider in formFilter.providers %}
+                    <div class="filters_checkbox">
+                        {{ form_widget(provider) }}
+                        {{ form_label(provider)}}
+                    </div>
+                {% endfor %}
+
+            <p class="title_section_filter">Styles de bières</p>       
+                {% for beerType in formFilter.beerTypes %}
+                <div class="filters_checkbox">
+                    {{ form_widget(beerType) }}
+                    {{ form_label(beerType)}}
+                </div>
+                {% endfor %}
+
+            <p class="title_section_filter">Prix ( € )</p>
+                <div class="filters_range">
+                    <div>
+                        <span>Min. </span>{{ form_widget(formFilter.min) }}
+                    </div>
+                    <div>
+                        <span>Max. </span>{{ form_widget(formFilter.max) }}
+                    </div>
+                </div>
+               
+            <p class="title_section_filter">Degré d'alcool ( %vol )</p>
+            <div class="filters_range">
+                <div>
+                    <span>Min. </span>{{ form_widget(formFilter.tauxMin) }}
+                </div>
+                <div>
+                    <span>Max. </span>{{ form_widget(formFilter.tauxMax) }}
+                </div>
+            </div>
+            <div class="btn_form_filter">
+                {{ form_row(formFilter.envoyer) }}
+            </div>
+                
+        {{ form_end(formFilter)}}
+
     </div>
     
-    <div class="container_products">
+   
+        {% if products is not defined or products is empty %}
+            <div class="container_products" style="display:block;width:100%">
+                <div class="list_products_empty">
+                    <p>Désolé, aucun produit ne correspond à votre recherche.</p>
+                    <a href="{{path('products_index')}}">retour boutique</a>
+                </div>
+        {% else %}
+        <div class="container_products" style="display:flex;">
+        {% endif %}
         {% for product in products %}
             {% if product.available %}
                 <article class="article_product">
