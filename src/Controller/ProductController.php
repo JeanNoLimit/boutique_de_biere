@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Form\CartType;
+use App\Model\Filters;
 use App\Entity\Product;
+use App\Form\FiltersType;
 use App\Entity\ShopParameters;
+use App\Repository\BeerTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,17 +19,32 @@ class ProductController extends AbstractController
 {
     // Affichage de la liste des produits
     #[Route('/products', name: 'products_index')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager, Request $request, BeerTypeRepository $btr): Response
     {
 
-        $products = $entityManager->getRepository(Product::class)->findAll();
+
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
+
+        $filters = new Filters();
+        $formFilter = $this ->createForm(FiltersType::class, $filters);
+
+        $formFilter->handleRequest($request);
+
+
+
+        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
+            $products = $entityManager->getRepository(Product::class)->findByCriteria($filters);
+        } else {
+            $products = $entityManager->getRepository(Product::class)->findAll();
+        }
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
-            'parameters' => $parameters
+            'parameters' => $parameters,
+            'formFilter' => $formFilter,
         ]);
     }
+
 
     // Affichage d'un produit
     #[Route('/products/{slug}', name: 'detail_product')]
