@@ -5,10 +5,15 @@
 {% block body %}
 
 <div class="filters_wrapper">
-
+    <div class="filters_left">
+        <button class="dropdown_btn_products filterBtn" id="btn_filters" onclick="filterDropdownFunction()">Filtrer par <i class="fa-solid fa-chevron-down" id="chevron1"></i></button>
+    </div>
+    <div>
+        <button class="dropdown_btn_products btn_sort_by">Trier par <i class="fa-solid fa-chevron-down"></i></button>
+    </div>
 </div>
 <div class="products_list_wrapper">
-    <div class="filters_container">
+    <div id="filters_container">
 
         {{ form_start(formFilter)}}
             {{ form_errors(formFilter) }}
@@ -110,3 +115,9 @@
 
 
 {% endblock %}
+
+
+{% block javascripts %}
+            <script src=" {{ asset('js/script.js')}}"></script>
+            <script src=" {{ asset('js/filterDropdown.js') }}"></script>
+        {% endblock %}
