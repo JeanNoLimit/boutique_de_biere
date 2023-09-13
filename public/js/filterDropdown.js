@@ -1,6 +1,7 @@
 // Fonction affichage sous menu filtres
 function filterDropdownFunction() {
     if (window.innerWidth <= 1104) {
+
         let btn = document.getElementById("btn_filters");
         let chevron = document.getElementById("chevron1");
         let filterMenu = document.getElementById("filters_container");
