@@ -21,7 +21,7 @@
 .user_informations {
     min-width: 340px;
     max-width: 400px;
-    box-shadow: 0 0 3px 3px #f1f1f1;
+    box-shadow: 0 0 3px 3px var(--light-grey);
     padding: 25px 25px;
 }
 
@@ -45,7 +45,7 @@
 
 .orders_history {
     padding: 0 10px;
-    border-left: solid 2px #f1f1f1;
+    border-left: solid 2px var(--light-grey);
 }
 
 .orders_history .secondary_title_profile {

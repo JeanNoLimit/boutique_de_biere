@@ -1,9 +1,9 @@
 .formContainer{
     width: 450px;
     margin: auto;
-    background-color: #f1f1f1;
+    background-color: var(--light-grey);
     border-radius: 3px;
-    box-shadow: 0 0 3px 3px #f1f1f1;
+    box-shadow: 0 0 3px 3px var(--light-grey);
     padding: 20px 15px;
 }
 
