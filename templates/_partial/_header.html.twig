@@ -32,6 +32,10 @@
                     </button>
                     <div class="dropdown-content" id="contentProfil" style="display:none">
                         {% if app.user %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('admin')}}">Administration</a>
+                                <hr class="nav-separator">
+                            {% endif %}
                             <a href="{{ path('app_userProfile')}}">Mon profil</a>
                             <hr class="nav-separator">
                             <a href="{{ path('app_logout')}}">Déconnexion</a>
