@@ -80,7 +80,7 @@ table, th, td {
 }
 
 
-/****************** HOME PAGE ************/
+/****************** HOME PAGE *******************/
 
 .main_title {
     text-align: center;
@@ -94,7 +94,7 @@ table, th, td {
 }
 
 .secondary_title {
-    padding: 0 190px 55px;
+    padding: 30px 190px 55px;
 
 }
 
@@ -144,7 +144,11 @@ table, th, td {
     padding: 100px 0 100px 0;
     clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
 } */
-
+.home_separator {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, var(--light-grey), rgba(0, 0, 0, 0.75), var(--light-grey));
+}
 
 .newProducts {
     width: 100%;
@@ -152,7 +156,7 @@ table, th, td {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin: 30px 0;
 }
 
 .newProducts article {
