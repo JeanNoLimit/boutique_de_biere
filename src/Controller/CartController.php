@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CartController extends AbstractController
 {
@@ -148,6 +149,7 @@ class CartController extends AbstractController
     /************************************ VERIFICATION ADRESSE DE FACTURATION AVANT VALIDATION COMMANDE *********************************/
 
     #[Route('/cart/check_Address', name: 'checkBillingAddress')]
+    #[IsGranted('ROLE_USER')]
     public function checkBillingAddress(
         Request $request,
         EntityManagerInterface $em,
@@ -155,7 +157,7 @@ class CartController extends AbstractController
     ): Response {
 
         //On vérifie si l'utilisateur est connecté
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        // $this->denyAccessUnlessGranted('ROLE_USER');
 
         //On récupère le panier et l'utilisateur
         $session = $request->getSession();
@@ -167,7 +169,7 @@ class CartController extends AbstractController
         $idUser = $this->getUser()->getId();
         $user = $userRepo->find($idUser);
 
-
+        //On vérifie que l'utilisateur a bien validé son adresse email
         if ($user->isVerified()) {
             if ($panier !== []) {
 

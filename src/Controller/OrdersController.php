@@ -11,14 +11,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class OrdersController extends AbstractController
 {
-    #[Route('/add_order', name: 'add_order')]
+    #[Route('/order/add_order', name: 'add_order')]
+
     public function index(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
     {
-        //On vérifie si l'utilisateur est connecté
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        //On vérifie si l'utilisateur est connecté -> Restriction spécifié dans security.yaml
+        // $this->denyAccessUnlessGranted('ROLE_USER');
 
         //On récupère le panier et l'utilisateur
         $session = $request->getSession();
