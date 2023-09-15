@@ -58,7 +58,7 @@
 }
 
 
-/****************conteneur de filtres *********************/
+/****************conteneur de filtres - fromulaire *********************/
 
 #filters_container{
     width: 270px;
@@ -147,7 +147,7 @@
     color: black;
 }
 
-/**************** zone image **************************/
+/**************** zone image - article de vente **************************/
 .img_product_article {
     position:relative;
     width: 250px;
@@ -230,6 +230,7 @@
 
     #filters_container {
         border-right: solid 1px var(--dark-grey); 
+
     }
 
     .filters_left {
@@ -335,4 +336,26 @@
             left: 20px;
         }
     }
+
+    @media screen and (max-width:390px) {
+
+        .dropdown_btn_products{
+            padding: 14px 30px;
+            font-weight: 400;
+        }
+
+        #btn_filters{
+            margin-left: 10px;
+        }
+
+        .btn_sort_by {
+            margin-right: 10px;
+        }
+        
+        #filters_container.filterMenuResponsive {
+            left: 10px;
+        }
+    }
+
+
 }

@@ -147,7 +147,12 @@ table, th, td {
 .home_separator {
     border: 0;
     height: 2px;
-    background-image: linear-gradient(to right, var(--light-grey), rgba(0, 0, 0, 0.75), var(--light-grey));
+    background-image: linear-gradient(
+        to right,
+        var(--light-grey),
+        rgba(0, 0, 0, 0.75),
+        var(--light-grey)
+        );
 }
 
 .newProducts {
