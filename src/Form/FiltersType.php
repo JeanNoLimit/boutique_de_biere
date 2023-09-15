@@ -91,6 +91,7 @@ class FiltersType extends AbstractType
             ->add('page', IntegerType::class, [
                 'required' => false,
                 'label' => false,
+                'mapped' => false,
                 'attr' => ['style' => 'display:none']
             ])
         ;
