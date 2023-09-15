@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Model\Filters;
 use App\Entity\Product;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -17,9 +19,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
+        $this->paginator = $paginator;
     }
 
     // Cherche les derniers porduits enregistrés pour l'affichage sur la page d'accueil
@@ -35,7 +38,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     //Cherche les produits en fonction des critères renseignés dnas le formulaire produits
-    public function findByCriteria(Filters $filters)
+    public function findByCriteria(Filters $filters): PaginationInterface
     {
 
         $query = $this->createQueryBuilder('p');
@@ -46,18 +49,7 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('p.designation LIKE :searchProduct')
                 ->setParameter('searchProduct', "%{$filters->searchProduct}%");
         }
-        //     //Pour en savoir plus :
-        //     // https://stackoverflow.com/questions/11704447/pass-array-of-conditions-to-doctrine-expr-orx-method
-        // if (!empty($filters->providers)) {
-        //     //On créé une instance de orX(). Cela représente une expression conditionnelle OR vide
-        //     $orX = $query->expr()->orX();
-        //     foreach ($filters->providers as $index => $provider) {
-        //         //On ajoute des conditions individuelles à cette expression OR
-        //         $orX->add($query->expr()->eq('p.provider', ':provider_' . $index));
-        //         $query->setParameter('provider_' . $index, $provider);
-        //     }
-        //     $query->andWhere($orX);
-        // }
+
         if (!empty($filters->providers)) {
             $query
                 ->select('pr', 'p')
@@ -96,7 +88,13 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('tauxMax', $filters->tauxMax);
         }
 
-        return $query->getQuery()->getResult();
+        $query = $query->getQuery();
+
+          return $this->paginator->paginate(
+              $query,
+              $filters->page,
+              6
+          );
     }
 
 

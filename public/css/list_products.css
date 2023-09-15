@@ -5,6 +5,7 @@
     position: relative ;
 }
 
+
 .container_products {
     flex-direction: row;
     flex-wrap: wrap;
@@ -28,6 +29,11 @@
     text-decoration:underline;
 }
 
+.paginator {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
 
 /****************Boutons filtres et trie - dropdown btn*********************/
 

@@ -4,11 +4,13 @@ namespace App\Model;
 
 class Filters
 {
+    public int $page;
+
     public ?string $searchProduct = '';
 
-    public array $providers = [];
+    public ?array $providers = [];
 
-    public array $beerTypes = [];
+    public ?array $beerTypes = [];
 
     public ?float $min;
 

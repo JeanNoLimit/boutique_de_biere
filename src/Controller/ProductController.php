@@ -9,6 +9,7 @@ use App\Form\FiltersType;
 use App\Entity\ShopParameters;
 use App\Repository\BeerTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,24 +20,19 @@ class ProductController extends AbstractController
 {
     // Affichage de la liste des produits
     #[Route('/products', name: 'products_index')]
-    public function index(EntityManagerInterface $entityManager, Request $request, BeerTypeRepository $btr): Response
-    {
-
+    public function index(
+        EntityManagerInterface $entityManager,
+        Request $request,
+    ): Response {
 
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
         $filters = new Filters();
+        $filters->page = $request->get('page', 1);
         $formFilter = $this ->createForm(FiltersType::class, $filters);
 
         $formFilter->handleRequest($request);
-
-
-
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
-            $products = $entityManager->getRepository(Product::class)->findByCriteria($filters);
-        } else {
-            $products = $entityManager->getRepository(Product::class)->findAll();
-        }
+        $products = $entityManager->getRepository(Product::class)->findByCriteria($filters);
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
