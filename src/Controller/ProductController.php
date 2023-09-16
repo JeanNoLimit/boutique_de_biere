@@ -7,13 +7,10 @@ use App\Model\Filters;
 use App\Entity\Product;
 use App\Form\FiltersType;
 use App\Entity\ShopParameters;
-use App\Repository\BeerTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
@@ -44,8 +41,11 @@ class ProductController extends AbstractController
 
     // Affichage d'un produit
     #[Route('/products/{slug}', name: 'detail_product')]
-    public function show(EntityManagerInterface $entityManager, string $slug = null, Request $request): Response
-    {
+    public function show(
+        EntityManagerInterface $entityManager,
+        string $slug = null,
+        Request $request
+        ): Response {
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 

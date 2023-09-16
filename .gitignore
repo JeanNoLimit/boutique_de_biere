@@ -23,3 +23,7 @@
 /.phpcs-cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
+
+
+### images uploaded ###
+/public/upload
