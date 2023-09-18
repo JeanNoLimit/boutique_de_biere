@@ -23,7 +23,7 @@ class OrderRepository extends ServiceEntityRepository
 
 
 
-    public function findOrdersPreparedByUserId($userId)
+    public function findOrdersPreparedByUserId($userId): ?array
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.user = :id')
@@ -36,7 +36,7 @@ class OrderRepository extends ServiceEntityRepository
     }
 
 
-    public function findOrdersInProccessByUserId($userId)
+    public function findOrdersInProccessByUserId($userId): ?array
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.user = :id')
@@ -46,6 +46,15 @@ class OrderRepository extends ServiceEntityRepository
             ->orderBy('o.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findOrderByReference($reference): ?Order
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.reference = :reference')
+            ->setParameter('reference', $reference)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 //    /**
 //     * @return Order[] Returns an array of Order objects

@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Entity\OrderDetails;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrdersController extends AbstractController
 {
@@ -89,12 +91,51 @@ class OrdersController extends AbstractController
 
 
     #[Route('/order/order_detail/{reference}', name: 'order_detail')]
-    public function show(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
+    public function show(Request $request, OrderRepository $orderRepository, EntityManagerInterface $em, string $reference = null): Response
     {
 
+            $order = $orderRepository->findOrderByReference($reference);
+            $user = $this->getUser();
+            $SsTotal = null;
+            $total = null;
+            $elements = [];
+            
+            if (!empty($order)) {
+                if ($user == $order->getUser()) {
+                    $orderDetails = $order->getOrderDetails();
+                    foreach ($orderDetails as $orderDetail) {
+                        $product = $orderDetail->getProduct();
+                        $quantity = $orderDetail->getQuantity();
+                        $price = $orderDetail->getPrice();
+                        $SsTotal = $price * $quantity;
+
+                        $elements[] = [
+                            'product' => $product,
+                            'quantity' => $quantity,
+                            'price' => $price,
+                            'SsTotal' => $SsTotal
+                        ];
+
+                        $total += $SsTotal ;
+                    }
+
+                }else {
+                    $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
+    
+                    return $this->redirectToRoute('app_home');
+                }
+
+            } else {
+                $this->addFlash('alert', 'Cette commande n\'existe pas!');
+    
+                return $this->redirectToRoute('app_home');
+            }
+            
 
         return $this->render('orders/detail.html.twig',[
-           
+           'order' => $order,
+           'elements' => $elements,
+           'total' => $total
         ]);
 
     }
