@@ -94,6 +94,7 @@ class FiltersType extends AbstractType
                 'mapped' => false,
                 'attr' => ['style' => 'display:none']
             ])
+
         ;
     }
 

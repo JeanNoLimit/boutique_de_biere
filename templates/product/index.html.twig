@@ -8,9 +8,12 @@
     <div class="filters_left">
         <button class="dropdown_btn_products filterBtn" id="btn_filters" onclick="filterDropdownFunction()">Filtrer par <i class="fa-solid fa-chevron-down" id="chevron1"></i></button>
     </div>
-    <div>
-        <button class="dropdown_btn_products btn_sort_by" id="btn_sortBy">Trier par <i class="fa-solid fa-chevron-down"></i></button>
-        {{ knp_pagination_sortable(products, 'Prix', 'p.price') }}
+    <div class="dropdown_sortBy">
+        <button class="dropdown_btn_products btn_sort_by" onclick="sortByDropdownFunction()">Trier par <i class="fa-solid fa-chevron-down" id="chevron2"></i></button>
+        <div class="dropdown_sortBy_content" id="dropdown_blop" style="display:none">
+            {{ knp_pagination_sortable(products, 'Prix croissants', 'p.price', {}, {'direction': 'asc'}) }}
+            {{ knp_pagination_sortable(products, 'Prix décroissants', 'p.price', {}, {'direction': 'desc'}) }}
+        </div>
     </div>
 </div>
 <div class="products_list_wrapper">

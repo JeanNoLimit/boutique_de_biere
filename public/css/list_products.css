@@ -58,11 +58,31 @@
 
 }
 
+/***************** PArtie tri des données - dropdown menu**************/
+
+.dropdown-sortBy {
+    position: relative;
+}
 
 .btn_sort_by {
     margin-right: 45px;
 }
 
+.dropdown_sortBy_content {
+    background-color: var(--tertiary-color);
+    position:relative;
+    right: 45px;
+    z-index: 1;
+}
+
+.dropdown_sortBy_content a {
+    display: block;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+}
 
 /****************conteneur de filtres - fromulaire *********************/
 

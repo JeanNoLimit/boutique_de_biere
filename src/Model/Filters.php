@@ -19,4 +19,8 @@ class Filters
     public ?float $tauxMin;
 
     public ?float $tauxMax;
+
+    public ?string $sort;
+
+    public ?string $direction;
 }

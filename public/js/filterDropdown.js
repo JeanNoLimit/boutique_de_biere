@@ -18,3 +18,17 @@ function filterDropdownFunction() {
             }
     }
 }
+
+function sortByDropdownFunction() {
+
+    let sortContent = document.getElementById("dropdown_blop");
+    let chevron2 = document.getElementById("chevron2");
+    if (sortContent.style.display === "none") {
+        sortContent.style.display = "block";
+        chevron2.className = "fa-solid fa-chevron-up";
+    }else{
+        sortContent.style.display = "none";
+        chevron2.className = "fa-solid fa-chevron-down";
+    }
+
+}
