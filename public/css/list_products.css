@@ -339,16 +339,16 @@
             padding: 14px 35px;
             font-weight: 400;
         }
+
+        .dropdown_sortBy_content a{
+            font-size: 1rem;
+            font-weight: 400;
+        }
         
     }
 
     @media screen and (max-width:440px) {
 
-        .dropdown_btn_products{
-            font-size: 1rem;
-            padding: 14px 35px;
-            font-weight: 400;
-        }
 
         #btn_filters{
             margin-left: 20px;
@@ -357,6 +357,15 @@
         .btn_sort_by {
             margin-right: 20px;
         }
+
+        .dropdown_sortBy_content {
+           right: 20px;
+        }
+
+        .dropdown_sortBy_content a{
+            padding: 12px 10px;
+        }
+        
         
         #filters_container.filterMenuResponsive {
             left: 20px;
@@ -377,6 +386,10 @@
         .btn_sort_by {
             margin-right: 10px;
         }
+
+        .dropdown_sortBy_content {
+            right: 10px;
+         }
         
         #filters_container.filterMenuResponsive {
             left: 10px;
