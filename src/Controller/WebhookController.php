@@ -20,26 +20,26 @@ class WebhookController extends AbstractController
     {
 
         Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
-       
+
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
         $endpoint_secret = '';
-    
+
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = @file_get_contents('php://input');
         $event = null;
 
         try {
-          $event = \Stripe\Webhook::constructEvent(
-            $payload, $sig_header, $endpoint_secret
-          );
-        }
-          
-          catch(\UnexpectedValueException $e) {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400);
             exit();
         }
-        
+
         // Handle the event
         switch ($event->type) {
             case 'payment_intent.succeeded':
@@ -54,8 +54,7 @@ class WebhookController extends AbstractController
             default:
                 echo 'Received unknown event type ' . $event->type;
         }
-        
-        http_response_code(200);
 
+        http_response_code(200);
     }
 }

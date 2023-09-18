@@ -15,8 +15,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class OrdersController extends AbstractController
 {
+    
     #[Route('/order/add_order', name: 'add_order')]
-
     public function index(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
     {
         //On vérifie si l'utilisateur est connecté -> Restriction spécifié dans security.yaml
@@ -38,6 +38,10 @@ class OrdersController extends AbstractController
 
                 $order->setUser($user);
                 $order->setReference($reference);
+
+                // /!\ Attention, la validation du paiement est automatisé pour les tests en local, 
+                // mais de devra être supprimé lorsque les webhhooks seront fonctionnels.
+                $order->setIsPaid(true);
 
                 //Création du détail de commande insertion des données
                 foreach ($panier as $id => $qte) {
@@ -67,7 +71,6 @@ class OrdersController extends AbstractController
 
                 $session->remove('panier');
 
-                $this->addFlash('success', 'Votre commande a été créée');
             } else {
                 $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
@@ -79,8 +82,21 @@ class OrdersController extends AbstractController
             return $this->redirectToRoute('cart_index');
         }
 
-        return $this->render('orders/index.html.twig', [
-            // 'order' => $order
+        return $this->render('orders/success.html.twig',[
+            'reference' => $reference
         ]);
     }
+
+
+    #[Route('/order/order_detail/{reference}', name: 'order_detail')]
+    public function show(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
+    {
+
+
+        return $this->render('orders/detail.html.twig',[
+           
+        ]);
+
+    }
+    
 }

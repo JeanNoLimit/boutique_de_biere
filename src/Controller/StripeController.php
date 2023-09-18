@@ -14,23 +14,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StripeController extends AbstractController
 {
-
-    public function __construct(){
+    public function __construct()
+    {
         Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
     }
 
     #[Route('/stripe/checkout', name: 'app_stripe_checkout')]
     public function startPayement(Request $request, EntityManagerInterface $em): RedirectResponse
     {
-        
+
         //On veut récupérer la liste des produits
-        $productStripe =[];
+        $productStripe = [];
 
         // On récupère le panier
         $session = $request->getSession();
         $panier = $session->get('panier', []);
         //Si le panier est vide on renvoie vers le panier et affichage d'un message d'un erreur
-        if(!$panier){
+        if (!$panier) {
             $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
             return $this->redirectToRoute('cart_index');
         }
@@ -40,16 +40,15 @@ class StripeController extends AbstractController
             $product = $em->getRepository(Product::class)->findOneById($id);
 
             $productStripe[] = [
-                'price_data' =>[
+                'price_data' => [
                     'currency' => 'eur',
                     'unit_amount' => $product->getPrice(),
-                    'product_data' =>[
+                    'product_data' => [
                     'name' => $product->getDesignation()
                     ],
                 ],
                 'quantity' => $quantity,
             ];
-
         }
 
         $checkout_session = \Stripe\Checkout\Session::create([
@@ -58,31 +57,32 @@ class StripeController extends AbstractController
                 $productStripe
             ]],
             'mode' => 'payment',
-            'success_url' => $this->generateUrl('stripe_success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'success_url' => $this->generateUrl('add_order', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url' => $this->generateUrl('stripe_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
           ]);
-        //   dd($checkout_session);
-        //   header("HTTP/1.1 303 See Other");
-        //   header("Location: " . $checkout_session->url);
 
-          return new RedirectResponse( $checkout_session->url);
+
+          return new RedirectResponse($checkout_session->url);
     }
 
-    #[Route('/stripe/success', name: 'stripe_success')]
-    public function stripeSucces(): Response
-    {
-        return $this->render('orders/success.html.twig',[
+    // Pour la phase de test, l'utilisateur est redirigé vers la page success depuis la fonction add_order.
+    // On concidère que la commande est validée dès que stripe nous redirige vers le site, étant donné qu'il
+    // difficile d'utiliser les webHooks.
+    // #[Route('/stripe/success', name: 'stripe_success')]
+    // public function stripeSucces(): Response
+    // {
 
-        ]);
-    }
+
+    //     return $this->render('orders/success.html.twig',[
+
+    //     ]);
+    // }
 
     #[Route('/stripe/cancel', name: 'stripe_cancel')]
     public function stripeCancel(): Response
     {
-        return $this->render('orders/cancel.html.twig',[
+        return $this->render('orders/cancel.html.twig', [
 
         ]);
     }
-
-
 }
