@@ -80,7 +80,7 @@
             
         <p>Valider ma commande et passer au paiement</p>
         <p>Attention : action irreversible!</p>
-        <button type="submit" class="btn_register button_validation">Valider ma commande</button>
+        <button type="submit" class="btn_register button_validation">Valider ma commande - payer {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} € par Stripe </button>
 
         {{ form_end(form) }}
     </div>
