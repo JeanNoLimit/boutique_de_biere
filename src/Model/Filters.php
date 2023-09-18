@@ -4,7 +4,7 @@ namespace App\Model;
 
 class Filters
 {
-    public int $page;
+    public int $page = 1;
 
     public ?string $searchProduct = '';
 
@@ -20,7 +20,7 @@ class Filters
 
     public ?float $tauxMax;
 
-    public ?string $sort;
+    // public ?string $sort;
 
-    public ?string $direction;
+    // public ?string $direction;
 }

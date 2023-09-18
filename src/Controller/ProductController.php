@@ -25,7 +25,7 @@ class ProductController extends AbstractController
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
         $filters = new Filters();
-        $filters->page = $request->get('page', 1);
+        $filters->page = $request->query->get('page', 1);
         $formFilter = $this ->createForm(FiltersType::class, $filters);
 
         $formFilter->handleRequest($request);
@@ -45,7 +45,7 @@ class ProductController extends AbstractController
         EntityManagerInterface $entityManager,
         string $slug = null,
         Request $request
-        ): Response {
+    ): Response {
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
