@@ -57,7 +57,11 @@ class StripeController extends AbstractController
                 $productStripe
             ]],
             'mode' => 'payment',
-            'success_url' => $this->generateUrl('add_order', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            //aide construction lien:
+            //https://stackoverflow.com/questions/67555522/symfony-5-stripe-v3-cant-find-checkout-session-id
+            'success_url' => $this
+                    ->generateUrl('add_order', [], UrlGeneratorInterface::ABSOLUTE_URL)
+                    . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $this->generateUrl('stripe_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
           ]);
 

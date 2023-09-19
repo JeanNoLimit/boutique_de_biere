@@ -97,7 +97,7 @@ class FiltersType extends AbstractType
                 'attr' => ['style' => 'display:none']
             ])
 
-            ->add('sort', TextType::class,[
+            ->add('sort', TextType::class, [
                 'required' => false,
                 'disabled' => true,
                 'label' => false,
@@ -105,7 +105,7 @@ class FiltersType extends AbstractType
                 'attr' => ['style' => 'display:none']
             ])
 
-            ->add('direction', TextType::class,[
+            ->add('direction', TextType::class, [
                 'required' => false,
                 'disabled' => true,
                 'label' => false,

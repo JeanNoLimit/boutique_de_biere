@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Order;
-use App\Entity\Product;
+use Stripe\StripeClient;
 use App\Entity\OrderDetails;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -12,15 +11,35 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrdersController extends AbstractController
 {
-    
     #[Route('/order/add_order', name: 'add_order')]
-    public function index(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
-    {
+    public function index(
+        Request $request,
+        ProductRepository $productRepository,
+        EntityManagerInterface $em
+    ): Response {
+
+        // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
+        $stripe = new StripeClient($_ENV["STRIPE_SECRET"]);
+        // $session_id=$request->query->get('session_id');
+        // $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+
+        try {
+            if (!empty($_GET['session_id'])) {
+                $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+
+                //Si la session stripe n'est pas retrouvé, renvoie vers une erreur 500.
+                //IL faudra régler ce problème avec une page erreur 500 personnalisée.
+            }
+        } catch (\Error $e) {
+            http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+
+
         //On vérifie si l'utilisateur est connecté -> Restriction spécifié dans security.yaml
         // $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -41,7 +60,7 @@ class OrdersController extends AbstractController
                 $order->setUser($user);
                 $order->setReference($reference);
 
-                // /!\ Attention, la validation du paiement est automatisé pour les tests en local, 
+                // /!\ Attention, la validation du paiement est automatisé pour les tests en local,
                 // mais de devra être supprimé lorsque les webhhooks seront fonctionnels.
                 $order->setIsPaid(true);
 
@@ -72,7 +91,6 @@ class OrdersController extends AbstractController
                 $em->flush();
 
                 $session->remove('panier');
-
             } else {
                 $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
@@ -84,60 +102,58 @@ class OrdersController extends AbstractController
             return $this->redirectToRoute('cart_index');
         }
 
-        return $this->render('orders/success.html.twig',[
+        return $this->render('orders/success.html.twig', [
             'reference' => $reference
         ]);
     }
 
 
     #[Route('/order/order_detail/{reference}', name: 'order_detail')]
-    public function show(Request $request, OrderRepository $orderRepository, EntityManagerInterface $em, string $reference = null): Response
-    {
+    public function show(
+        OrderRepository $orderRepository,
+        string $reference = null
+    ): Response {
 
             $order = $orderRepository->findOrderByReference($reference);
             $user = $this->getUser();
             $SsTotal = null;
             $total = null;
             $elements = [];
-            
-            if (!empty($order)) {
-                if ($user == $order->getUser()) {
-                    $orderDetails = $order->getOrderDetails();
-                    foreach ($orderDetails as $orderDetail) {
-                        $product = $orderDetail->getProduct();
-                        $quantity = $orderDetail->getQuantity();
-                        $price = $orderDetail->getPrice();
-                        $SsTotal = $price * $quantity;
 
-                        $elements[] = [
-                            'product' => $product,
-                            'quantity' => $quantity,
-                            'price' => $price,
-                            'SsTotal' => $SsTotal
-                        ];
+        if (!empty($order)) {
+            if ($user == $order->getUser()) {
+                $orderDetails = $order->getOrderDetails();
+                foreach ($orderDetails as $orderDetail) {
+                    $product = $orderDetail->getProduct();
+                    $quantity = $orderDetail->getQuantity();
+                    $price = $orderDetail->getPrice();
+                    $SsTotal = $price * $quantity;
 
-                        $total += $SsTotal ;
-                    }
+                    $elements[] = [
+                        'product' => $product,
+                        'quantity' => $quantity,
+                        'price' => $price,
+                        'SsTotal' => $SsTotal
+                    ];
 
-                }else {
-                    $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
-    
-                    return $this->redirectToRoute('app_home');
+                    $total += $SsTotal ;
                 }
-
             } else {
-                $this->addFlash('alert', 'Cette commande n\'existe pas!');
-    
+                $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
+
                 return $this->redirectToRoute('app_home');
             }
-            
+        } else {
+            $this->addFlash('alert', 'Cette commande n\'existe pas!');
 
-        return $this->render('orders/detail.html.twig',[
+            return $this->redirectToRoute('app_home');
+        }
+
+
+        return $this->render('orders/detail.html.twig', [
            'order' => $order,
            'elements' => $elements,
            'total' => $total
         ]);
-
     }
-    
 }
