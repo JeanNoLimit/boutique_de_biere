@@ -20,7 +20,7 @@ class Filters
 
     public ?float $tauxMax;
 
-    // public ?string $sort;
+    public ?string $sort;
 
-    // public ?string $direction;
+    public ?string $direction;
 }

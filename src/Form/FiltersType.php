@@ -88,6 +88,7 @@ class FiltersType extends AbstractType
                 'label' => 'filtrer les résultats'
             ])
 
+            // Ajout des paramètres qui ne sont pas présents dans le form
             ->add('page', IntegerType::class, [
                 'required' => false,
                 'disabled' => true,
@@ -96,6 +97,21 @@ class FiltersType extends AbstractType
                 'attr' => ['style' => 'display:none']
             ])
 
+            ->add('sort', TextType::class,[
+                'required' => false,
+                'disabled' => true,
+                'label' => false,
+                'mapped' => false,
+                'attr' => ['style' => 'display:none']
+            ])
+
+            ->add('direction', TextType::class,[
+                'required' => false,
+                'disabled' => true,
+                'label' => false,
+                'mapped' => false,
+                'attr' => ['style' => 'display:none']
+            ])
         ;
     }
 
