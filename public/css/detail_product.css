@@ -123,3 +123,68 @@ input::-webkit-inner-spin-button {
     border: 1px solid black;
     padding: 10px;
 }
+
+
+/***************** Avis clients *********************/
+
+.review {
+    margin-top: 30px;
+}
+
+.secondary_title_detail_product {
+    margin-bottom: 40px;
+}
+
+.empty_review {
+    text-align: center;
+}
+
+.link_add_review {
+    text-decoration: underline;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/********** En-tête reviews ************/
+
+.reviews_summary {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0;
+
+}
+
+.stats_reviews {
+    display: flex;
+    flex-direction: row;
+}
+
+.stats_reviews p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding-left: 50px;
+}
+
+
+/************* bloc Review *****************/
+
+.review_informations {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.right_review_informations{
+    display:flex; 
+    flex-direction: row;
+}
+
+.right_review_informations p {
+    padding-left: 50px;
+}
+
+.dateTime_review{
+    
+}

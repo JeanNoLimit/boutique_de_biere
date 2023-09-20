@@ -6,5 +6,7 @@
     <h1>Ajout d'un avis </h1>
     <h2>{{product.designation}} - {{ product.volume|number_format }}cl</h2>
 
+    <a href="{{ path('detail_product', {'slug' : product.slug })}}"> Retour en arrière</a>
+
     {{ form(formReview)}}
 {% endblock %}
