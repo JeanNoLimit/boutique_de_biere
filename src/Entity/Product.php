@@ -85,11 +85,15 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetails::class, orphanRemoval: true)]
     private Collection $orderDetails;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class)]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->createdAt = new \DatetimeImmutable();
         $this->beerTypes = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -335,5 +339,35 @@ class Product
     public function __toString()
     {
         return $this->designation . ' - ' . $this->volume . 'cl';
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getProduct() === $this) {
+                $review->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }
