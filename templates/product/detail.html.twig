@@ -97,7 +97,22 @@
 
 <div class="review">
  <h2>Avis</h2>
- <p style="text-align:center;"> ******* COMING SOON *******</p>
+ 
+ <a href="{{ path('add_review', {'slug' : product.slug})}}">Ajouter un avis</a> 
+<p>{{ product.reviews|length }} avis</p>
+
+<p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }}/ 5 </p>
+
+ {% for review in product.reviews %}
+    <p>{{ review.user.pseudo }}</p>
+    <p>{{ review.createdAt|format_datetime('short', 'short', locale='fr', timezone='Europe/Paris') }}</p>
+    <p>Note {{ review.rating}}/5 </p>
+
+    <p>{{ review.description }}</p>
+
+    <hr style="width:100%;">
+
+ {% endfor %}
 </div>
 
 {% endblock %}

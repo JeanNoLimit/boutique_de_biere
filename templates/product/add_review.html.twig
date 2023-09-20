@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ajouter un avis{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'un avis </h1>
+    <h2>{{product.designation}} - {{ product.volume|number_format }}cl</h2>
+
+    {{ form(formReview)}}
+{% endblock %}

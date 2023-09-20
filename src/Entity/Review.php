@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ReviewRepository;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\ReviewRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[UniqueEntity(
@@ -28,7 +29,9 @@ class Review
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Length(
+        min: 10,
         max: 1000,
+        minMessage: 'Votre commentaire doit faire un minimum de {{ limit }} caractères.',
         maxMessage: 'Votre commentaire ne peut pas dépasser les {{ limit }} caractères.',
     )]
     private ?string $description = null;

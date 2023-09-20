@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+use function PHPUnit\Framework\isEmpty;
+
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 
 class Product
@@ -87,6 +89,9 @@ class Product
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class)]
     private Collection $reviews;
+
+    //Moyenne des notes
+    private ?float $average;
 
     public function __construct()
     {
@@ -370,4 +375,28 @@ class Product
 
         return $this;
     }
+
+    /**
+     * Get the value of average
+     */ 
+    public function getAverage()
+    {
+        $reviews = $this->reviews;
+
+        if($reviews->isEmpty()) {
+             $this->average = null;
+             return $this->average;
+        }
+        $total = 0;
+        foreach($reviews as $review) {
+            $rating = $review->getRating();
+            $total = $total + $rating;
+        }
+
+        $this->average = $total / count($reviews);
+
+        return $this->average;
+    }
+
+    
 }
