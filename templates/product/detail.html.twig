@@ -105,11 +105,11 @@
         <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
       <div class="stats_reviews">
         <p>{{ product.reviews|length }} avis</p>
-        <p>Note : {{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} / 5 </p>
+        {# <p>Note : {{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} / 5 </p> #}
+        <p>{{ product.average| stars }}</p>
       </div>
     </div>
-    
-  
+
 
     {% for review in product.reviews %}
     
@@ -119,7 +119,7 @@
           <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
           <div class="right_review_informations">
             <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
-            <p>Note {{ review.rating }}/5 </p>
+            <p>{{ review.rating | stars }}</p>
           </div>
         </div>
   
