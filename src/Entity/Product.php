@@ -378,17 +378,17 @@ class Product
 
     /**
      * Get the value of average
-     */ 
+     */
     public function getAverage()
     {
         $reviews = $this->reviews;
 
-        if($reviews->isEmpty()) {
+        if ($reviews->isEmpty()) {
              $this->average = null;
              return $this->average;
         }
         $total = 0;
-        foreach($reviews as $review) {
+        foreach ($reviews as $review) {
             $rating = $review->getRating();
             $total = $total + $rating;
         }
@@ -397,6 +397,4 @@ class Product
 
         return $this->average;
     }
-
-    
 }

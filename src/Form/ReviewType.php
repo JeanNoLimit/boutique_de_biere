@@ -15,7 +15,7 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('rating', ChoiceType::class,[
+            ->add('rating', ChoiceType::class, [
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
@@ -28,10 +28,10 @@ class ReviewType extends AbstractType
                 'invalid_message' => "La note doit être comprise entre 1 et 5",
                 'required' => true,
             ])
-            ->add('description', TextareaType::class,[
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => "",'min' => "10", 'max' => "1000"],
                 'label' => 'description',
-                'required' =>false,
+                'required' => false,
             ])
             ->add('envoyer', SubmitType::class, [
                 'attr' => ['class' => "button_validation"],

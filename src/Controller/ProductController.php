@@ -18,7 +18,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-    // Affichage de la liste des produits
+
+    /**
+     * Affiche la liste des produits
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/products', name: 'products_index')]
     public function index(
         EntityManagerInterface $entityManager,
@@ -42,7 +49,15 @@ class ProductController extends AbstractController
     }
 
 
-    // Affichage d'un produit
+    /**
+     * 
+     * Gère la vue détail produit
+     * 
+     * @param EntityManagerInterface $entityManager
+     * @param string $slug
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/products/{slug}', name: 'detail_product')]
     public function show(
         EntityManagerInterface $entityManager,
@@ -55,13 +70,13 @@ class ProductController extends AbstractController
         $reviews = $entityManager->getRepository(Review::class)->findByProduct($product, $page);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
         //On veut savoir si l'utilisateur a déjà donné un avis sur ce produit.
-        $userReview = $entityManager->getRepository(Review::class)->findReviewIfExist($this->getUser(),$product);
+        $userReview = $entityManager->getRepository(Review::class)->findReviewIfExist($this->getUser(), $product);
 
         $form = $this->createForm(CartType::class);
         $form->handleRequest($request);
-        // Pour info : 
+        // Pour info :
         // J'ai basculé la gestion du formulaire d'ajout du produit dans le panier dans le cartController
-       
+
         return $this->render('product/detail.html.twig', [
             'product' => $product,
             'parameters' => $parameters,
@@ -71,44 +86,52 @@ class ProductController extends AbstractController
         ]);
     }
 
-
-    //Ajout d'une review + modification.
+    /**
+     *
+     * Gestion du formulaire d'ajout/modification review
+     * 
+     * @param EntityManagerInterface $entityManager
+     * @param Review $review
+     * @param Request $request
+     * @param string $slug
+     * @param int $userId
+     * @return Response 
+     */
     #[IsGranted('ROLE_USER')]
     #[Route('/products/add_review/{slug}', name: 'add_review')]
     #[Route('/products/edit_review/{slug}/{userId}/{id}', name: 'edit_review')]
-    public function add_review(   
+    public function addReview(
         EntityManagerInterface $entityManager,
         Review $review = null,
         Request $request,
         string $slug = null,
-        $userId=Null,
+        int $userId = null,
     ): Response {
 
-        //On récupère le produit et l'utilisateur nécessaire pour créer la review. 
+        //On récupère le produit et l'utilisateur nécessaire pour créer la review.
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $user = $this->getUser();
 
-        if(!$review || $userId!=$user->getId()){
+        if (!$review || $userId != $user->getId()) {
             $review = new Review();
             //On insère le user et le produit dans la nouvel instance de review.
             $review->setUser($user);
             $review->setProduct($product);
-        }else{
+        } else {
             $review->setUpdatedAt(new \DateTimeImmutable());
         }
 
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
 
-        if($formReview->isSubmitted() && $formReview->isValid()) {
-           
-            $review=$formReview->getData();
+        if ($formReview->isSubmitted() && $formReview->isValid()) {
+            $review = $formReview->getData();
             $entityManager->persist($review);
             $entityManager->flush();
 
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
         }
-    
+
         return $this->render('product/add_review.html.twig', [
             'formReview' => $formReview,
             'product' => $product
