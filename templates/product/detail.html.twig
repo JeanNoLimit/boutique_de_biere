@@ -93,7 +93,7 @@
 
 <div class="review">
   <h2 class="secondary_title_detail_product">Avis</h2>
-  {% if product.reviews is empty or product.reviews is not defined %}
+  {% if reviews is empty or reviews is not defined %}
     <div class="empty_review">
       <p>Cette bière est surement exellente mais personne n'a donné un avis pour l'instant!</p>
       <p>Soyez le premier à <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">ajouter un avis !</a> </p>
@@ -108,13 +108,13 @@
         <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
       {% endif %}
       <div class="stats_reviews">
-        <p>{{ product.reviews|length }} avis</p>
+        <p>{{ reviews|length }} avis</p>
         <p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} {{ product.average| stars }} </p>
       </div>
     </div>
 
 
-    {% for review in product.reviews %}
+    {% for review in reviews %}
     
     <div class="review_content">
         <hr class="review_separator">
@@ -137,7 +137,7 @@
       </div>
       
     {% endfor %}
-    
+    {{ knp_pagination_render(reviews) }}
   {% endif %}
 </div>
 

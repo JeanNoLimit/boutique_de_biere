@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Review;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Review>
@@ -16,10 +18,27 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ReviewRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Review::class);
+        $this->paginator = $paginator;
     }
+
+    public function findByProduct($product, $page): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('r')
+            ->andWhere('r.product= :product')
+            ->orderBy('r.createdAt', 'DESC')
+            ->setParameter('product', $product)
+            ->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            3
+        );
+    }
+
 
     /**
      * Récupère une review si un utilisateur en a déjà renseigné une sur un produit

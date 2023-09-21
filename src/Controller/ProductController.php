@@ -50,20 +50,22 @@ class ProductController extends AbstractController
         Request $request
     ): Response {
 
+        $page = $request->query->get('page', 1);
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
+        $reviews = $entityManager->getRepository(Review::class)->findByProduct($product, $page);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
+        //On veut savoir si l'utilisateur a déjà donné un avis sur ce produit.
         $userReview = $entityManager->getRepository(Review::class)->findReviewIfExist($this->getUser(),$product);
+
         $form = $this->createForm(CartType::class);
-        // $form->setData(['idProduct' => $product->getId()]);
         $form->handleRequest($request);
         // Pour info : 
         // J'ai basculé la gestion du formulaire d'ajout du produit dans le panier dans le cartController
        
-
-
         return $this->render('product/detail.html.twig', [
             'product' => $product,
             'parameters' => $parameters,
+            'reviews' => $reviews,
             'userReview' => $userReview,
             'form' => $form
         ]);
@@ -80,15 +82,13 @@ class ProductController extends AbstractController
         Request $request,
         string $slug = null,
         $userId=Null,
-        
-
     ): Response {
 
         //On récupère le produit et l'utilisateur nécessaire pour créer la review. 
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $user = $this->getUser();
 
-        if(!$review){
+        if(!$review || $userId!=$user->getId()){
             $review = new Review();
             //On insère le user et le produit dans la nouvel instance de review.
             $review->setUser($user);
@@ -96,8 +96,6 @@ class ProductController extends AbstractController
         }else{
             $review->setUpdatedAt(new \DateTimeImmutable());
         }
-
-    
 
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
@@ -111,7 +109,6 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
         }
     
-
         return $this->render('product/add_review.html.twig', [
             'formReview' => $formReview,
             'product' => $product
