@@ -102,6 +102,7 @@
   {% else %}
     
     <div class="reviews_summary">
+ 
         <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
       <div class="stats_reviews">
         <p>{{ product.reviews|length }} avis</p>

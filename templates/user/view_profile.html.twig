@@ -49,7 +49,7 @@
                         
                     <tr>
                         <td>{{ order.reference }}</td>
-                        <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                        <td>Le {{ order.createdAt|format_date('short', locale='fr') }} à {{ order.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</td>
                         <td ><a href="{{path('order_detail', {'reference' : order.reference})}}" class="see_more">Voir détails</a></td>
                     </tr> 
                     {% endfor %}
@@ -74,7 +74,7 @@
                         
                     <tr>
                         <td>{{ order.reference }}</td>
-                        <td>Le {{ order.createdAt|format_date(locale='fr') }} à {{ order.createdAt|format_time(locale='fr') }}</td>
+                        <td>Le {{ order.createdAt|format_date('short', locale='fr') }} à {{ order.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</td>
                         <td><a href="" class="see_more">Voir détails</a></td>
                     </tr> 
                     {% endfor %}

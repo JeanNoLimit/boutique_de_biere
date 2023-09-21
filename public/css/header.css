@@ -113,7 +113,6 @@ nav a {
 
 .nav-separator {
     border: 1px solid var(--secondary-color);
-    width: 100%;
     margin: 0 auto;
 }
 
