@@ -91,7 +91,6 @@
     </table>
 </div>
 
-
 <div class="review">
   <h2 class="secondary_title_detail_product">Avis</h2>
   {% if product.reviews is empty or product.reviews is not defined %}
@@ -102,8 +101,12 @@
   {% else %}
     
     <div class="reviews_summary">
- 
+      {% if userReview is defined and userReview is not null  %}
+
+      <a href="{{ path('edit_review',  {'slug' : product.slug, 'userId' : app.user.id,'id' : userReview.id} )}}" class="link_add_review">Modifier votre avis</a> 
+      {% else %}
         <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
+      {% endif %}
       <div class="stats_reviews">
         <p>{{ product.reviews|length }} avis</p>
         <p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} {{ product.average| stars }} </p>
@@ -118,7 +121,12 @@
         <div class="review_informations">
           <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
           <div class="right_review_informations">
-            <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
+            {% if review.updatedAt is not empty and review.updatedAt is not null %}
+              <p class="dateTime_review">Modifié le {{ review.updatedAt|format_date('short', locale='fr')}} à {{ review.updatedAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
+            {% else %}
+              <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
+            {% endif %}
+            
             <p>{{ review.rating | stars }}</p>
           </div>
         </div>

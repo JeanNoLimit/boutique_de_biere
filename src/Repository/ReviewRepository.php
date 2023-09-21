@@ -21,6 +21,25 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
+    /**
+     * Récupère une review si un utilisateur en a déjà renseigné une sur un produit
+     *
+     * @param User $user
+     * @param Product $product
+     * @return Review|null
+     */
+    public function findReviewIfExist($user, $product): ?Review
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user= :user')
+            ->andWhere('r.product= :product')
+            ->setParameter('user', $user)
+            ->setParameter('product', $product)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Review[] Returns an array of Review objects
 //     */

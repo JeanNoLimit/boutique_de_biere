@@ -49,10 +49,10 @@ class ProductController extends AbstractController
         string $slug = null,
         Request $request
     ): Response {
-        
+
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
-
+        $userReview = $entityManager->getRepository(Review::class)->findReviewIfExist($this->getUser(),$product);
         $form = $this->createForm(CartType::class);
         // $form->setData(['idProduct' => $product->getId()]);
         $form->handleRequest($request);
@@ -64,6 +64,7 @@ class ProductController extends AbstractController
         return $this->render('product/detail.html.twig', [
             'product' => $product,
             'parameters' => $parameters,
+            'userReview' => $userReview,
             'form' => $form
         ]);
     }
@@ -71,20 +72,32 @@ class ProductController extends AbstractController
 
     //Ajout d'une review + modification.
     #[IsGranted('ROLE_USER')]
-    #[Route('/products/{slug}/add_review', name: 'add_review')]
+    #[Route('/products/add_review/{slug}', name: 'add_review')]
+    #[Route('/products/edit_review/{slug}/{userId}/{id}', name: 'edit_review')]
     public function add_review(   
         EntityManagerInterface $entityManager,
+        Review $review = null,
+        Request $request,
         string $slug = null,
-        Request $request
+        $userId=Null,
+        
+
     ): Response {
 
         //On récupère le produit et l'utilisateur nécessaire pour créer la review. 
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $user = $this->getUser();
-        $review = new Review();
-        //On insère le user et le produit dans la nouvel instance de review.
-        $review->setUser($user);
-        $review->setProduct($product);
+
+        if(!$review){
+            $review = new Review();
+            //On insère le user et le produit dans la nouvel instance de review.
+            $review->setUser($user);
+            $review->setProduct($product);
+        }else{
+            $review->setUpdatedAt(new \DateTimeImmutable());
+        }
+
+    
 
         $formReview = $this->createForm(ReviewType::class, $review);
         $formReview->handleRequest($request);
