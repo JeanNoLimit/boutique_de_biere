@@ -113,22 +113,21 @@
 
     {% for review in product.reviews %}
     
-      <hr style="width:100%;">
-
-      <div class="review_informations">
-        <p>{{ review.user.pseudo|capitalize }}</p>
-        <div class="right_review_informations">
-          <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
-          <p>Note {{ review.rating}}/5 </p>
+      <hr class="review_separator">
+      <div class="review_content">
+        <div class="review_informations">
+          <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
+          <div class="right_review_informations">
+            <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
+            <p>Note {{ review.rating }}/5 </p>
+          </div>
+        </div>
+  
+        <div class="review_description">
+          <p>{{ review.description }}</p>
         </div>
       </div>
-
-      <div class="review_description">
-        <p>{{ review.description }}</p>
-      </div>
       
-        
-
     {% endfor %}
     
   {% endif %}

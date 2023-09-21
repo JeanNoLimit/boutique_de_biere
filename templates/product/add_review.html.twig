@@ -8,5 +8,17 @@
 
     <a href="{{ path('detail_product', {'slug' : product.slug })}}"> Retour en arrière</a>
 
-    {{ form(formReview)}}
+    {# {{ form(formReview)}} #}
+
+    {{ form_errors(formReview) }}
+        {{ form_start(formReview) }}
+        
+        <div class="row">
+            {{ form_widget(formReview.rating) }}
+        </div>
+        <div class="row">
+            {{ form_row(formReview.description) }}
+        </div>
+
+        {{ form_end(formReview) }}
 {% endblock %}

@@ -151,7 +151,8 @@ input::-webkit-inner-spin-button {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 1000px;
 
 }
 
@@ -169,22 +170,45 @@ input::-webkit-inner-spin-button {
 
 /************* bloc Review *****************/
 
+.review_content {
+    max-width: 1000px;
+    margin: 0 auto;
+
+}
+
 .review_informations {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 20px 0 5px 0;
 }
 
 .right_review_informations{
     display:flex; 
     flex-direction: row;
+    align-items: baseline;
 }
 
 .right_review_informations p {
     padding-left: 50px;
 }
 
+.review_pseudo{
+    font-weight: 600;
+}
 .dateTime_review{
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--dark-grey);
+}
+
+.review_description {
+    color: var(--dark-grey);
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.review_separator {
+    border-top: 1px solid black;
     
 }

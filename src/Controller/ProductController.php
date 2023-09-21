@@ -49,31 +49,16 @@ class ProductController extends AbstractController
         string $slug = null,
         Request $request
     ): Response {
+        
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
         $form = $this->createForm(CartType::class);
         // $form->setData(['idProduct' => $product->getId()]);
         $form->handleRequest($request);
-    
+        // Pour info : 
         // J'ai basculé la gestion du formulaire d'ajout du produit dans le panier dans le cartController
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     // dd($form);
-        //     // Je récupère la quantité de produit renseigné et je récupère l'id du produit
-        //     $quantity = $form->getData()['quantity'];
-        //     $productId = $product->getId();
-
-        //     // Solution 1 :
-        //     // return new RedirectResponse($this->generateUrl('cart_add',
-                    //  ['id' => $productId, 'quantity' => $quantity]));
-        //     // Solution 2 :
-        //     $response = $this->forward('App\Controller\CartController::add', [
-        //         'id' => $productId,
-        //         'quantity' => $quantity
-        //     ]);
-
-        //     return $response;
-        // }
+       
 
 
         return $this->render('product/detail.html.twig', [
