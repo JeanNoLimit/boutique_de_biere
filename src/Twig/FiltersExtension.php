@@ -34,6 +34,7 @@ class FiltersExtension extends AbstractExtension
             $html .= '<i class="fa-solid fa-star-half-stroke"></i>';
             $count++;
         }
+        
         for ($i = 0; $i < 5 - $count; $i++) {
             $html .= '<i class="fa-regular fa-star"></i>';
         
