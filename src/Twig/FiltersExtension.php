@@ -8,14 +8,14 @@ use Twig\TwigFilter;
 
 class FiltersExtension extends AbstractExtension
 {
-    public function getFilters()
+    public function getFilters() : array
     {
         return [
             new TwigFilter('stars', [$this, 'stars'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function stars(float $note)
+    public function stars(float $note) : string
     {
         $entier = floor($note);
         $decimal = $note - $entier;
