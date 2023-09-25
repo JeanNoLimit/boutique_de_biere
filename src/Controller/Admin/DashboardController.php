@@ -40,7 +40,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             MenuItem::linkToCrud('Gestion des commandes', 'fa-solid fa-sack-dollar', Order::class),
             MenuItem::linkToCrud('Liste des Utilisateurs', 'fa-solid fa-users', User::class),
-            MenuItem::linkToCrud('Modération des commentaires', 'fa-solid fa-hand-middle-finger', Review::class),
+            MenuItem::linkToCrud('Modération des commentaires', 'fa-solid fa-ban', Review::class),
             MenuItem::subMenu('Catalogues', 'fa fa-book')->setSubItems([
                 MenuItem::linkToCrud('Brasseries', 'fa fa-handshake', Provider::class),
                 MenuItem::linkToCrud('Bières', 'fa fa-beer-mug-empty', Product::class)
