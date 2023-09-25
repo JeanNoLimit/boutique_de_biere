@@ -1,1 +1,33 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
+{% block title %}
+    administration de la boutique l'échoppe
+{% endblock %}
+{% block content_title %}Bienvenue sur la partie administration de la boutique l'échoppe!{% endblock %}
+
+
+{% block main %}
+<style>
+    h1 {
+        text-align: center;
+    }
+    .content-body{
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .content-body p {
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.4rem;
+    }
+    img {
+        margin: 50px auto;
+    }
+
+</style>
+
+<img src="upload/images/site/{{logo.defaultImageProduct}}" alt="image par défaut">
+
+<p> Pour commencer, parcourez le menu à gauche pour administrer les différentes sections du site.</p>
+{% endblock %}
