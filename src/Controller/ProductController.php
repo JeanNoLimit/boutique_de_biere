@@ -44,7 +44,7 @@ class ProductController extends AbstractController
         return $this->render('product/index.html.twig', [
             'products' => $products,
             'parameters' => $parameters,
-            'formFilter' => $formFilter,
+            'formFilter' => $formFilter,          
         ]);
     }
 

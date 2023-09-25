@@ -372,7 +372,6 @@ class Product
                 $review->setProduct(null);
             }
         }
-
         return $this;
     }
 
@@ -397,4 +396,5 @@ class Product
 
         return $this->average;
     }
+
 }

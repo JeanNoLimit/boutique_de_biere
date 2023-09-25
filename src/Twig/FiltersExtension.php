@@ -14,30 +14,37 @@ class FiltersExtension extends AbstractExtension
         ];
     }
 
-    public function stars(float $note): string
+    public function stars(?float $note): string
     {
-        $entier = floor($note);
-        $decimal = $note - $entier;
         $html = '';
-        $count = 0;
 
-        for ($i = 0; $i < $entier; $i++) {
-            $html .= '<i class="fa-solid fa-star"></i>';
-            $count++;
+        if(!$note){
+            return $html;
         }
-
-        if ($decimal > 0 && $decimal < 0.5) {
-            $html .= '<i class="fa-regular fa-star"></i>';
-            $count++;
-        } elseif ($decimal >= 0.5) {
-            $html .= '<i class="fa-solid fa-star-half-stroke"></i>';
-            $count++;
+        else{
+            
+            $entier = floor($note);
+            $decimal = $note - $entier; 
+            $count = 0;
+    
+            for ($i = 0; $i < $entier; $i++) {
+                $html .= '<i class="fa-solid fa-star"></i>';
+                $count++;
+            }
+    
+            if ($decimal > 0 && $decimal < 0.5) {
+                $html .= '<i class="fa-regular fa-star"></i>';
+                $count++;
+            } elseif ($decimal >= 0.5) {
+                $html .= '<i class="fa-solid fa-star-half-stroke"></i>';
+                $count++;
+            }
+    
+            for ($i = 0; $i < 5 - $count; $i++) {
+                $html .= '<i class="fa-regular fa-star"></i>';
+            }
+    
+            return $html;
         }
-
-        for ($i = 0; $i < 5 - $count; $i++) {
-            $html .= '<i class="fa-regular fa-star"></i>';
-        }
-
-        return $html;
     }
 }

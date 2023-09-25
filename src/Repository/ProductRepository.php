@@ -19,6 +19,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class ProductRepository extends ServiceEntityRepository
 {
+    private PaginatorInterface $paginator;
+
     public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
@@ -40,9 +42,11 @@ class ProductRepository extends ServiceEntityRepository
     //Cherche les produits en fonction des critères renseignés dnas le formulaire produits
     public function findByCriteria(Filters $filters): PaginationInterface
     {
-
-        $query = $this->createQueryBuilder('p');
-
+        //On cherche à récupérer les produits et la moyenne de leur note si celle-ci existe
+        $query = $query = $this->createQueryBuilder('p')
+            ->select('p', 'AVG(r.rating) AS averageRating')
+            ->leftjoin('p.reviews', 'r')
+            ->groupBy('p.id');
 
         if (!empty($filters->searchProduct)) {
             $query
