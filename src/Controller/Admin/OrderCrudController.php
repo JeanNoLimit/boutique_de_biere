@@ -26,7 +26,8 @@ class OrderCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Commandes')
             ->setEntityLabelInSingular('Commande')
-            ->setPageTitle('index', 'Administration des commandes');
+            ->setPageTitle('index', 'Administration des commandes')
+            ->setDefaultSort(['createdAt' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions
@@ -42,6 +43,7 @@ class OrderCrudController extends AbstractCrudController
             IdField::new('id')
             ->hideOnform(),
             TextField::new('reference', 'Réference'),
+            TextField::new('stripeId','Référence Stripe'),
             BooleanField::new('isPaid', 'Commande payée'),
             booleanField::new('isProcessed', 'Commande Préparée'),
             AssociationField::new('user', 'Utilisateur'),
