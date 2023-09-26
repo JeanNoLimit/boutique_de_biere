@@ -19,7 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-
     /**
      * Affiche la liste des produits
      *
@@ -44,15 +43,15 @@ class ProductController extends AbstractController
         return $this->render('product/index.html.twig', [
             'products' => $products,
             'parameters' => $parameters,
-            'formFilter' => $formFilter,          
+            'formFilter' => $formFilter,
         ]);
     }
 
 
     /**
-     * 
+     *
      * Gère la vue détail produit
-     * 
+     *
      * @param EntityManagerInterface $entityManager
      * @param string $slug
      * @param Request $request
@@ -89,13 +88,13 @@ class ProductController extends AbstractController
     /**
      *
      * Gestion du formulaire d'ajout/modification review
-     * 
+     *
      * @param EntityManagerInterface $entityManager
      * @param Review $review
      * @param Request $request
      * @param string $slug
      * @param int $userId
-     * @return Response 
+     * @return Response
      */
     #[IsGranted('ROLE_USER')]
     #[Route('/products/add_review/{slug}', name: 'add_review')]
@@ -111,38 +110,28 @@ class ProductController extends AbstractController
         //On récupère le produit et l'utilisateur nécessaire pour créer la review.
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
         $userSession = $this->getUser();
-        $user=$entityManager->getRepository(User::class)->find($userSession);
+        $user = $entityManager->getRepository(User::class)->find($userSession);
 
         //On vérifie que l'utilisateur est autorisé à rédiger ou modifier une review
-        if ($user->isBan()){
+        if ($user->isBan()) {
             $this->addFlash('alert', 'Vous n\'êtes pas autorisé à rédiger ou modifier une review!');
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
-        }
         // On vérifie que la review a été créée par l'utilisateur connecté en session
-        elseif ($review && $userSession->getId() != $review->getUser()->getId())
-        {
+        } elseif ($review && $userSession->getId() != $review->getUser()->getId()) {
             $this->addFlash('alert', 'Vous ne pouvez pas modifier ce commentaire!');
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
-        }
-        elseif ($review && $userSession->getId() != $userId) 
-        {
+        } elseif ($review && $userSession->getId() != $userId) {
             $this->addFlash('alert', 'vous ne pouvez pas modifier ce commentaire!');
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
-        }
-        elseif ($review && $review->getProduct()->getId() != $product->getId())
-        {
+        } elseif ($review && $review->getProduct()->getId() != $product->getId()) {
             $this->addFlash('alert', 'vous ne pouvez pas modifier ce commentaire!');
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
-        }
-        elseif (!$review || $userId != $userSession->getId()) 
-        {
+        } elseif (!$review || $userId != $userSession->getId()) {
             $review = new Review();
             //On insère le user et le produit dans la nouvel instance de review.
             $review->setUser($userSession);
             $review->setProduct($product);
-        } 
-        else 
-        {
+        } else {
             $review->setUpdatedAt(new \DateTimeImmutable());
         }
 

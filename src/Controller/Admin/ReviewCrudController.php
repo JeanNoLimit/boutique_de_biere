@@ -31,9 +31,8 @@ class ReviewCrudController extends AbstractCrudController
             ->setTimezone('Europe/Paris')
             ->setSearchFields(['product.designation', 'user.pseudo', 'description', 'rating', 'createdAt'])
             ->setDefaultSort(['updatedAt' => 'DESC','createdAt' => 'DESC']);
-    
     }
-    
+
     public function configureActions(Actions $actions): Actions
     {
         return $actions
@@ -69,5 +68,4 @@ class ReviewCrudController extends AbstractCrudController
                 ->OnlyOnIndex(),
         ];
     }
-
 }

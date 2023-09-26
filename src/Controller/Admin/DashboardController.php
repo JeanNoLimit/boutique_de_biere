@@ -24,7 +24,7 @@ class DashboardController extends AbstractDashboardController
 
     public function __construct(ShopParametersRepository $ShopParametersRepository)
     {
-       $this->ShopParametersRepository = $ShopParametersRepository;
+        $this->ShopParametersRepository = $ShopParametersRepository;
     }
 
     #[Route('/admin', name: 'admin')]

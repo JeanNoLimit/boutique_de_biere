@@ -396,5 +396,4 @@ class Product
 
         return $this->average;
     }
-
 }
