@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Review;
 use App\Form\CartType;
 use App\Model\Filters;
@@ -109,14 +110,39 @@ class ProductController extends AbstractController
 
         //On récupère le produit et l'utilisateur nécessaire pour créer la review.
         $product = $entityManager->getRepository(Product::class)->findOneBySlug($slug);
-        $user = $this->getUser();
+        $userSession = $this->getUser();
+        $user=$entityManager->getRepository(User::class)->find($userSession);
 
-        if (!$review || $userId != $user->getId()) {
+        //On vérifie que l'utilisateur est autorisé à rédiger ou modifier une review
+        if ($user->isBan()){
+            $this->addFlash('alert', 'Vous n\'êtes pas autorisé à rédiger ou modifier une review!');
+            return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
+        }
+        // On vérifie que la review a été créée par l'utilisateur connecté en session
+        elseif ($review && $userSession->getId() != $review->getUser()->getId())
+        {
+            $this->addFlash('alert', 'Vous ne pouvez pas modifier ce commentaire!');
+            return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
+        }
+        elseif ($review && $userSession->getId() != $userId) 
+        {
+            $this->addFlash('alert', 'vous ne pouvez pas modifier ce commentaire!');
+            return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
+        }
+        elseif ($review && $review->getProduct()->getId() != $product->getId())
+        {
+            $this->addFlash('alert', 'vous ne pouvez pas modifier ce commentaire!');
+            return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
+        }
+        elseif (!$review || $userId != $userSession->getId()) 
+        {
             $review = new Review();
             //On insère le user et le produit dans la nouvel instance de review.
-            $review->setUser($user);
+            $review->setUser($userSession);
             $review->setProduct($product);
-        } else {
+        } 
+        else 
+        {
             $review->setUpdatedAt(new \DateTimeImmutable());
         }
 

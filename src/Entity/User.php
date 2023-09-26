@@ -145,6 +145,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class)]
     private Collection $reviews;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $ban = false;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -411,6 +414,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $review->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isBan(): ?bool
+    {
+        return $this->ban;
+    }
+
+    public function setBan(?bool $ban): static
+    {
+        $this->ban = $ban;
 
         return $this;
     }

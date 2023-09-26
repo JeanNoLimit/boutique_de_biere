@@ -42,14 +42,16 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInPlural('Utilisateurs')
             ->setEntityLabelInSingular('Utilisateur')
-            ->setPageTitle('index', 'Administration des utilisateurs');
+            ->setPageTitle('index', 'Administration des utilisateurs')
+            ->setDefaultSort(['createdAt' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions
     {
 
         return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->disable(Action::NEW);
     }
 
 
@@ -82,7 +84,8 @@ class UserCrudController extends AbstractCrudController
                 ->setFormat("'le 'dd.MM.yyyy ' à '  HH'h'mm:ss")
                 ->setTimezone('Europe/Paris'),
             BooleanField::new('isVerified')
-                ->OnlyOnIndex()
+                ->OnlyOnIndex(),
+            BooleanField::new('ban', 'bannir')
         ];
     }
 
