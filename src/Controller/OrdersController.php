@@ -8,6 +8,7 @@ use App\Entity\OrderDetails;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\PaymentIntent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,11 +25,15 @@ class OrdersController extends AbstractController
 
         // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
         $stripe = new StripeClient($_ENV["STRIPE_SECRET"]);
-        // $session_id=$request->query->get('session_id');
-        // $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        $session_id = $request->query->get('session_id');
+        $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        //On vérifie si le ID stripe existe déjà dans une entité commande
+        $orderVerification = $em
+            ->getRepository(Order::class)
+            ->findOneBy(["stripeId" => $session_stripe["payment_intent"]]);
 
         try {
-            if (!empty($_GET['session_id'])) {
+            if (!empty($session_id)) {
                 $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
 
                 //Si la session stripe n'est pas retrouvé, renvoie vers une erreur 500.
@@ -40,67 +45,70 @@ class OrdersController extends AbstractController
         }
 
 
-        //On vérifie si l'utilisateur est connecté -> Restriction spécifié dans security.yaml
-        // $this->denyAccessUnlessGranted('ROLE_USER');
-
         //On récupère le panier et l'utilisateur
         $session = $request->getSession();
         $panier = $session->get('panier', []);
         $user = $this->getUser();
 
+        if (!$orderVerification) {
+            if ($user->isVerified()) {
+                if ($panier !== []) {
+                    //Création objet commande et insertion des données
+                    $order = new Order();
+                    //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
+                    $time = new \DateTimeImmutable();
+                    $reference = $user->getId() . $time->format('Ymdhis');
 
-        if ($user->isVerified()) {
-            if ($panier !== []) {
-                //Création objet commande et insertion des données
-                $order = new Order();
-                //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
-                $time = new \DateTimeImmutable();
-                $reference = $user->getId() . $time->format('Ymdhis');
+                    $order->setUser($user);
+                    $order->setReference($reference);
+                    $order->setStripeId($session_stripe["payment_intent"]);
+                    // /!\ Attention, la validation du paiement est automatisé pour les tests en local,
+                    // mais de devra être supprimé lorsque les webhhooks seront fonctionnels.
+                    $order->setIsPaid(true);
 
-                $order->setUser($user);
-                $order->setReference($reference);
+                    //Création du détail de commande insertion des données
+                    foreach ($panier as $id => $qte) {
+                        $orderDetails = new OrderDetails();
+                        //On récupère le produit
+                        $product = $productRepository->find($id);
+                        if (!$product) {
+                            throw $this->createNotFoundException(
+                                'No product found for id ' . $id
+                            );
+                        }
 
-                // /!\ Attention, la validation du paiement est automatisé pour les tests en local,
-                // mais de devra être supprimé lorsque les webhhooks seront fonctionnels.
-                $order->setIsPaid(true);
+                        $price = $product->getPrice();
 
-                //Création du détail de commande insertion des données
-                foreach ($panier as $id => $qte) {
-                    $orderDetails = new OrderDetails();
-                    //On récupère le produit
-                    $product = $productRepository->find($id);
-                    if (!$product) {
-                        throw $this->createNotFoundException(
-                            'No product found for id ' . $id
-                        );
+                        //On remplit orderDetails
+                        $orderDetails->setProduct($product);
+                        $orderDetails->setPrice($price);
+                        $orderDetails->setQuantity($qte);
+                        //On rajoute OrderDetails à la commande
+                        $order->addOrderDetail($orderDetails);
+                        //On retire du stock la quantité commandé
+                        $newStock = $product->getStock() - $qte;
+                        $product->setStock($newStock);
                     }
+                    $em->persist($order);
+                    $em->flush();
 
-                    $price = $product->getPrice();
+                    $session->remove('panier');
+                } else {
+                    $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
-                    //On remplit orderDetails
-                    $orderDetails->setProduct($product);
-                    $orderDetails->setPrice($price);
-                    $orderDetails->setQuantity($qte);
-                    //On rajoute OrderDetails à la commande
-                    $order->addOrderDetail($orderDetails);
-                    //On retire du stock la quantité commandé
-                    $newStock = $product->getStock() - $qte;
-                    $product->setStock($newStock);
+                    return $this->redirectToRoute('cart_index');
                 }
-                $em->persist($order);
-                $em->flush();
-
-                $session->remove('panier');
             } else {
-                $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
+                $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
 
                 return $this->redirectToRoute('cart_index');
             }
         } else {
-            $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
+            $this->addFlash('alert', 'Erreur lors du traitement de la commande! celle-ci existe déjà!');
 
             return $this->redirectToRoute('cart_index');
         }
+
 
         return $this->render('orders/success.html.twig', [
             'reference' => $reference

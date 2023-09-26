@@ -40,6 +40,9 @@ class Order
     #[ORM\Column]
     private ?bool $isProcessed = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeId = null;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -139,6 +142,18 @@ class Order
     public function setIsProcessed(bool $isProcessed): static
     {
         $this->isProcessed = $isProcessed;
+
+        return $this;
+    }
+
+    public function getStripeId(): ?string
+    {
+        return $this->stripeId;
+    }
+
+    public function setStripeId(?string $stripeId): static
+    {
+        $this->stripeId = $stripeId;
 
         return $this;
     }
