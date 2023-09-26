@@ -113,7 +113,7 @@
                         </a>
                     
                     <p class="product_price">{{ (product[0].price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
-                    <p>{{ product.averageRating|stars }} {{ product[0].reviews|length > 0 ? "(" ~ product[0].reviews|length ~ ")" : "" }}</p>
+                    <p>{{ product.averageRating|stars }} <span class="count_rating"> {{ product[0].reviews|length > 0 ? "(" ~ product[0].reviews|length ~ ")" : "" }}</span></p>
                 </div>
             </article>
         {% endif %}

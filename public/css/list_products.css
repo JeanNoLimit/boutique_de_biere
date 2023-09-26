@@ -160,7 +160,7 @@
     min-width: 260px;
     width: 32%;
     max-width: 290px;
-    height: 355px;
+    height: 365px;
     margin: 10px 5px;
     padding: 5px 0;
     /* Pour test */
@@ -223,11 +223,11 @@
 
 /****************** Informations sous l'image *****************/
 .product_info{
-    margin: 5px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 75px;
+    align-items: center;
 }
 
 .product_title {
@@ -235,7 +235,7 @@
     text-align: center;
     font-size: 16px;
     font-weight: 600;
-    padding-top: 5px;
+    /* padding-top: 5px; */
     color:rgb(80, 80, 80);
 }
 
@@ -247,6 +247,10 @@
     color:var(--tertiary-color);
 }
 
+.count_rating {
+    font-size: 1rem;
+    color:var(--dark-grey);
+}
 
 
 /*************************** RESPONSIVE ******************************/
