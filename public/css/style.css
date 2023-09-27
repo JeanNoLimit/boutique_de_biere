@@ -97,7 +97,7 @@ table, th, td {
     height: 60px;
     padding: 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     font-weight: 600;
     font-size: 1rem;
 }
@@ -113,7 +113,7 @@ table, th, td {
 
 .button_step_validation {
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     font-weight: 600;
     font-size: 1.2rem;
     padding: 15px;

@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{# Bouton retour panier #}
+
+    <div class="action_back">
+        <a href="{{path('cart_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour Panier</a>
+    </div>
+    
     <h1>Vérification des informations</h1>
 
     <h2>Récapitulatif de la commande</h2>
@@ -46,12 +52,6 @@
         <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
     </div>
 
-{# Bouton retour panier #}
-
-    <div class="action_back">
-        <a href="{{path('cart_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour Panier</a>
-    </div>
-
     <h2>Mes informations de facturation </h2>
 
     {# ICI LE FORMULAIRE UTILISATEUR #}
@@ -82,13 +82,13 @@
     </div>
 
     <div class="before_redirect">
-        <p>Valider ma commande et passer au paiement</p>
-        <p>Attention : action irreversible!</p>
+        <p>Valider ma commande et passer au paiement.</p>
+        <p>Vous allez être redirigé vers le service de paiement.</p>
     </div>
 
 
     <div class="step_validation">
-        <button type="submit" class="btn_register button_base button_step_validation">Valider ma commande <br> - payer {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} € par Stripe - </button>
+        <button type="submit" class="btn_register button_base button_step_validation">payer <span style="font-weight:800;">{{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</span> par Stripe</button>
     </div>
 {{ form_end(form) }}
 {# VALIDATION ET PASSER AU PAIMENT #}

@@ -1,5 +1,20 @@
+/******************* CART INDEX ********************/
+
+
+.button_delete_cart {
+    background-color: red;
+    padding: 5px 5px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+/**************** CHECK ADDRESS***********************/
+
 .before_redirect {
     width: 100%;
     text-align: center;
     margin-top: 25px;
 }
+
