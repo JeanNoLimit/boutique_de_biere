@@ -9,7 +9,9 @@
 
 
 :root {
-    --main-color: #FFAF3B ;
+    --main-color-header-variation: #F2A03D;
+    --main-color: #FFAF3B;
+    --main-color-shade: #ffb13b9f;
     --secondary-color: #A66619;
     --tertiary-color: #0872A6;
     --tertiary-color-shade: #3F8DB5;
@@ -51,17 +53,24 @@ small {
     font-style: italic;
 }
 
+
+/************ Les boutons *****************/
+
 .button_links {
     cursor: pointer;
     padding: 15px 45px;
-    /* clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%); */
-    /* border-radius: 30px; */
     background-color: var(--tertiary-color);
     font-weight: 500;
     color :white;
     font-size: 1.2rem;
     text-align: center;
+    transition: 0.2s;
 }
+
+.button_links:hover {
+    background-color: var(--tertiary-color-shade);
+}
+
 
 .button_validation {
     cursor: pointer;
@@ -74,7 +83,13 @@ small {
     font-weight: 600;
     background-color: var(--tertiary-color);
     font-size: 1rem;
+    transition: 0.2s;
 }
+
+.button_validation:hover {
+    background-color: var(--tertiary-color-shade);
+}
+
 
 table, th, td {
     border-collapse: collapse;
@@ -102,9 +117,9 @@ table, th, td {
 /***  Partie présentation association ***/
 
 .container_presentation {
-    background-color:#ffb13b9f;
+    background-color: var(--main-color-shade) ;
     padding: 100px 0 100px 0;
-    clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
+    clip-path: polygon(0 5%, 100% 0%, 100% 95%, 0 100%);
 }
 
 .home_presentation {
@@ -133,8 +148,10 @@ table, th, td {
 
 .button_div{
     width: 100%;
-    padding: 50px 0;
-    text-align: center;
+    height: 100px ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /***************** PARTIE NOUVEAUTES ***********************/

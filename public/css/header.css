@@ -37,7 +37,7 @@
 
 .nav_bar {
     width: 100%;
-    background-color: #F2A03D;
+    background-color: var(--main-color-header-variation);
     position: sticky;
     top: 0px;
     z-index:999;
@@ -59,13 +59,16 @@ nav a {
     font-weight: 600;
 }
 
+nav a:hover {
+    color: hsla(0, 0%, 0%, 0.8);
+}
+
 
 #right_navBar a{
     margin-left: 30px;
 }
 
 /* Left_navBar */
-
 
 
 .left_navBar a{
@@ -90,14 +93,14 @@ nav a {
     font-size: 14px;
     border: none;
     outline: none;
-    background-color: #F2A03D;
+    background-color: var(--main-color-header-variation);
   }
 
 .dropdown-content {
     display: none;
     position: absolute;
     right:0px;top:45px;
-    background-color: #F2A03D;
+    background-color: var(--main-color-header-variation);
     max-width: 200px;
     z-index: 1;
     text-align: center;
@@ -119,6 +122,7 @@ nav a {
 .dropdown-content .nav-separator {
     width: 90%;
 }
+
 
 @media screen and (max-width: 1230px){
 

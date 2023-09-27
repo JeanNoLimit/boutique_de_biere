@@ -55,7 +55,11 @@
     color :white;
     font-size: 1.2rem;
     text-align: center;
+    transition: 0.2s;
+}
 
+.dropdown_btn_products:hover {
+    background-color: var(--tertiary-color-shade);
 }
 
 /***************** PArtie tri des données - dropdown menu**************/
@@ -65,13 +69,13 @@
 }
 
 .btn_sort_by {
-    margin-right: 45px;
+    margin-right: 47px;
 }
 
 .dropdown_sortBy_content {
     background-color: var(--tertiary-color);
     position:relative;
-    right: 45px;
+    right: 47px;
     z-index: 1;
 }
 
@@ -82,6 +86,11 @@
     text-align: center;
     color: white;
     font-weight: 500;
+    transition:0.2s;
+}
+
+.dropdown_sortBy_content a:hover {
+    background-color: var(--tertiary-color-shade);
 }
 
 /****************conteneur de filtres - fromulaire *********************/
@@ -299,7 +308,7 @@
         /* display:none; */
         position:absolute;
         left: -300px;
-        top:-12px;
+        top:-14px;
         z-index: 998;
         background-color: var(--tertiary-color);
         transition: 
@@ -310,7 +319,7 @@
     #filters_container.filterMenuResponsive {
         display: block;
         left: 40px;
-        top: -12px;
+        top: -14px;
         opacity: 1;
     }
 
