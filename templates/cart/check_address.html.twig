@@ -48,11 +48,11 @@
 
 {# Bouton retour panier #}
 
-    <a href="{{path('cart_index')}}" style="color:palevioletred"> Retour Panier</a>
-   
-    
+    <div class="action_back">
+        <a href="{{path('cart_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour Panier</a>
+    </div>
 
-    <h2>Mes informations personnelles </h2>
+    <h2>Mes informations de facturation </h2>
 
     {# ICI LE FORMULAIRE UTILISATEUR #}
     <div class="formContainer">
@@ -78,13 +78,19 @@
             {{ form_row(form.tel) }}
         </div>
             
-        <p>Valider ma commande et passer au paiement</p>
-        <p>Attention : action irreversible!</p>
-        <button type="submit" class="btn_register button_validation">Valider ma commande - payer {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} € par Stripe </button>
-
-        {{ form_end(form) }}
+        
     </div>
 
+    <div class="before_redirect">
+        <p>Valider ma commande et passer au paiement</p>
+        <p>Attention : action irreversible!</p>
+    </div>
+
+
+    <div class="step_validation">
+        <button type="submit" class="btn_register button_base button_step_validation">Valider ma commande <br> - payer {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} € par Stripe - </button>
+    </div>
+{{ form_end(form) }}
 {# VALIDATION ET PASSER AU PAIMENT #}
 
 {% endblock %}

@@ -84,7 +84,7 @@ class FiltersType extends AbstractType
             ])
 
             ->add('envoyer', SubmitType::class, [
-                'attr' => ['class' => "button_validation"],
+                'attr' => ['class' => "button_base button_validation"],
                 'label' => 'filtrer les résultats'
             ])
 

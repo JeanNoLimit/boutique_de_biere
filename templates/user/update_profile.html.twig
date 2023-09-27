@@ -36,7 +36,7 @@
                 {{ form_row(form.tel) }}
             </div>
                 
-            <button type="submit" class="btn_register button_validation">Modifier mes informations</button>
+            <button type="submit" class="btn_register button_base button_validation">Modifier mes informations</button>
 
             {{ form_end(form) }}
         </div>
@@ -44,8 +44,8 @@
     <div class="additionnal_actions">
         <h2 class="secondary_title_profile">Actions supplémentaires</h2>
 
-        <a href="{{ path('app_updatePassword')}}" class="button_links btn_updateProfil">Modifier mon mot de passe</a>
-        <a href="" class="button_links btn_updateProfil"> Supprimer mon compte</a>
+        <a href="{{ path('app_updatePassword')}}" class="button_base button_links btn_updateProfil">Modifier mon mot de passe</a>
+        <a href="" class="button_base button_links btn_updateProfil"> Supprimer mon compte</a>
     </div>
 
 </div>

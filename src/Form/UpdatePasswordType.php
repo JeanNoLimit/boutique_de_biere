@@ -51,7 +51,7 @@ class UpdatePasswordType extends AbstractType
                 ],
             ])
             ->add('envoyer', SubmitType::class, [
-                'attr' => ['class' => "btn_register button_validation"],
+                'attr' => ['class' => "btn_register button_base button_base button_validation"],
                 'label' => 'Modifier mon mot de passe'
             ]);
     }

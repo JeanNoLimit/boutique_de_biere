@@ -34,7 +34,7 @@ class ReviewType extends AbstractType
                 'required' => false,
             ])
             ->add('envoyer', SubmitType::class, [
-                'attr' => ['class' => "button_validation"],
+                'attr' => ['class' => "button_base button_validation"],
                 'label' => 'ajouter un avis'
             ])
 

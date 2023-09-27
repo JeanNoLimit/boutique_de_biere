@@ -4,6 +4,10 @@
 
 {% block body %}
 
+<div class="action_back">
+    <a href="{{path('products_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour boutique</a>
+</div>
+
 <h1>Panier</h1>
 
 {% if elements is defined and elements is not empty %}
@@ -54,14 +58,13 @@
 
     </table>
 
-    <a href="{{path('products_index')}}" style="color:palevioletred"> Retour boutique</a>
     <a href="{{ path('delete_cart')}}" style="color:red">Supprimer le panier</a>
 
-    <a href="{{ path ('checkBillingAddress')}}" class="button_validation">Valider le panier</a>
+ <div class="step_validation">
+    <a href="{{ path ('checkBillingAddress')}}" class="button_base button_step_validation">Valider mon panier <br>- passer à l'étape suivante - </a>
+ </div>
 {% else %}
-
     <p>Malheuresement votre panier est vide! </p>
-    <a href="{{path('products_index')}}" style="color:palevioletred"> Retour boutique</a>
 {% endif %}
 
 {% endblock %}
