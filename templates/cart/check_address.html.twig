@@ -86,11 +86,13 @@
         <p>Vous allez être redirigé vers le service de paiement.</p>
     </div>
 
+    {# VALIDATION ET PASSER AU PAIMENT #}
 
     <div class="step_validation">
         <button type="submit" class="btn_register button_base button_step_validation">payer <span style="font-weight:800;">{{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</span> par Stripe</button>
     </div>
-{{ form_end(form) }}
-{# VALIDATION ET PASSER AU PAIMENT #}
+    {{ form_end(form) }}
 
+    {% include "_partial/_bandeau_boissons.html.twig" %}
+    
 {% endblock %}
