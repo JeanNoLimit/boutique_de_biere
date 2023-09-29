@@ -27,6 +27,7 @@
 
 .block_assurance h3 {
     padding-bottom: 10px;
+    white-space: nowrap;
 }
 
 .block_assurance p {
@@ -68,7 +69,69 @@
 @media screen and (max-width:910px){
 
     .assurance_container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        row-gap: 5px;
         /* grid-template-rows:  */
     }
+
+    .block_assurance {
+        flex-direction: row;
+        min-height: 230px;
+        clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0% 90%, 0% 0%, 50% 10%);
+        margin: 0 auto;
+        padding-left: 5%;
+        box-sizing: border-box;
+        min-width: 95%;
+    }
+}
+
+@media screen and (max-width:600px){
+
+    .block_assurance h3 {
+        font-size: 1.1rem;
+    }
+    .block_assurance i {
+        font-size:6rem;
+    }
+
+    .block_assurance p {
+        padding: 5px 10%;
+    }
+
+}
+
+@media screen and (max-width:510px){
+
+    .block_assurance h3 {
+        font-size: 1rem;
+    }
+
+    .block_assurance i {
+        font-size:5rem;
+    }
+
+    .block_assurance p {
+        padding: 5px 5%;
+    }
+
+    .block_assurance_content {
+        padding : 20px 0;
+    }
+
+}
+@media screen and (max-width:380px){
+
+    .block_assurance h3 {
+        font-size: 0.95rem;
+    }
+
+    .block_assurance i {
+        font-size:4rem;
+    }
+
+    .block_assurance p {
+        padding: 5px 5%;
+        font-size: 0.92rem;
+    }
+
 }
