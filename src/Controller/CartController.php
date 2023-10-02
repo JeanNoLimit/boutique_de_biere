@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\CartType;
 use App\Entity\Product;
 use App\Form\UpdateProfilType;
@@ -11,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
@@ -27,7 +28,8 @@ class CartController extends AbstractController
         $stockTemp = null;
         $total = null;
         $elements = [];
-
+        
+        //On récupère le panier avec les produits....
         foreach ($panier as $id => $quantity) {
             $product = $entityManager->getRepository(Product::class)->findOneById($id);
             $SsTotal = $product->getPrice() * $quantity;
@@ -42,9 +44,49 @@ class CartController extends AbstractController
             $total += $SsTotal ;
         }
 
+        //On vérifie si l'utilisateur à payer sa cotisation et si elle est à jour. Sinon on rajoute un produit "cotisation"
+        $userSession=$this->getUser();
+        $today = new \DateTimeImmutable();
+        $cotisation = [];
+        $cotisationPrice = 1000;
+        
+        if($userSession){
+
+            $user = $entityManager->getRepository(User::class)->find($userSession->getId());
+            $userCotisationEndDate = $user->getMembershipContributionEndDate();
+
+            if($userCotisationEndDate && $userCotisationEndDate->format('Y-m-d')>=$today->format('Y-m-d')) {
+                $cotisation = [
+                    'endDate' => $userCotisationEndDate,
+                ];
+            }
+            else {
+
+                $newEndDate = $today->modify('+1 year');
+
+                $cotisation = [
+                    'endDate' => $newEndDate,
+                    'price' => $cotisationPrice,
+                ];
+
+                $total += $cotisationPrice;
+            }
+
+        }else {
+            $newEndDate = $today->modify('+1 year');
+
+            $cotisation[] = [
+                'endDate' => $newEndDate,
+                'price' => $cotisationPrice,
+            ];
+
+            $total += $cotisationPrice;
+        }
+        
         return $this->render('cart/index.html.twig', [
             'panier' => $panier,
             'elements' => $elements,
+            'cotisation' => $cotisation,
             'total' => $total
         ]);
     }

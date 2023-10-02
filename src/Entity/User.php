@@ -158,6 +158,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $ban = false;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $membershipContributionEndDate = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -448,6 +451,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBirthDate(?\DateTimeImmutable $birthDate): static
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function getMembershipContributionEndDate(): ?\DateTimeImmutable
+    {
+        return $this->membershipContributionEndDate;
+    }
+
+    public function setMembershipContributionEndDate(?\DateTimeImmutable $membershipContributionEndDate): static
+    {
+        $this->membershipContributionEndDate = $membershipContributionEndDate;
 
         return $this;
     }
