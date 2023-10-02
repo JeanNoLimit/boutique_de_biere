@@ -23,12 +23,23 @@ form {
 .input, select {
     width: 100%;
     padding: 10px;
-    height: 2rem;
+    /* height: 2rem; */
     font-size: 1.25rem;
     box-sizing: border-box;
     border: solid 1px #d1d1d1 ;
     border: solid 1px #d1d1d1 ;
     border-radius: 3px;
+}
+
+.input_date {
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5px;
+}
+
+.input_date select {
+    width: unset;
 }
 
 #registration_form_agreeTerms {
