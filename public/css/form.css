@@ -67,3 +67,10 @@ label{
     flex-direction: row;
     align-items: center;
 }
+
+@media screen and (max-Width: 520px) {
+    .formContainer{
+        width: 95%;
+        box-sizing: border-box;
+    }
+}
