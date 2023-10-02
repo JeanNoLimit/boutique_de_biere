@@ -17,7 +17,7 @@
             <p class="user_information"><span style="font-weight:600;">Pseudo : </span><span style="color:var(--dark-grey);" >{{ app.user.pseudo }}</span></p>
             <p class="user_information"><span style="font-weight:600;">Nom : </span><span style="color:var(--dark-grey);">{{ app.user.lastName }}</span></p>
             <p class="user_information"><span style="font-weight:600;">Prénom :</span><span style="color:var(--dark-grey);">{{ app.user.firstName }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Date de naissance:</span><span style="color:var(--dark-grey);">{{ app.user.birthDate }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Date de naissance:</span><span style="color:var(--dark-grey);">{{ app.user.birthDate|date("d/m/Y", "Europe/Paris") }}</span></p>
             <p class="user_information"><span style="font-weight:600;">Adresse : </span><span style="color:var(--dark-grey);" >{{ app.user.adress }}</span></p>
             <p class="user_information"><span style="font-weight:600;">Code Postal : </span><span style="color:var(--dark-grey);">{{ app.user.zipCode }}</span></p>
             <p class="user_information"><span style="font-weight:600;">Ville : </span><span style="color:var(--dark-grey);">{{ app.user.city }}</span></p>
