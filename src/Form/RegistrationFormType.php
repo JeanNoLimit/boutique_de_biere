@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
@@ -69,6 +70,8 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['class' => 'input_date'],
                 'format' => 'ddMMyyyy',
                 'input' => 'datetime_immutable',
+                'invalid_message' => 'Veuillez rentrer une date valide',
+                'data' => new DateTimeImmutable(),
             ])
             ->add('adress', TextType::class, [
                 'label' => 'Adresse',

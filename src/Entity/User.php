@@ -86,11 +86,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
     private ?string $firstName = null;
     
-    
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner votre date de naissance'
+    ])]
     #[Assert\LessThanOrEqual([
         'value' => '-18 years',
         'message' => 'Vous devez avoir plus de 18 ans pour vous inscrire!'])]
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $birthDate = null;
 
     #[ORM\Column(length: 150)]
@@ -450,15 +452,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthDateTest(): ?\DateTimeInterface
-    {
-        return $this->birthDateTest;
-    }
-
-    public function setBirthDateTest(?\DateTimeInterface $birthDateTest): static
-    {
-        $this->birthDateTest = $birthDateTest;
-
-        return $this;
-    }
 }
