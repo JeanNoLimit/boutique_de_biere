@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class UpdateProfilType extends AbstractType
 {
@@ -24,6 +25,13 @@ class UpdateProfilType extends AbstractType
         ->add('firstName', TextType::class, [
             'label' => 'Prénom',
             'attr' => ['class' => 'input', 'min' => '2', 'maxlength' => '50']
+        ])
+        ->add('birthDate', BirthdayType::class, [
+            'label' => 'Date de Naissance',
+            'attr' => ['class' => 'input_date' ],
+            'format' => 'ddMMyyyy',
+            'input' => 'datetime_immutable',
+            'disabled' => true,
         ])
         ->add('adress', TextType::class, [
             'label' => 'Adresse',

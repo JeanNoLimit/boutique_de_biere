@@ -32,7 +32,6 @@ form {
 }
 
 .input_date {
-    padding: 10px 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 5px;

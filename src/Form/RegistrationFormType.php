@@ -69,7 +69,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['class' => 'input_date'],
                 'format' => 'ddMMyyyy',
                 'input' => 'datetime_immutable',
-                
             ])
             ->add('adress', TextType::class, [
                 'label' => 'Adresse',
