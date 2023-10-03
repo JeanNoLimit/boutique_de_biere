@@ -13,15 +13,19 @@
 
         <h2 class="secondary_title_profile">Mes informations</h2>
 
-            <p class="user_information"><span style="font-weight:600;">Email : </span><span style="color:var(--dark-grey);" >{{ app.user.email }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Pseudo : </span><span style="color:var(--dark-grey);" >{{ app.user.pseudo }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Nom : </span><span style="color:var(--dark-grey);">{{ app.user.lastName }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Prénom :</span><span style="color:var(--dark-grey);">{{ app.user.firstName }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Date de naissance:</span><span style="color:var(--dark-grey);">{{ app.user.birthDate|date("d/m/Y", "Europe/Paris") }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Adresse : </span><span style="color:var(--dark-grey);" >{{ app.user.adress }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Code Postal : </span><span style="color:var(--dark-grey);">{{ app.user.zipCode }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Ville : </span><span style="color:var(--dark-grey);">{{ app.user.city }}</span></p>
-            <p class="user_information"><span style="font-weight:600;">Téléphone : </span><span style="color:var(--dark-grey);">{{ app.user.tel }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Email : </span><span style="color:var(--dark-grey);" >{{ user.email }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Pseudo : </span><span style="color:var(--dark-grey);" >{{ user.pseudo }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Nom : </span><span style="color:var(--dark-grey);">{{ user.lastName }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Prénom :</span><span style="color:var(--dark-grey);">{{ user.firstName }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Date de naissance:</span><span style="color:var(--dark-grey);">{{ user.birthDate|date("d/m/Y", "Europe/Paris") }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Adresse : </span><span style="color:var(--dark-grey);" >{{ user.adress }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Code Postal : </span><span style="color:var(--dark-grey);">{{ user.zipCode }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Ville : </span><span style="color:var(--dark-grey);">{{ user.city }}</span></p>
+            <p class="user_information"><span style="font-weight:600;">Téléphone : </span><span style="color:var(--dark-grey);">{{ user.tel }}</span></p>
+            {% if user.membershipContributionEndDate is not null %}
+                <p class="user_information"><span style="font-weight:600;">Expiration de la cotisation le :  </span><span style="color:var(--dark-grey);">{{ user.membershipContributionEndDate|date("d/m/Y", "Europe/Paris") }}</span></p>   
+            {% endif %}
+
         
         <a href="{{ path("app_updateProfile") }}" class="button_base button_links modify_profil">Modifier mon profil</a>
     </div>

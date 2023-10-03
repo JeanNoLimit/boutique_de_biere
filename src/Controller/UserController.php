@@ -19,15 +19,18 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_userProfile')]
-    public function index(OrderRepository $orderRepository): Response
-    {
+    public function index(
+        OrderRepository $orderRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
 
         $userId = $this->getUser()->getId();
-
+        $user = $entityManager->getRepository(User::class)->find($userId);
         $ordersArchives = $orderRepository->findOrdersPreparedByUserId($userId);
         $ordersInProcess = $orderRepository->findOrdersInProccessByUserId($userId);
 
         return $this->render('user/view_profile.html.twig', [
+            'user' => $user,
             'ordersInProcess' => $ordersInProcess,
             'ordersArchives' => $ordersArchives,
         ]);
