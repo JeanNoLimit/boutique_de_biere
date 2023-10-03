@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ShopParametersCrudController extends AbstractCrudController
@@ -43,6 +44,9 @@ class ShopParametersCrudController extends AbstractCrudController
                 ->setUploadDir('public/upload/images/site/')
                 ->setBasePath('upload/images/site/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]'),
+            MoneyField::new('contribution', 'prix de la cotisation')
+                ->setCurrency('EUR')
+                ->setNumDecimals(2),
         ];
     }
 }

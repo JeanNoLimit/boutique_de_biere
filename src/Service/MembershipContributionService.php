@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use App\Repository\ShopParametersRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class MembershipContributionService
@@ -13,11 +14,13 @@ class MembershipContributionService
         public function __construct(
             private Security $security,
             private RequestStack $requestStack,
-            private UserRepository $userRepository
+            private UserRepository $userRepository,
+            private ShopParametersRepository $shopParametersRepository,
         ){
             $this->requestStack = $requestStack;
             $this->userRepository = $userRepository;
             $this->security = $security;
+            $this->shopParametersRepository = $shopParametersRepository;
         }
 
         public function checkContribution() : array
@@ -27,7 +30,8 @@ class MembershipContributionService
             // $session = $request->getSession();
             $userSession = $this->security->getUser();
             $today = new \DateTimeImmutable();
-            $cotisationPrice = 1000;
+            $shopParameters = $this->shopParametersRepository->findAll()[0];
+            $cotisationPrice = $shopParameters->getContribution();
             $cotisation = [];
 
             if($userSession) {

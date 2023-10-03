@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ShopParametersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ShopParametersRepository::class)]
 class ShopParameters
@@ -18,6 +19,10 @@ class ShopParameters
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $defaultImageProduct = null;
+
+    #[Assert\PositiveOrZero(['message' => 'veuillez rentrer un montant valide.'])]
+    #[ORM\Column(nullable: true)]
+    private ?float $contribution = null;
 
     public function getId(): ?int
     {
@@ -44,6 +49,18 @@ class ShopParameters
     public function setDefaultImageProduct(?string $defaultImageProduct): static
     {
         $this->defaultImageProduct = $defaultImageProduct;
+
+        return $this;
+    }
+
+    public function getContribution(): ?float
+    {
+        return $this->contribution;
+    }
+
+    public function setContribution(?float $contribution): static
+    {
+        $this->contribution = $contribution;
 
         return $this;
     }
