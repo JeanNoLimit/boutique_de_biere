@@ -34,7 +34,7 @@
 
         <h2 class="secondary_title_profile">Mon historique de commandes</h2>
 
-        {% if ordersInProcess is not defined or ordersInProcess is empty and ordersArchives is not defined or ordersArchives is empty %}
+        {% if ordersInProcess is empty and ordersArchives is empty %}
             <p>Aucune commande dans votre historique</p>
         {% endif %}
 
