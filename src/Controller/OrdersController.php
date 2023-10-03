@@ -160,6 +160,10 @@ class OrdersController extends AbstractController
 
                     $total += $SsTotal ;
                 }
+                $contribution = $order->getContribution();
+                if (isset($contribution)){
+                    $total += $order->getContribution();
+                }
             } else {
                 $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
 

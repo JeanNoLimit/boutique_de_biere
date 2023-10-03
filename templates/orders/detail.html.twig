@@ -4,9 +4,12 @@
 
 {% block body %}
 
+<div class="action_back">
+    <a href="{{path('app_userProfile')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour profil</a>
+</div>
+
 <h1>Commande N°{{ order.reference }} du {{ order.createdAt|date("d/m/Y") }} à {{ order.createdAt|format_time(locale='fr') }} </h1>
 
-<a href="{{path('app_userProfile')}}"> Retour profil</a>
 
 <table style="min-width: 600px;margin:40px auto">
     {% for element in elements %}
@@ -27,12 +30,28 @@
         </tr>
       
     {% endfor %}
+    {% if order.contribution is not null %}
+        <tr>
+            <th colspan="3" style="text-align: left;font-size:1.3rem;">Cotisation valable jusqu'au {{ order.createdAt|date_modify("+1 year")|date("d/m/Y") }}</th>
+        </tr>
+        <tr style="height:30px;">
+            <td>
+                Quantité : 1
+            </td>
+            <td>
+                Prix : {{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €
+            </td>
+            <td>
+                Sous-Total : {{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €
+            </td>
+        </tr>
+    {% endif %}
 </table>
 {# br à supprimer #}
 <br><br><br>
 
 <div class="total_commande" style="display: flex;justify-content: space-around;margin-bottom:40px;">
-    <p> Nombre d'acticles : {{ elements|length }} </p>
+    <p> Nombre d'acticles : {{ order.contribution ? elements|length +1 : elements|length }} </p>
     <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
 </div>
 
