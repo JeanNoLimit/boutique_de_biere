@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Service\MembershipContributionService;
 use App\Form\CartType;
 use App\Entity\Product;
 use App\Form\UpdateProfilType;
@@ -20,10 +20,15 @@ class CartController extends AbstractController
     /***************************** GESTION VUE PANIER *****************************************/
 
     #[Route('/cart', name: 'cart_index')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function index(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        MembershipContributionService $membershipContribution
+    ): Response{
+
         $session = $request->getSession();
         $panier = $session->get('panier', []);
+        
         $SsTotal = null;
         $stockTemp = null;
         $total = null;
@@ -45,34 +50,8 @@ class CartController extends AbstractController
         }
 
         /****** COTISATION ******/
-        //On vérifie si l'utilisateur a payé sa cotisation et si elle est à jour. Sinon on rajoute un produit "cotisation"
-        $userSession = $this->getUser();
-        $today = new \DateTimeImmutable();
-        $cotisation = $session->get('cotisation', []);
-        $cotisationPrice = 1000;
-        
-        //Si un utilisateur est connecté en session, on récupère ses infos en b.d.d.
-        if($userSession){
-            $user = $entityManager->getRepository(User::class)->find($userSession->getId());
-            $userCotisationEndDate = $user->getMembershipContributionEndDate();
-        }
-        //Si une date de cotisation existe et qu'elle est supérerieure à la date du jour
-        //on renvoie la date pour affichage, sinon on ajoute la cotisation dans le tableau panier
-        if(isset($userCotisationEndDate) && $userCotisationEndDate->format('Y-m-d')>=$today->format('Y-m-d')) {
-            $cotisation = [
-                'endDate' => $userCotisationEndDate,
-            ];
-        }
-        else {
-            $newEndDate = $today->modify('+1 year');
-            $cotisation = [
-                'endDate' => $newEndDate,
-                'price' => $cotisationPrice,
-            ];
-            $session->set('cotisation', $cotisation);
-            $total += $cotisationPrice;
-        }
-
+        $cotisation=$membershipContribution->checkContribution();
+        $total += $cotisation['price'];
         
         return $this->render('cart/index.html.twig', [
             'panier' => $panier,
@@ -186,7 +165,8 @@ class CartController extends AbstractController
     public function checkBillingAddress(
         Request $request,
         EntityManagerInterface $em,
-        UserRepository $userRepo
+        UserRepository $userRepo,
+        MembershipContributionService $membershipContribution,
     ): Response {
 
         //On vérifie si l'utilisateur est connecté
@@ -199,6 +179,7 @@ class CartController extends AbstractController
         $total = null;
         $stockTemp = null;
         $elements = [];
+        $cotisation = $membershipContribution->checkContribution();
         $idUser = $this->getUser()->getId();
         $user = $userRepo->find($idUser);
 
@@ -220,6 +201,8 @@ class CartController extends AbstractController
 
                     $total += $SsTotal ;
                 }
+
+                $total += $cotisation['price'];
 
                 /******* création du formulaire *************/
                 $form = $this->createForm(UpdateProfilType::class, $user);
@@ -251,7 +234,8 @@ class CartController extends AbstractController
         return $this->render('cart/check_address.html.twig', [
             'elements' => $elements,
             'total' => $total,
-            'form' => $form
+            'form' => $form,
+            'cotisation' => $cotisation
         ]);
     }
 }

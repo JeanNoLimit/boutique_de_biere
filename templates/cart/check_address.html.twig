@@ -34,21 +34,35 @@
             </tr>
             {% if element.product.stock <= 0 %}
                 <tr>
-                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                    <td colspan="3" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                 </tr>
             {% elseif element.stockTemp < 0 %}
                 <tr>
-                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                    <td colspan="3" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                 </tr>
             {% endif %}
 
         {% endfor %}
+
+        {% if cotisation is defined and cotisation is not empty %}
+        {# COTISATION #}
+        <tr>
+            <td colspan="3" style="text-align: left;font-size:1.3rem;"><span style="font-weight: 600;">Cotisation annuelle valable jusqu'au {{cotisation.endDate |date("d/m/Y", "Europe/Paris") }}  </span> </td> 
+        </tr>
+            {% if cotisation.price > 0 %}
+                <tr>
+                    <td>Quantité : 1 </td>
+                    <td>Prix : {{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                    <td>Sous-Total : {{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                </tr>
+            {% endif %}
+    {% endif %}
     </table>
 {# br à supprimer #}
 <br><br><br>
 
     <div class="total_commande" style="display: flex;justify-content: space-around;margin-bottom:40px;">
-        <p> Nombre d'acticles : {{ elements|length }} </p>
+        <p> Nombre d'acticles : {{ cotisation.price == 0 ? elements|length : elements|length +1 }} </p>
         <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
     </div>
 
@@ -64,6 +78,9 @@
         </div>
         <div class="row">
             {{ form_row(form.firstName) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.birthDate) }}
         </div>
         <div class="row">
             {{ form_row(form.adress) }}
