@@ -43,6 +43,9 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripeId = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $contribution = null;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -154,6 +157,18 @@ class Order
     public function setStripeId(?string $stripeId): static
     {
         $this->stripeId = $stripeId;
+
+        return $this;
+    }
+
+    public function getContribution(): ?float
+    {
+        return $this->contribution;
+    }
+
+    public function setContribution(?float $contribution): static
+    {
+        $this->contribution = $contribution;
 
         return $this;
     }

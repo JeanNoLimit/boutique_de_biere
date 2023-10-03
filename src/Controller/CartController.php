@@ -165,7 +165,7 @@ class CartController extends AbstractController
     public function checkBillingAddress(
         Request $request,
         EntityManagerInterface $em,
-        UserRepository $userRepo,
+        UserRepository $userRepository,
         MembershipContributionService $membershipContribution,
     ): Response {
 
@@ -181,7 +181,7 @@ class CartController extends AbstractController
         $elements = [];
         $cotisation = $membershipContribution->checkContribution();
         $idUser = $this->getUser()->getId();
-        $user = $userRepo->find($idUser);
+        $user = $userRepository->find($idUser);
 
         //On vérifie que l'utilisateur a bien validé son adresse email
         if ($user->isVerified()) {

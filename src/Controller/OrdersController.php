@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Order;
 use Stripe\StripeClient;
+use Stripe\PaymentIntent;
 use App\Entity\OrderDetails;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Stripe\PaymentIntent;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\MembershipContributionService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +22,8 @@ class OrdersController extends AbstractController
     public function index(
         Request $request,
         ProductRepository $productRepository,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        MembershipContributionService $MCS
     ): Response {
 
         // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
@@ -45,10 +48,12 @@ class OrdersController extends AbstractController
         }
 
 
-        //On récupère le panier et l'utilisateur
+        //On récupère le panier, la cotisation et l'utilisateur
+        $cotisation = $MCS->checkContribution();
         $session = $request->getSession();
         $panier = $session->get('panier', []);
-        $user = $this->getUser();
+        $userSession = $this->getUser();
+        $user = $em->getRepository(User::class)->find($userSession->getId());
 
         if (!$orderVerification) {
             if ($user->isVerified()) {
@@ -89,6 +94,15 @@ class OrdersController extends AbstractController
                         $newStock = $product->getStock() - $qte;
                         $product->setStock($newStock);
                     }
+
+                    //Ajout cotisation à la commande et mise à jour nouvelle date à l'utilisateur
+                    $userEndDate = $user->getMembershipContributionEndDate();
+                    if(!isset($userEndDate) || $cotisation['endDate']->format('Y-m-d') != $userEndDate->format('Y-m-d'))
+                    {
+                        $order->setContribution($cotisation['price']);
+                        $user->setMembershipContributionEndDate($cotisation['endDate']);
+                    }
+                    
                     $em->persist($order);
                     $em->flush();
 

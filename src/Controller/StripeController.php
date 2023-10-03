@@ -6,6 +6,7 @@ use Stripe\Stripe;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\MembershipContributionService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,15 +21,19 @@ class StripeController extends AbstractController
     }
 
     #[Route('/stripe/checkout', name: 'app_stripe_checkout')]
-    public function startPayement(Request $request, EntityManagerInterface $em): RedirectResponse
-    {
+    public function startPayement(
+        Request $request,
+        EntityManagerInterface $em,
+        MembershipContributionService $contributionService
+    ): RedirectResponse {
 
         //On veut récupérer la liste des produits
         $productStripe = [];
 
-        // On récupère le panier
+        // On récupère le panier et la cotisation
         $session = $request->getSession();
         $panier = $session->get('panier', []);
+        $cotisation = $contributionService->checkContribution();
         //Si le panier est vide on renvoie vers le panier et affichage d'un message d'un erreur
         if (!$panier) {
             $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
@@ -50,7 +55,19 @@ class StripeController extends AbstractController
                 'quantity' => $quantity,
             ];
         }
-
+        //On ajoute la cotisation à la liste des produits
+        if ($cotisation['price'] > 0) {
+            $productStripe[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'unit_amount' => $cotisation['price'],
+                    'product_data' => [
+                    'name' => 'Cotisation valable jusqu\'au ' . $cotisation['endDate']->format('d-m-Y')
+                    ],
+                ],
+                'quantity' => $quantity,
+            ];
+        }
         $checkout_session = \Stripe\Checkout\Session::create([
             'customer_email' => $this->getUser()->getEmail(),
             'line_items' => [[
