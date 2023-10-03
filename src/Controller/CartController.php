@@ -41,47 +41,38 @@ class CartController extends AbstractController
                 'SsTotal' => $SsTotal
             ];
 
-            $total += $SsTotal ;
+            $total += $SsTotal;
         }
 
-        //On vérifie si l'utilisateur à payer sa cotisation et si elle est à jour. Sinon on rajoute un produit "cotisation"
-        $userSession=$this->getUser();
+        /****** COTISATION ******/
+        //On vérifie si l'utilisateur a payé sa cotisation et si elle est à jour. Sinon on rajoute un produit "cotisation"
+        $userSession = $this->getUser();
         $today = new \DateTimeImmutable();
-        $cotisation = [];
+        $cotisation = $session->get('cotisation', []);
         $cotisationPrice = 1000;
         
+        //Si un utilisateur est connecté en session, on récupère ses infos en b.d.d.
         if($userSession){
-
             $user = $entityManager->getRepository(User::class)->find($userSession->getId());
             $userCotisationEndDate = $user->getMembershipContributionEndDate();
-
-            if($userCotisationEndDate && $userCotisationEndDate->format('Y-m-d')>=$today->format('Y-m-d')) {
-                $cotisation = [
-                    'endDate' => $userCotisationEndDate,
-                ];
-            }
-            else {
-
-                $newEndDate = $today->modify('+1 year');
-
-                $cotisation = [
-                    'endDate' => $newEndDate,
-                    'price' => $cotisationPrice,
-                ];
-
-                $total += $cotisationPrice;
-            }
-
-        }else {
+        }
+        //Si une date de cotisation existe et qu'elle est supérerieure à la date du jour
+        //on renvoie la date pour affichage, sinon on ajoute la cotisation dans le tableau panier
+        if(isset($userCotisationEndDate) && $userCotisationEndDate->format('Y-m-d')>=$today->format('Y-m-d')) {
+            $cotisation = [
+                'endDate' => $userCotisationEndDate,
+            ];
+        }
+        else {
             $newEndDate = $today->modify('+1 year');
-
-            $cotisation[] = [
+            $cotisation = [
                 'endDate' => $newEndDate,
                 'price' => $cotisationPrice,
             ];
-
+            $session->set('cotisation', $cotisation);
             $total += $cotisationPrice;
         }
+
         
         return $this->render('cart/index.html.twig', [
             'panier' => $panier,
@@ -201,7 +192,7 @@ class CartController extends AbstractController
         //On vérifie si l'utilisateur est connecté
         // $this->denyAccessUnlessGranted('ROLE_USER');
 
-        //On récupère le panier et l'utilisateur
+        //On récupère le panier et la cotisation de l'utilisateur
         $session = $request->getSession();
         $panier = $session->get('panier', []);
         $SsTotal = null;
@@ -240,8 +231,7 @@ class CartController extends AbstractController
                     $em->persist($user);
                     $em->flush();
 
-                    $this->addFlash('success', 'Informations de facturation validées');
-
+                    // $this->addFlash('success', 'Informations de facturation validées');
 
                     // Gestion de la redirection vers le site de paiement
                     return $this->redirectToRoute('app_stripe_checkout');
