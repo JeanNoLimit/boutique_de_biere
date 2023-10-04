@@ -4,11 +4,21 @@
 
 {% block body %}
 
-<p>Votre commande a bien été prise en compte.</p>
+    <div class="action_back">
+        <a href="{{path('products_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour boutique</a>
+    </div>
 
-<a href="{{path('products_index')}}"> Retour boutique</a>
-<a href="{{path('order_detail', {'reference' : reference})}}"> Voir le détail de la commande</a>
-<a href="{{path('app_userProfile')}}"> Accédez à votre profil</a>
+    <div class="stripe_redirect_container">
+        <div class="stripe_redirect_content">
+            <p>Votre commande a bien été prise en compte.</p>
+            <p>Un mail de confirmation va vous être envoyé, veuillez vérifier votre boîte mail.</p>
+        </div>
+        
+        <div class="button_stripe_success">
+            <a href="" class="button_base button_links"> Voir le détail de la commande</a>
+            <a href="{{path('app_userProfile')}}" class="button_base button_links"> Accédez à votre profil</a>
+        </div>
+       
 
-
+    </div>
 {% endblock %}

@@ -28,7 +28,14 @@
     padding: 0;
 }
 
+body {
+    min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+}
+
 .container {
+    width: 100%;
     max-width: 1180px;
     margin: 0px auto;
     padding: 90px 0;

@@ -4,6 +4,14 @@
 
 {% block body %}
 
-<p>Une erreur c'est produite et votre commande n'a pu aboutir</p>
+    <div class="action_back">
+        <a href="{{path('cart_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour Panier</a>
+    </div>
+
+    <div class="stripe_redirect_content">
+         <p>Une erreur c'est produite et votre commande n'a pu aboutir!</p>
+         <p>Veuillez rééssayer ultérieurement...</p>
+    </div>
+   
 
 {% endblock %}
