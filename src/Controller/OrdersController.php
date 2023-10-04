@@ -96,13 +96,12 @@ class OrdersController extends AbstractController
                     }
 
                     //Ajout cotisation à la commande et mise à jour nouvelle date à l'utilisateur
-                    $userEndDate = $user->getMembershipContributionEndDate();
-                    if(!isset($userEndDate) || $cotisation['endDate']->format('Y-m-d') != $userEndDate->format('Y-m-d'))
-                    {
+                    $endDate = $user->getMembershipContributionEndDate();
+                    if (!isset($endDate) || $cotisation['endDate']->format('Y-m-d') != $endDate->format('Y-m-d')) {
                         $order->setContribution($cotisation['price']);
                         $user->setMembershipContributionEndDate($cotisation['endDate']);
                     }
-                    
+
                     $em->persist($order);
                     $em->flush();
 
@@ -161,7 +160,7 @@ class OrdersController extends AbstractController
                     $total += $SsTotal ;
                 }
                 $contribution = $order->getContribution();
-                if (isset($contribution)){
+                if (isset($contribution)) {
                     $total += $order->getContribution();
                 }
             } else {

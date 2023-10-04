@@ -24,16 +24,16 @@ class CartController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         MembershipContributionService $membershipContribution
-    ): Response{
+    ): Response {
 
         $session = $request->getSession();
         $panier = $session->get('panier', []);
-        
+
         $SsTotal = null;
         $stockTemp = null;
         $total = null;
         $elements = [];
-        
+
         //On récupère le panier avec les produits....
         foreach ($panier as $id => $quantity) {
             $product = $entityManager->getRepository(Product::class)->findOneById($id);
@@ -50,9 +50,9 @@ class CartController extends AbstractController
         }
 
         /****** COTISATION ******/
-        $cotisation=$membershipContribution->checkContribution();
+        $cotisation = $membershipContribution->checkContribution();
         $total += $cotisation['price'];
-        
+
         return $this->render('cart/index.html.twig', [
             'panier' => $panier,
             'elements' => $elements,

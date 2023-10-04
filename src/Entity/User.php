@@ -85,7 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
         'maxMessage' => 'Votre prénom ne peut contenir plus de {{ limit }} caractères'])]
     private ?string $firstName = null;
-    
+
     #[Assert\NotBlank([
         'message' => 'veuillez renseigner votre date de naissance'
     ])]
@@ -466,5 +466,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }

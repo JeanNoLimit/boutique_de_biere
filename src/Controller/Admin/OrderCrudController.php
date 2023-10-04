@@ -43,7 +43,7 @@ class OrderCrudController extends AbstractCrudController
             IdField::new('id')
             ->hideOnform(),
             TextField::new('reference', 'Réference'),
-            TextField::new('stripeId','Référence Stripe'),
+            TextField::new('stripeId', 'Référence Stripe'),
             BooleanField::new('isPaid', 'Commande payée'),
             booleanField::new('isProcessed', 'Commande Préparée'),
             AssociationField::new('user', 'Utilisateur'),
