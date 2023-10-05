@@ -2,7 +2,7 @@ footer {
     width: 100%;
     min-height: 250px ;
     background-color: rgba(0, 0, 0, 0.644);
-    
+    border-top: 2px solid black;
 }
 
 .footer_container {
@@ -16,7 +16,7 @@ footer {
 
 .mandatory_legal_message {
     text-align: center;
-    margin: 5px;
+    padding:10px;
     box-sizing: border-box;
 }
 
@@ -30,6 +30,7 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 15px;
+
 }
 
 .footer_sections h4 {
@@ -100,6 +101,7 @@ footer {
 .adress_and_opening {
     display: flex;
     flex-direction: row;
+    align-items: baseline;
     padding-top: 10px;
 }
 .adress_and_opening i {
@@ -126,4 +128,93 @@ footer {
     font-size: 0.9rem;
     padding : 5px 5px;
 
+}
+
+
+
+@media screen and (min-width:635px) and (max-width: 930px) {
+    
+    .mandatory_legal_message p {
+        font-size: 0.8rem ;
+    }
+    .legal_informations a {
+        font-size: 0.9rem;
+    }
+    .legal_informations i {
+        font-size: 0.7rem ;
+    }
+    .logos_social_networks i {
+        font-size: 3.5rem;
+    }
+    .social_networks_links a {
+        font-size: 0.9rem;
+    } 
+  
+    .adress_and_opening p {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media screen and (min-width:635px) and (max-width: 720px) {
+    .mandatory_legal_message p {
+        font-size: 0.7rem ;
+    }
+}
+
+@media screen and (max-width: 635px) {
+
+   .footer_sections {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+   }
+
+   .footer_sections section {
+    margin-bottom: 25px;
+   }
+
+   /************** Liens mentions légales *****************/
+
+    .footer_sections h4 {
+        font-size: 1.4rem;
+   }
+
+    .legal_informations i {
+        display: none;
+   }
+
+    .legal_informations li {
+        justify-content: center;
+        font-size: 0.95rem;
+   }
+
+   /********** liens réseaux sociaux ************/
+   .logos_social_networks{
+        padding-bottom: 10px;
+    }
+
+    /********** Partie adresse et horaires ********/
+
+    .adress_and_opening {
+       flex-direction: column;
+       align-items: center;
+       margin-bottom: 15px;
+    }
+
+    .adress_and_opening p {
+        padding-top: 5px;
+        text-align: center;
+    }
+}
+
+
+@media screen and (min-width:400px ) and (max-width: 635px) {
+
+   .logos_social_networks{
+        justify-content: center;
+   }
+
+    .fa-square-facebook{
+        padding: 0 40px;
+   }
 }
