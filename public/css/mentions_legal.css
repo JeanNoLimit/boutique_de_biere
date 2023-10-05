@@ -1,0 +1,29 @@
+.mentions_legales {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mentions_legales_content {
+    text-align: center;
+
+}
+
+.mentions_legales_content h2 {
+    margin: 30px 0;
+}
+
+
+@media screen and (max-width: 650px) {
+
+    .mentions_legales {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .mentions_legales_content {
+        margin-bottom: 30px;
+    
+    }
+
+}

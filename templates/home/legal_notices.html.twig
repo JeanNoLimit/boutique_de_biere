@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Mentions légales {% endblock title %}
+
+{% block body %}
+
+<h1>Mentions légales</h1>
+
+<div class="mentions_legales">
+    <div class="mentions_legales_content">
+        <h2 >Propriétaire</h2>
+
+            <p>Association l'échoppe</p>
+            <p>1, rue du Paradis du houblon</p>
+            <p>67000 Strasbourg</p>
+            <p>SIRET : XXX XXX XXX XXX XX</p>
+            <p>Tél : 06 01 02 03 04</p>
+            <p><a href=""><i class="fa-solid fa-envelope"></i> email </a></p>
+
+        <h2 >Hébergeur</h2>
+
+            <p>** Nom de l'hébergeur **</p>
+    </div>
+
+<img src="{{ asset('upload/images/site/bbdc0cbb7b63d8316d9d1ec608a7e721df93322b.png') }}" alt="logo du site" id="logo_header" >
+
+</div>
+
+
+{% endblock body %}
