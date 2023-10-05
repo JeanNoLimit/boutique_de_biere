@@ -1,0 +1,129 @@
+footer {
+    width: 100%;
+    min-height: 250px ;
+    background-color: rgba(0, 0, 0, 0.644);
+    
+}
+
+.footer_container {
+    width: 100%;
+    max-width: 1180px;
+    height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.mandatory_legal_message {
+    text-align: center;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.mandatory_legal_message p {
+    color:white;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.footer_sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 15px;
+}
+
+.footer_sections h4 {
+    color:white;
+    text-align: center;
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+}
+
+.footer_sections a {
+    color:white;
+}
+
+/************** Liens mentions légales *****************/
+
+.footer_sections li {
+    color:white;
+    list-style-position: inside;
+    list-style-type:none;
+    padding-top: 10px;
+}
+
+.legal_informations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.legal_informations li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.legal_informations i {
+    font-size: 0.8rem ;
+    padding-right: 5px;
+}
+
+/********** liens réseaux sociaux ************/
+
+.social_networks_links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position:relative;
+}
+
+.logos_social_networks {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.logos_social_networks i {
+    font-size: 4.5rem;
+}
+
+/************ Horaires et adresse***********/
+
+.asso_informations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adress_and_opening {
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+}
+.adress_and_opening i {
+    color: white;
+   font-size: 1rem;
+   padding-right: 15px;
+}
+
+.adress_and_opening p {
+    color:white;
+    font-size: 1rem;  
+}
+
+/************ Copyright *****************/
+
+.copyright_container {
+    width: 100%;
+    text-align: center;
+    border-top: solid 1px black;
+}
+
+.copyright_container p {
+    color:white;
+    font-size: 0.9rem;
+    padding : 5px 5px;
+
+}

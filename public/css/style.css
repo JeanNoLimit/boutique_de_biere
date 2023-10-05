@@ -8,6 +8,7 @@
 @import url(paginator.css);
 @import url(cart.css);
 @import url(assurance.css);
+@import url(footer.css);
 
 
 :root {
@@ -88,7 +89,6 @@ table, th, td {
 
 /* div qui contient bouton back */
 .action_back {
-    width: 100%;
     padding-left: 20px;
     height: 50px;
     display: flex ;
@@ -242,7 +242,7 @@ table, th, td {
     .home_presentation{
         flex-direction: column;
         align-items: center;
-       
+        margin: 0 10px;
     }
 
     .img_home_presentation{
@@ -255,5 +255,9 @@ table, th, td {
         max-width: 500px;
         margin: 0 10px;
     }
-
+@media screen and (max-width: 805px){
+    .img_home_presentation{
+        max-width: 100%;
+    }
+}
 }
