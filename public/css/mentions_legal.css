@@ -1,3 +1,5 @@
+/*************** Mentions légales ********************/
+
 .mentions_legales {
     display: flex;
     flex-direction: row;
@@ -14,7 +16,6 @@
     margin: 30px 0;
 }
 
-
 @media screen and (max-width: 650px) {
 
     .mentions_legales {
@@ -27,3 +28,12 @@
     }
 
 }
+
+/***************** Conditions générales de vente *******************/
+
+
+
+/**************** conditions d'utilisation *************************/
+
+
+/***************** Prodtection des données et vie privée **********/
