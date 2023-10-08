@@ -24,12 +24,12 @@
         <p class="product_liter_price"> (11.96 € le litre) </p>
       {% if product.stock <= 10 and product.stock > 0 %}
         {% if product.stock == 1 %}
-           <p> Il reste 1 article en stock</p>
+           <p class="item_stock stock_warning"> Il reste 1 article en stock</p>
         {% else %}
-            <p> Il reste {{product.stock }} articles en stock</p>
+            <p class="item_stock few_left"> Il reste {{product.stock }} articles en stock</p>
         {% endif %}
       {% elseif product.stock <= 0 %}
-        <p> Rupture de stock - Commande possible mais délais de livraison allongé </p>
+        <p class="item_stock stock_warning"> Rupture de stock - Commande possible mais délais de livraison allongé </p>
       {% endif %}
 
 
@@ -39,11 +39,13 @@
                     {{ form_label(form.quantity)}}
                     <div class="select_qte">
                       <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="minus" fill="var(--main-color)" id="minusForm"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+                        {# <i class="fa-solid fa-minus" id="minusForm"></i> #}
+                        <i class="fa-solid fa-square-minus" id="minusForm"></i>
                       </div>
                         {{ form_widget(form.quantity)}}
                         <div>
-                          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="plus" fill="var(--main-color)" id="plusForm"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg> 
+                          {# <i class="fa-solid fa-plus" id="plusForm"></i> #}
+                          <i class="fa-solid fa-square-plus" id="plusForm"></i>
                         </div>
                     </div>   
                 </div>

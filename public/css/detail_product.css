@@ -73,8 +73,25 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.item_stock {
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 10px;
+    
+}
+
+.few_left {
+    color: rgb(99, 187, 64);
+}
+
+.stock_warning {
+    color: rgb(255,0,0);
+}
+
+
 .input_number {
-    height: 30px;
+    height: 2.1rem;
     width: 35px;
     font-size: 16px;
     font-weight: 600;
@@ -89,15 +106,16 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-.minus {
+.fa-square-minus {
     cursor: pointer;
-    height: 25px;
+    font-size:2.5rem;
     margin-right: 10px;
+    color: var(--main-color);
 }
 
-.plus {
+.fa-square-plus {
     cursor: pointer;
-    height: 25px;
+    font-size: 2.5rem;
     margin-left: 10px;
     color: var(--main-color);
 }
