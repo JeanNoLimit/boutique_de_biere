@@ -61,26 +61,26 @@
     <table class="table_futher_informations">
         <tbody>
             <tr>
-              <td>Brasserie</td>
+              <th>Brasserie</th>
               <td> {{ product.provider.name }}</td>
             </tr>
             <tr>
-              <td>Ingrédients</td>
+              <th>Ingrédients</th>
               <td> {{ product.ingredients }}</td>
             </tr>
             <tr>
-              <td>Taux d'alcool</td>
+              <th>Taux d'alcool</th>
               <td> {{product.alcoholLevel}} °C </td>
             </tr>
             {% if product.bitterness is defined and product.bitterness is not null %}
                   <tr>
-                    <td>Amertume</td>
+                    <th>Amertume</th>
                     <td> {{ product.bitterness }} </td>
                   </tr>
             {% endif %}
         
             <tr>
-              <td>Style</td>
+              <th>Style</th>
               <td> 
                 {% for beerType in product.beerTypes %}
                   {% if product.beerTypes|length == 1 or beerType == product.beerTypes|last %}

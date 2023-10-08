@@ -9,7 +9,7 @@
 /******** Partie présentation du produit ********/
 .img_detail_product{
     width: 350px;
-    min-width: 350px;
+    /* min-width: 350px; */
     height: 350px;
     /* border: 1px solid black; */
     margin-right: 65px;
@@ -133,13 +133,9 @@ input::-webkit-inner-spin-button {
     font-size: 14px;
 }
 
-/* .table_futher_informations td {
-    border: 1px solid var(--main-color);
-    border-collapse: collapse;
-} */
-
-.table_futher_informations td {
+.table_futher_informations td,th {
     border: 1px solid black;
+    font-size: 1rem;
     padding: 10px;
 }
 
