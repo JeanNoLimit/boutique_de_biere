@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block meta %} <meta name="description" content="Bienvenue sur notre boutique en ligne - Découvrez notre selection de bières locales"> {% endblock meta %}
 {% block title %}la  Boutique - L'échoppe{% endblock %}
 
 {% block body %}
@@ -93,7 +93,7 @@
                         
                         <div class="more_info">plus d'infos</div>
                         {% if product[0].imageFile is defined and product[0].imageFile is not null %}
-                            <img src="upload/images/products/{{product[0].imageFile}}" alt="image {{product[0].designation}}">     
+                            <img src="upload/images/products/{{product[0].imageFile}}" alt="image de la bière {{product[0].designation}}">     
                         {% else %}
                             <img src="upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
                         {% endif %}

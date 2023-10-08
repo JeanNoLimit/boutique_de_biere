@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}{{product.designation}} - {{ product.volume|number_format }}cl - boutique l'échoppe{% endblock %}
+{% block meta %} <meta name="description" content="{{ product.description }}"> {% endblock meta %}
+{% block title %}{{product.designation}} - {{ product.volume|number_format }}cl  de la brasserie {{ product.provider.name }} - boutique l'échoppe{% endblock %}
 
 {% block body %}
 
