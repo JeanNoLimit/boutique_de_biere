@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -29,6 +30,11 @@ class ProductCrudController extends AbstractCrudController
         $product = new Product();
 
         return $product;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud;
     }
 
     public function configureFields(string $pageName): iterable
@@ -68,7 +74,7 @@ class ProductCrudController extends AbstractCrudController
             ImageField::new('imagefile', 'Image')
                 ->setUploadDir('public/upload/images/products/')
                 ->setBasePath('upload/images/products/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]'),
+                ->setUploadedFileNamePattern('[slug].[extension]'),
         ];
     }
 }
