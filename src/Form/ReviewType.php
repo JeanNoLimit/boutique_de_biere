@@ -23,7 +23,7 @@ class ReviewType extends AbstractType
                     '4' => 4,
                     '5' => 5
                 ],
-                'label' => 'Note',
+                'label' => 'Note / 5',
                 'attr' => ['class' => ""],
                 'invalid_message' => "La note doit être comprise entre 1 et 5",
                 'required' => true,
