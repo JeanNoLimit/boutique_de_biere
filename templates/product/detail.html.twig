@@ -54,7 +54,7 @@
         {{ form_end(form) }}
     </div>
 </div>
-{# 
+
 <div class="further_informations">
     <h2 class="secondary_title_detail_product">Informations détaillées</h2>
 
@@ -62,7 +62,12 @@
         <tbody>
             <tr>
               <th>Brasserie</th>
-              <td> {{ product.provider.name }}</td>
+              {% if product.provider.website is not null %}
+              <td> <a href="{{product.provider.website}}" target="_blank" rel="noopener noreferrer">{{ product.provider.name }}</a> </td>
+              {% else %}
+                <td> {{ product.provider.name }}</td>
+              {% endif %}
+              
             </tr>
             <tr>
               <th>Ingrédients</th>
@@ -75,7 +80,7 @@
             {% if product.bitterness is defined and product.bitterness is not null %}
                   <tr>
                     <th>Amertume</th>
-                    <td> {{ product.bitterness }} </td>
+                    <td> {{ product.bitterness }} I.B.U. </td>
                   </tr>
             {% endif %}
         
@@ -92,10 +97,14 @@
                 {% endfor %} 
               </td>
             </tr>
+            <tr>
+              <th>Volume</th>
+              <td> {{ product.volume|number_format }}cl </td>
+            </tr>
           </tbody>
     </table>
 </div>
-
+{# 
 <div class="review">
   <h2 class="secondary_title_detail_product">Avis</h2>
   {% if reviews is empty or reviews is not defined %}
