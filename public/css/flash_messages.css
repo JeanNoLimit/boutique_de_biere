@@ -1,3 +1,28 @@
+.flash {
+    text-align: center;
+    
+    font-weight: 600;
+    padding: 11px 30px;
+    margin: 0 20px;
+    border-radius: 10px;
+    position: relative;
+    top: -80px;
+}
+
+
+.flash-success {
+    color: var(--dark-grey);
+    background-color: var(--light-grey);
+}
+
+.flash-alert {
+    color:white;
+    background-color: #d14130;
+}
+
+
+
+/************* Flash ajout panier *******************/
 .flash_add_cart {
     width: 350px;
     background-color: var(--light-grey);
