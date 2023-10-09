@@ -240,6 +240,31 @@ input::-webkit-inner-spin-button {
 }
 
 
+/******************** FORMULAIRE AJOUT REVIEW ***************************/
+
+.add_review {
+    margin: 40px 20px;
+}
+
+.add_review h1 {
+    margin-bottom: 20px;
+ }
+
+.add_review h2 {
+    margin-bottom: 20px;
+    font-style: italic;
+ }
+
+.add_review .row {
+    padding-bottom: 20px;
+}
+.submit_review {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 @media screen and (max-width: 1080px) {
     .img_detail_product {
         margin-right: 20px;
@@ -278,6 +303,12 @@ input::-webkit-inner-spin-button {
         margin-top: 80px;
     }
 
+        /******* FORMULAIRE REVIEW *******/
+
+        .add_review {
+           text-align: center;
+        }
+    
 }
 
 @media screen and (max-width: 650px) {
@@ -331,5 +362,15 @@ input::-webkit-inner-spin-button {
 
     .secondary_title_detail_product {
         font-size: 1.4rem;
+    }
+
+    /******* FORMULAIRE REVIEW *******/
+
+    .add_review h1 {
+        font-size: 1.6rem;
+    }
+
+    .add_review h2 {
+        font-size: 1.2rem;
     }
 }

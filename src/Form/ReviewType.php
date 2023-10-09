@@ -30,12 +30,13 @@ class ReviewType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => "",'min' => "10", 'max' => "1000"],
-                'label' => 'description',
+                'label' => 'Détaillez votre avis',
                 'required' => false,
             ])
             ->add('envoyer', SubmitType::class, [
+                'row_attr' => ['class' =>'submit_review'],
                 'attr' => ['class' => "button_base button_validation"],
-                'label' => 'ajouter un avis'
+                'label' => 'Ajouter un avis'
             ])
 
             // ->add('user')

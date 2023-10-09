@@ -3,14 +3,22 @@
 {% block title %}Ajouter un avis{% endblock %}
 
 {% block body %}
-    <h1>Ajout d'un avis </h1>
+
+<div class="action_back">
+    <a href="{{ path('detail_product', {'slug' : product.slug })}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour en arrière</a>
+</div>
+
+<div class="add_review">
+
+
+    <h1>Ajouter un avis </h1>
+    
     <h2>{{product.designation}} - {{ product.volume|number_format }}cl</h2>
 
-    <a href="{{ path('detail_product', {'slug' : product.slug })}}"> Retour en arrière</a>
 
     {# {{ form(formReview)}} #}
 
-    {{ form_errors(formReview) }}
+        {{ form_errors(formReview) }}
         {{ form_start(formReview) }}
         
         <div class="row">
@@ -19,8 +27,9 @@
         <div class="row">
             {{ form_row(formReview.description) }}
         </div>
-
+            {{form_row(formReview.envoyer)}}
         {{ form_end(formReview) }}
+</div>
 {% endblock %}
 {% block javascripts %}
     <script src=" {{ asset('js/script.js')}}"></script>
