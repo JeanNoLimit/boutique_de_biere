@@ -151,7 +151,7 @@ input::-webkit-inner-spin-button {
 /***************** Avis clients *********************/
 
 .review {
-    margin-top: 30px;
+    margin: 30px 20px;
 }
 
 
@@ -270,6 +270,46 @@ input::-webkit-inner-spin-button {
         margin-left: 0;
         text-align: center;
     }
+    .further_informations {
+        margin-top: 80px;
+    }
+
+    .review {
+        margin-top: 80px;
+    }
+
+}
+
+@media screen and (max-width: 650px) {
+    
+    .reviews_summary {
+        align-items: center;
+    }
+    .reviews_summary a, .reviews_summary p {
+        font-size: 1.2rem;
+    }
+
+    .stats_reviews {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats_reviews p {
+        padding-left: unset;
+    }
+
+    .review_informations p {
+        font-size: 1rem;
+    }
+
+    .right_review_informations {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+    }
+
+    .dateTime_review {
+        font-size: 0.8rem !important;
+    }
 }
 
 @media screen and (max-width: 440px) {
@@ -279,5 +319,17 @@ input::-webkit-inner-spin-button {
 
     .form_select_qte {
         padding-bottom: 30px;
+    }
+
+    .reviews_summary a {
+        font-size: 1rem;
+    }
+
+    .review_description p {
+        font-size: 1rem;
+    }
+
+    .secondary_title_detail_product {
+        font-size: 1.4rem;
     }
 }
