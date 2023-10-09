@@ -1,4 +1,4 @@
-.product_presention{
+.product_presentation{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -8,19 +8,23 @@
 
 /******** Partie présentation du produit ********/
 .img_detail_product{
-    width: 350px;
-    /* min-width: 350px; */
-    height: 350px;
-    /* border: 1px solid black; */
+
+    max-width: 350px;
+    max-height: 350px;
     margin-right: 65px;
+    margin-left: 20px;
 }
 
 .img_detail_product img {
-    width: 350px;
-    height: 350px;
+    width:100%;
+    max-width: 350px;
+    max-height: 350px;
     object-fit: cover;
 }
 
+.product_informations {
+    margin: 0 20px;
+}
 .product_designation{
     margin-bottom: 20px; 
 }
@@ -32,7 +36,7 @@
 }
 
 .product_price_detail_product {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--tertiary-color) ;
 }
@@ -40,7 +44,7 @@
 .product_liter_price {
     color: var(--dark-grey);
     font-weight: 500;
-    font-size: 14px;
+    font-size: 0.95rem;
     margin-bottom: 20px;
 }
 
@@ -133,7 +137,7 @@ input::-webkit-inner-spin-button {
     font-size: 14px;
 }
 
-.table_futher_informations td,th {
+.table_futher_informations td, .table_futher_informations th {
     border: 1px solid black;
     font-size: 1rem;
     padding: 10px;
@@ -232,4 +236,36 @@ input::-webkit-inner-spin-button {
 }
 .fa-star-half-stroke {
     color:var(--main-color);
+}
+
+
+@media screen and (max-width: 1080px) {
+    .img_detail_product {
+        margin-right: 20px;
+    }
+
+}
+
+@media screen and (max-width: 735px) {
+    .product_presentation {
+        flex-direction: column;
+        align-items: center;
+    }
+    .product_informations {
+        text-align: center;
+    }
+    .form_detail_product {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .form_detail_product {
+        flex-direction: column;
+    }
+
+    .form_select_qte {
+        padding-bottom: 30px;
+    }
 }
