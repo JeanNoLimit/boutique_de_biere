@@ -10,7 +10,7 @@
 @import url(assurance.css);
 @import url(footer.css);
 @import url(mentions_legal.css);
-
+@import url(flash_messages.css);
 
 :root {
     --main-color-header-variation: #F2A03D;
@@ -41,6 +41,7 @@ body {
     max-width: 1180px;
     margin: 0px auto;
     padding: 90px 0;
+    position: relative;
 }
 
 a {

@@ -2,157 +2,186 @@
 {% block meta %} <meta name="description" content="{{ product.description }}"> {% endblock meta %}
 {% block title %}{{product.designation}} - {{ product.volume|number_format }}cl  de la brasserie {{ product.provider.name }} - boutique l'échoppe{% endblock %}
 
+
+{% block flash_container %}
+  {% for message in app.flashes('add_cart') %}         
+    <div class="flash_add_cart" id="flash_#1">
+      <div class="close_flash">
+        <a href="javascript:void(0);" style="color: var(--dark-grey)" onclick="closeFlash()"> <i class="fa-solid fa-square-xmark"></i></a>
+      </div>
+      <p>{{ message }}</p>
+      <div class="links_flash">
+        <a href="{{path('cart_index')}}" class="button_base button_links"> Votre panier</a>
+      </div>
+    </div>
+   {% endfor %} 
+{% endblock %}
+
 {% block body %}
 
-<div class="action_back">
-  <a href="{{path('products_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour boutique</a>
-</div>
+  
 
-<div class="product_presentation">
-
-    <div class="img_detail_product">
-      {% if product.imageFile is defined and product.imageFile is not null %}
-        <img src="{{ asset('upload/images/products/'~ product.imageFile) }}" alt="image {{product.designation}}">     
-      {% else %}
-        <img src="{{ asset('upload/images/site/' ~ parameters.defaultImageProduct) }}" alt="image par défaut">
-      {% endif %}
+    <div class="action_back">
+      <a href="{{path('products_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour boutique</a>
     </div>
-    <div class="product_informations">
-        <h1 class="product_designation">{{product.designation}} - {{ product.volume|number_format }}cl</h1>
-        <p class="description_product">{{ product.description }}</p>
-        <p class="product_price_detail_product">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
-        <p class="product_liter_price"> (11.96 € le litre) </p>
-      {% if product.stock <= 10 and product.stock > 0 %}
-        {% if product.stock == 1 %}
-           <p class="item_stock stock_warning"> Il reste 1 article en stock</p>
+
+  <div class="product_presentation">
+
+      <div class="img_detail_product">
+        {% if product.imageFile is defined and product.imageFile is not null %}
+          <img src="{{ asset('upload/images/products/'~ product.imageFile) }}" alt="image {{product.designation}}">     
         {% else %}
-            <p class="item_stock few_left"> Il reste {{product.stock }} articles en stock</p>
+          <img src="{{ asset('upload/images/site/' ~ parameters.defaultImageProduct) }}" alt="image par défaut">
         {% endif %}
-      {% elseif product.stock <= 0 %}
-        <p class="item_stock stock_warning"> Rupture de stock - Commande possible mais délais de livraison allongé </p>
-      {% endif %}
+      </div>
+      <div class="product_informations">
+          <h1 class="product_designation">{{product.designation}} - {{ product.volume|number_format }}cl</h1>
+          <p class="description_product">{{ product.description }}</p>
+          <p class="product_price_detail_product">{{ (product.price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
+          <p class="product_liter_price"> (11.96 € le litre) </p>
+        {% if product.stock <= 10 and product.stock > 0 %}
+          {% if product.stock == 1 %}
+            <p class="item_stock stock_warning"> Il reste 1 article en stock</p>
+          {% else %}
+              <p class="item_stock few_left"> Il reste {{product.stock }} articles en stock</p>
+          {% endif %}
+        {% elseif product.stock <= 0 %}
+          <p class="item_stock stock_warning"> Rupture de stock - Commande possible mais délais de livraison allongé </p>
+        {% endif %}
 
 
-        {{ form_start(form,  {'action': path('cart_add', {'id' : product.id})} )}}
-            <div class="form_detail_product"> 
-                <div class="form_select_qte">
-                    {{ form_label(form.quantity)}}
-                    <div class="select_qte">
-                      <div>
-                        {# <i class="fa-solid fa-minus" id="minusForm"></i> #}
-                        <i class="fa-solid fa-square-minus" id="minusForm"></i>
-                      </div>
-                        {{ form_widget(form.quantity)}}
+          {{ form_start(form,  {'action': path('cart_add', {'id' : product.id})} )}}
+              <div class="form_detail_product"> 
+                  <div class="form_select_qte">
+                      {{ form_label(form.quantity)}}
+                      <div class="select_qte">
                         <div>
-                          {# <i class="fa-solid fa-plus" id="plusForm"></i> #}
-                          <i class="fa-solid fa-square-plus" id="plusForm"></i>
+                          {# <i class="fa-solid fa-minus" id="minusForm"></i> #}
+                          <i class="fa-solid fa-square-minus" id="minusForm"></i>
                         </div>
-                    </div>   
-                </div>
-                {{ form_row(form.envoyer) }}
-            </div>
-        {{ form_end(form) }}
-    </div>
-</div>
+                          {{ form_widget(form.quantity)}}
+                          <div>
+                            {# <i class="fa-solid fa-plus" id="plusForm"></i> #}
+                            <i class="fa-solid fa-square-plus" id="plusForm"></i>
+                          </div>
+                      </div>   
+                  </div>
+                  {{ form_row(form.envoyer) }}
+              </div>
+          {{ form_end(form) }}
+      </div>
+  </div>
 
-<div class="further_informations">
-    <h2 class="secondary_title_detail_product">Informations détaillées</h2>
+  <div class="further_informations">
+      <h2 class="secondary_title_detail_product">Informations détaillées</h2>
 
-    <table class="table_futher_informations">
-        <tbody>
-            <tr>
-              <th>Brasserie</th>
-              {% if product.provider.website is not null %}
-              <td> <a href="{{product.provider.website}}" target="_blank" rel="noopener noreferrer">{{ product.provider.name }}</a> </td>
+      <table class="table_futher_informations">
+          <tbody>
+              <tr>
+                <th>Brasserie</th>
+                {% if product.provider.website is not null %}
+                <td> <a href="{{product.provider.website}}" target="_blank" rel="noopener noreferrer">{{ product.provider.name }}</a> </td>
+                {% else %}
+                  <td> {{ product.provider.name }}</td>
+                {% endif %}
+                
+              </tr>
+              <tr>
+                <th>Ingrédients</th>
+                <td> {{ product.ingredients }}</td>
+              </tr>
+              <tr>
+                <th>Taux d'alcool</th>
+                <td> {{product.alcoholLevel}} °C </td>
+              </tr>
+              {% if product.bitterness is defined and product.bitterness is not null %}
+                    <tr>
+                      <th>Amertume</th>
+                      <td> {{ product.bitterness }} I.B.U. </td>
+                    </tr>
+              {% endif %}
+          
+              <tr>
+                <th>Style</th>
+                <td> 
+                  {% for beerType in product.beerTypes %}
+                    {% if product.beerTypes|length == 1 or beerType == product.beerTypes|last %}
+                      {{beerType.name}}   
+                    {% else %}
+                      {{beerType.name}},       
+                    {% endif %}
+                    
+                  {% endfor %} 
+                </td>
+              </tr>
+              <tr>
+                <th>Volume</th>
+                <td> {{ product.volume|number_format }}cl </td>
+              </tr>
+            </tbody>
+      </table>
+  </div>
+
+  <div class="review">
+    <h2 class="secondary_title_detail_product">Avis</h2>
+    {% if reviews is empty or reviews is not defined %}
+      <div class="empty_review">
+        <p>Cette bière est surement exellente mais personne n'a donné un avis pour l'instant!</p>
+        <p>Soyez le premier à <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">ajouter un avis !</a> </p>
+      </div>
+    {% else %}
+      
+      <div class="reviews_summary">
+        {% if userReview is defined and userReview is not null  %}
+
+        <a href="{{ path('edit_review',  {'slug' : product.slug, 'userId' : app.user.id,'id' : userReview.id} )}}" class="link_add_review">Modifier votre avis</a> 
+        {% else %}
+          <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
+        {% endif %}
+        <div class="stats_reviews">
+          <p>{{ reviews|length }} avis</p>
+          <p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} {{ product.average| stars }} </p>
+        </div>
+      </div>
+
+
+      {% for review in reviews %}
+      
+      <div class="review_content">
+          <hr class="review_separator">
+          <div class="review_informations">
+            <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
+            <div class="right_review_informations">
+              {% if review.updatedAt is not empty and review.updatedAt is not null %}
+                <p class="dateTime_review">Modifié le {{ review.updatedAt|format_date('short', locale='fr')}} à {{ review.updatedAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
               {% else %}
-                <td> {{ product.provider.name }}</td>
+                <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
               {% endif %}
               
-            </tr>
-            <tr>
-              <th>Ingrédients</th>
-              <td> {{ product.ingredients }}</td>
-            </tr>
-            <tr>
-              <th>Taux d'alcool</th>
-              <td> {{product.alcoholLevel}} °C </td>
-            </tr>
-            {% if product.bitterness is defined and product.bitterness is not null %}
-                  <tr>
-                    <th>Amertume</th>
-                    <td> {{ product.bitterness }} I.B.U. </td>
-                  </tr>
-            {% endif %}
-        
-            <tr>
-              <th>Style</th>
-              <td> 
-                {% for beerType in product.beerTypes %}
-                  {% if product.beerTypes|length == 1 or beerType == product.beerTypes|last %}
-                    {{beerType.name}}   
-                  {% else %}
-                    {{beerType.name}},       
-                  {% endif %}
-                  
-                {% endfor %} 
-              </td>
-            </tr>
-            <tr>
-              <th>Volume</th>
-              <td> {{ product.volume|number_format }}cl </td>
-            </tr>
-          </tbody>
-    </table>
-</div>
-
-<div class="review">
-  <h2 class="secondary_title_detail_product">Avis</h2>
-  {% if reviews is empty or reviews is not defined %}
-    <div class="empty_review">
-      <p>Cette bière est surement exellente mais personne n'a donné un avis pour l'instant!</p>
-      <p>Soyez le premier à <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">ajouter un avis !</a> </p>
-    </div>
-  {% else %}
+              <p>{{ review.rating | stars }}</p>
+            </div>
+          </div>
     
-    <div class="reviews_summary">
-      {% if userReview is defined and userReview is not null  %}
-
-      <a href="{{ path('edit_review',  {'slug' : product.slug, 'userId' : app.user.id,'id' : userReview.id} )}}" class="link_add_review">Modifier votre avis</a> 
-      {% else %}
-        <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
-      {% endif %}
-      <div class="stats_reviews">
-        <p>{{ reviews|length }} avis</p>
-        <p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} {{ product.average| stars }} </p>
-      </div>
-    </div>
-
-
-    {% for review in reviews %}
-    
-    <div class="review_content">
-        <hr class="review_separator">
-        <div class="review_informations">
-          <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
-          <div class="right_review_informations">
-            {% if review.updatedAt is not empty and review.updatedAt is not null %}
-              <p class="dateTime_review">Modifié le {{ review.updatedAt|format_date('short', locale='fr')}} à {{ review.updatedAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
-            {% else %}
-              <p class="dateTime_review">Le {{ review.createdAt|format_date('short', locale='fr')}} à {{ review.createdAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
-            {% endif %}
-            
-            <p>{{ review.rating | stars }}</p>
+          <div class="review_description">
+            <p>{{ review.description | raw }}</p>
           </div>
         </div>
-  
-        <div class="review_description">
-          <p>{{ review.description | raw }}</p>
-        </div>
-      </div>
-      
-    {% endfor %}
-    {{ knp_pagination_render(reviews) }}
-  {% endif %}
-</div>
+        
+      {% endfor %}
+      {{ knp_pagination_render(reviews) }}
+    {% endif %}
+  </div>
 
+
+  {% block javascripts %}
+    <script src=" {{ asset('js/script.js')}}"></script>
+    <script>
+      function closeFlash() {
+        let flash = document.getElementById('flash_#1');
+        flash.style.display ="none";
+      }
+
+    
+    </script>
+  {% endblock %}
 {% endblock %}

@@ -1,0 +1,36 @@
+.flash_add_cart {
+    width: 350px;
+    background-color: var(--light-grey);
+    border: 2px solid var(--dark-grey);
+    border-radius: 15px;
+    position:absolute;
+    top: 15px;
+    left:50%;
+    transform: translate(-50%, 0);
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.flash_add_cart p {
+    text-align: center;
+}
+
+.close_flash {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    padding-right: 5px;
+}
+
+.links_flash {
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+@media screen and (max-width:390px) {
+    .flash_add_cart {
+        width: 95%;
+    }
+    
+}

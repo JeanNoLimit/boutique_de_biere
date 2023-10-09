@@ -93,6 +93,7 @@ class CartController extends AbstractController
             } else {
                 $panier[$id] = $quantity;
             }
+            $this->addFlash('add_cart', 'Produit ajouté au panier');
         }
         // On sauvegarde le panier en session pour continuer nos achats en boutique
         $session->set('panier', $panier);

@@ -15,9 +15,8 @@
     </head>
     <body>
 
-    
         {% include "_partial/_header.html.twig" %}
-
+ 
         <div class="container">
 
             {% for message in app.flashes('success') %}         
@@ -32,6 +31,8 @@
                 {{ message }}
             </div>
             {% endfor %}
+            
+           {% block flash_container %}{% endblock %}
             
             {% block body %}{% endblock %}
 
