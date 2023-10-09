@@ -40,7 +40,7 @@
     background-color: var(--main-color-header-variation);
     position: sticky;
     top: 0px;
-    z-index:999;
+    z-index:99;
     
 }
 

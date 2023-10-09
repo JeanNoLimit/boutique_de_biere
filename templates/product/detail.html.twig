@@ -4,16 +4,18 @@
 
 
 {% block flash_container %}
-  {% for message in app.flashes('add_cart') %}         
-    <div class="flash_add_cart" id="flash_#1">
+  {% for message in app.flashes('add_cart') %}
+  <div class="modal_add_cart" id="flash_#1">
+    <div class="flash_add_cart">
       <div class="close_flash">
-        <a href="javascript:void(0);" style="color: var(--dark-grey)" onclick="closeFlash()"> <i class="fa-solid fa-square-xmark"></i></a>
+        <a href="javascript:void(0);" style="color: var(--dark-grey)" onclick="closeFlash()" aria-label="Fermer la fenêtre"> <i class="fa-solid fa-square-xmark"></i></a>
       </div>
-      <p>{{ message }}</p>
+      <p>{{ message|raw }}</p>
       <div class="links_flash">
-        <a href="{{path('cart_index')}}" class="button_base button_links"> Votre panier</a>
+        <a href="{{path('cart_index')}}" class="button_base button_links"> Voir le panier</a>
       </div>
     </div>
+  </div>         
    {% endfor %} 
 {% endblock %}
 
