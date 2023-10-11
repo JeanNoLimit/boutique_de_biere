@@ -118,19 +118,23 @@ input::-webkit-inner-spin-button {
 
 .fa-square-minus {
     cursor: pointer;
-    font-size:2.5rem;
     margin-right: 10px;
     color: var(--main-color);
 }
 
 .fa-square-plus {
     cursor: pointer;
-    font-size: 2.5rem;
     margin-left: 10px;
     color: var(--main-color);
 }
 
+#minusForm {
+    font-size:2.5rem;
+}
 
+#plusForm {
+    font-size: 2.5rem;
+}
 /***************Informations détaillées*************************/
 
 .further_informations {
