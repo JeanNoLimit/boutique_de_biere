@@ -127,7 +127,6 @@ table, th, td {
     font-weight: 600;
     font-size: 1.2rem;
     padding: 15px;
-    width: 350px;
 }
 
 /****************** HOME PAGE *******************/
@@ -257,9 +256,27 @@ table, th, td {
         max-width: 500px;
         margin: 0 10px;
     }
+}
 @media screen and (max-width: 805px){
     .img_home_presentation{
         max-width: 100%;
+        max-height: 350px;
     }
 }
+
+
+@media screen and (max-width: 420px) {
+
+    .button_step_validation {
+       width: 100%;
+       margin: 0px 20px;
+    }
+    
+}
+@media screen and (min-width: 420px) {
+
+    .button_step_validation {
+       width: 350px;
+    }
+    
 }

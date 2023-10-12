@@ -42,11 +42,11 @@
   table.cart_table th {
     font-weight: bold;
     padding: 0.35em;
-    font-size: 0.9em;
+
   }
   table.cart_table td {
     padding: 0.35em;
-    font-size: 0.9em;
+
   }
 
   table.cart_table th.number,
@@ -119,17 +119,22 @@
 
 /******************* CART INDEX ********************/
 
+.cart_title {
+  margin: 30px 0 10px 20px;
+}
+
 .action_delete_cart {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     padding-right: 20px;
     height: 50px;
+    margin-bottom: 80px ;
 }
 .button_delete_cart {
-    background-color: red;
-    padding: 8px 15px;
-    color: white;
+    background-color: var(--main-color);
+    border-radius: 30px;
+    padding: 15px 15px;
     font-size: 1rem;
     font-weight: 600;
 }

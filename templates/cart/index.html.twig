@@ -8,7 +8,7 @@
         <a href="{{path('products_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour boutique</a>
     </div>
 
-    <h1>Panier</h1>
+    <h1 class="cart_title">Mon panier</h1>
 
     {% if elements is defined and elements is not empty %}
        <div class="table_cart_container">
@@ -42,11 +42,11 @@
                         
                             {% if element.product.stock <= 0 %}
                                 <tr class="cart-more-infos">
-                                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                                    <td colspan="5" style="font-size:0.8rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                                 </tr>
                             {% elseif element.stockTemp < 0 %}
                                 <tr>
-                                    <td colspan="4" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                                    <td colspan="5" style="font-size:0.8rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
                                 </tr>
                             {% endif %}
                         
@@ -81,6 +81,6 @@
 
     {% include "_partial/_assurance.html.twig" %}
 
-    {% include "_partial/_bandeau_boissons.html.twig" %}
+    {# {% include "_partial/_bandeau_boissons.html.twig" %} #}
     
 {% endblock %}
