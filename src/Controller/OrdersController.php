@@ -135,7 +135,7 @@ class OrdersController extends AbstractController
         string $reference = null
     ): Response {
 
-            $order = $orderRepository->findOrderByReference($reference);
+            $order = $orderRepository->findOneByReference($reference);
             $user = $this->getUser();
             $SsTotal = null;
             $total = null;

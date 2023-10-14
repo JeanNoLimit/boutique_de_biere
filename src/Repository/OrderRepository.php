@@ -48,14 +48,6 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOrderByReference($reference): ?Order
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.reference = :reference')
-            ->setParameter('reference', $reference)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

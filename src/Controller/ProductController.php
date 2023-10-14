@@ -128,7 +128,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
         } elseif (!$review || $userId != $userSession->getId()) {
             $review = new Review();
-            //On insère le user et le produit dans la nouvel instance de review.
+            //On insère le user et le produit dans la nouvelle instance de review.
             $review->setUser($userSession);
             $review->setProduct($product);
         } else {

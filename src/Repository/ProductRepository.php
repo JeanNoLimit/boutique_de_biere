@@ -27,17 +27,6 @@ class ProductRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    // Cherche les derniers porduits enregistrés pour l'affichage sur la page d'accueil
-    public function findNewProducts(int $limit)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.available = true')
-            ->orderBy('p.createdAt', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 
     //Cherche les produits en fonction des critères renseignés dnas le formulaire produits
     public function findByCriteria(Filters $filters): PaginationInterface
