@@ -141,7 +141,7 @@
           <a href="{{ path('add_review', {'slug' : product.slug})}}" class="link_add_review">Ajouter un avis</a> 
         {% endif %}
         <div class="stats_reviews">
-          <p>{{ reviews|length }} avis</p>
+          <p>{{ product.reviews|length }} avis</p>
           <p>{{ product.average|number_format(1, ',', ',')|replace({',0':''}) }} {{ product.average| stars }} </p>
         </div>
       </div>

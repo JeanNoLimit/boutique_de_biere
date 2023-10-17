@@ -26,13 +26,13 @@ class UserController extends AbstractController
 
         $userId = $this->getUser()->getId();
         $user = $entityManager->getRepository(User::class)->find($userId);
-        $ordersArchives = $orderRepository->findOrdersPreparedByUserId($userId);
+        // $ordersArchives = $orderRepository->findOrdersPreparedByUserId($userId);
         // Deuxième version aussi valide : 
-        // $ordersArchives = $orderRepository->findBy(
-        //         ['user'=> $userId,
-        //         'isPaid'=>true,
-        //         'isProcessed'=> true],
-        //         ['createdAt' => 'DESC']);
+        $ordersArchives = $orderRepository->findBy(
+                ['user'=> $userId,
+                'isPaid'=>true,
+                'isProcessed'=> true],
+                ['createdAt' => 'DESC']);
         $ordersInProcess = $orderRepository->findOrdersInProccessByUserId($userId);
 
         return $this->render('user/view_profile.html.twig', [

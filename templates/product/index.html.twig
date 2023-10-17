@@ -83,7 +83,7 @@
 
         {% if product[0].available %}
             <article class="article_product">
-                <a href="{{path('detail_product', {'slug' : product[0].slug})}}">
+                <a href="{{ path('detail_product', {'slug' : product[0].slug}) }}">
                     <div class="img_product_article">
                         {% if product[0].productionType is defined and product[0].productionType.productionType != 'Permanente' %}
                             <div class="production_type">
@@ -93,15 +93,15 @@
                         
                         <div class="more_info">plus d'infos</div>
                         {% if product[0].imageFile is defined and product[0].imageFile is not null %}
-                            <img src="upload/images/products/{{product[0].imageFile}}" alt="image de la bière {{product[0].designation}}">     
+                            <img src="{{ asset('upload/images/products/'~ product[0].imageFile) }}" alt="image de la bière {{product[0].designation}}">     
                         {% else %}
-                            <img src="upload/images/site/{{parameters.defaultImageProduct}}" alt="image par défaut">
+                            <img src="{{ asset('upload/images/site/' ~ parameters.defaultImageProduct) }} " alt="image par défaut">
                         {% endif %}
                     </div>
                 </a>
                 <div class="product_info">
                     
-                        <a href="{{path('detail_product', {'slug' : product[0].slug})}}"> 
+                        <a href="{{ path('detail_product', {'slug' : product[0].slug}) }}"> 
                             <p class="product_title">
                                 {% if (product[0].provider.name ~ product[0].designation)|length >51 %}
                                     {{ (product[0].provider.name ~ ' - ' ~ product[0].designation)|slice(0,51) ~ ' ...'}}        

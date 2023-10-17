@@ -36,7 +36,7 @@ class CartController extends AbstractController
 
         //On récupère le panier avec les produits....
         foreach ($panier as $id => $quantity) {
-            $product = $entityManager->getRepository(Product::class)->findOneById($id);
+            $product = $entityManager->getRepository(Product::class)->find($id);
             $SsTotal = $product->getPrice() * $quantity;
             $stockTemp = $product->getStock() - $quantity;
             $elements[] = [
@@ -72,7 +72,7 @@ class CartController extends AbstractController
 
         // On récupère le slug du produit pour rediriger vers la page du produit
         // après l'ajout de ce dernier dans le panier.
-        $product = $em->getRepository(Product::class)->findOneById($id);
+        $product = $em->getRepository(Product::class)->find($id);
         $slug = $product->getSlug();
 
         // On récupère la session
@@ -191,7 +191,7 @@ class CartController extends AbstractController
 
                 /********** Récupération des informations du panier ***********/
                 foreach ($panier as $id => $quantity) {
-                    $product = $em->getRepository(Product::class)->findOneById($id);
+                    $product = $em->getRepository(Product::class)->find($id);
                     $SsTotal = $product->getPrice() * $quantity;
                     $stockTemp = $product->getStock() - $quantity;
                     $elements[] = [

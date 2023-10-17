@@ -127,6 +127,7 @@ class ProductController extends AbstractController
             $this->addFlash('alert', 'vous ne pouvez pas modifier ce commentaire!');
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);
         } elseif (!$review || $userId != $userSession->getId()) {
+            // On initialise un nouvel objet Review
             $review = new Review();
             //On insère le user et le produit dans la nouvelle instance de review.
             $review->setUser($userSession);
@@ -136,11 +137,15 @@ class ProductController extends AbstractController
         }
 
         $formReview = $this->createForm(ReviewType::class, $review);
+        //On récupère les données reçu par l'intermédiaire du formulaire
         $formReview->handleRequest($request);
 
         if ($formReview->isSubmitted() && $formReview->isValid()) {
+            // On insère les données du formulaire à notre Review
             $review = $formReview->getData();
+            //On signale à Doctrine que l'objet doit être enregistré en b.d.d.
             $entityManager->persist($review);
+            // On envoie les donnée à persister en b.d.d.
             $entityManager->flush();
 
             return $this->redirectToRoute('detail_product', ['slug' => $product->getSlug()]);

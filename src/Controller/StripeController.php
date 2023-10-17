@@ -65,7 +65,7 @@ class StripeController extends AbstractController
                     'name' => 'Cotisation valable jusqu\'au ' . $cotisation['endDate']->format('d-m-Y')
                     ],
                 ],
-                'quantity' => $quantity,
+                'quantity' => 1,
             ];
         }
         $checkout_session = \Stripe\Checkout\Session::create([
