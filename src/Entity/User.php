@@ -134,12 +134,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank([
         'message' => 'veuillez renseigner un numéro de téléphone'
     ])]
-    #[Assert\Length([
-        'min' => '10',
-        'max' => '14',
-        'minMessage' => 'Veuillez entrer un numéro de téléphone valide',
-        'maxMessage' => 'Veuillez entrer un numéro de téléphone valide'
-    ])]
+    #[Assert\Regex(
+        pattern: '/^0[0-7](\d{8})$/',
+        message: 'Veuillez rentrer un numéro de téléphone valide'
+    )]
     private ?string $tel = null;
 
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]

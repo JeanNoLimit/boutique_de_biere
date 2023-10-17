@@ -62,6 +62,7 @@ class UserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Votre profil a été modifié');
+            return $this->redirectToRoute('app_userProfile');
         }
 
         return $this->render('user/update_profile.html.twig', [
