@@ -130,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ])]
     private ?string $city = null;
 
-    #[ORM\Column(length: 14)]
+    #[ORM\Column(length: 10)]
     #[Assert\NotBlank([
         'message' => 'veuillez renseigner un numéro de téléphone'
     ])]
