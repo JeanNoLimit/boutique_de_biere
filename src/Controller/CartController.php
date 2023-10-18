@@ -93,7 +93,8 @@ class CartController extends AbstractController
             } else {
                 $panier[$id] = $quantity;
             }
-            $message = '<span style="font-weight:600";>'. $quantity. '</span> ' .$product->getDesignation(). ' - '.$product->getVolume() .'cl <br> ajouté au panier';
+            $message = '<span style="font-weight:600";>' . $quantity . '</span> ' . $product->getDesignation() .
+                        ' - ' . $product->getVolume() . 'cl <br> ajouté au panier';
             $this->addFlash('add_cart', $message);
         }
         // On sauvegarde le panier en session pour continuer nos achats en boutique

@@ -75,5 +75,4 @@ class UserCrudController extends AbstractCrudController
                 ->OnlyOnIndex(),
         ];
     }
-
 }

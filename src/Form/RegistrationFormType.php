@@ -40,8 +40,8 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe',
                                     'attr' => ['class' => 'input'],
-                                    'help'=> 'Votre mot de passe doit contenir au moins <span>8 caractères</span> et au minimum :
-                                            1 majuscule, 1 minusule, 1 chiffre et 1 caractère spécial',
+                                    'help' => 'Votre mot de passe doit contenir au moins <span>8 caractères</span> 
+                                    et au minimum : 1 majuscule, 1 minusule, 1 chiffre et 1 caractère spécial',
                                     'help_attr' => ['class' => 'help_message_password'],
                                     'help_html' => true,
                 ],
@@ -54,7 +54,7 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez rentrer un mot de passe',
                     ]),
-                    new Regex([ 
+                    new Regex([
                         'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
                         'message' => 'Votre mot de passe n\'est pas valide'
                     ]),
@@ -99,7 +99,8 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['class' => 'input', 'min' => '10', 'maxlength' => '14']
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'J\'accepte les conditions générales d\'utilisation du site et sa politique de confidentialité',
+                'label' => 'J\'accepte les conditions générales d\'utilisation du site
+                            et sa politique de confidentialité',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

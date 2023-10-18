@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     public function index(EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
         // $newProducts = $productRepository->findNewProducts(4);
-        $newProducts = $productRepository->findBy([],['createdAt' => 'DESC'],4);
+        $newProducts = $productRepository->findBy([], ['createdAt' => 'DESC'], 4);
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
 
         return $this->render('home/index.html.twig', [
@@ -29,6 +29,6 @@ class HomeController extends AbstractController
     #[Route('/mentions_legales', name: 'app_mentions')]
     public function legalNotices(): Response
     {
-        return $this->render('home/legal_notices.html.twig',[]);
+        return $this->render('home/legal_notices.html.twig', []);
     }
 }

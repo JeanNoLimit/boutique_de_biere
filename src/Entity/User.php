@@ -58,7 +58,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ])]
     #[Assert\Regex(
         pattern: '/^[^@\s<>"\']+$/',
-        message: 'Votre pseudo ne peut comporter pas comporter d\'espace ni les caractères spéciaux suivant : @ <, >, ", \''
+        message: 'Votre pseudo ne peut comporter pas comporter d\'espace ni les caractères spéciaux suivant :
+                    @ <, >, ", \''
     )]
     private ?string $pseudo = null;
 
@@ -68,7 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Variable qui ne sera pas enregistré en BDD
     private ?string $plainPassword = null;
-    
+
     /**
      * @var string The hashed password
      */
