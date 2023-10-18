@@ -37,6 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'message' => 'Veuillez renseigner une adresse mail valide'
         ])
     ]
+    #[Assert\NotBlank([
+        'message' => 'veuillez renseigner une adresse mail'
+    ])]
+    #[Assert\Regex(
+        pattern: '/[A-Za-z0-9-_\.]+@[a-zA-z0-9]+.[a-zA-Z]{2,3}/',
+        message: 'Veuillez renseigner une adresse mail valide'
+    )]
     private ?string $email = null;
 
     #[ORM\Column(length: 15, unique: true)]
@@ -49,6 +56,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'minMessage' => 'Veuillez selectionner un pseudo de plus de {{ limit }} caractères',
         'maxMessage' => 'Veuillez selectionner un pseudo de moins de {{ limit }} caractères'
     ])]
+    #[Assert\Regex(
+        pattern: '/^[^@\s<>"\']+$/',
+        message: 'Votre pseudo ne peut comporter pas comporter d\'espace ni les caractères spéciaux suivant : @ <, >, ", \''
+    )]
     private ?string $pseudo = null;
 
     #[ORM\Column]
@@ -57,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Variable qui ne sera pas enregistré en BDD
     private ?string $plainPassword = null;
-
+    
     /**
      * @var string The hashed password
      */
@@ -115,6 +126,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min:5,
         max: 5,
         exactMessage: 'Veuillez entrer un code postal valide, {{ limit }} caractères',
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$/',
+        message: 'Veuillez renseigner un code postal valide'
     )]
     private ?string $zipCode = null;
 

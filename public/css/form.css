@@ -53,6 +53,16 @@ label{
     padding: 0 0 5px 10px;
 }
 
+.help_message_password {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.help_message_password span {
+    font-weight: 600;
+}
+
 /* messages d'erreurs */
 
 .row ul li {
