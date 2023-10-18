@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class RegistrationFormType extends AbstractType
@@ -108,6 +110,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'registration',
+                'locale' => 'fr',
+            ]);
         ;
     }
 

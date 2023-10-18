@@ -4,11 +4,13 @@ namespace App\Form;
 
 use App\Entity\Review;
 use Symfony\Component\Form\AbstractType;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class ReviewType extends AbstractType
 {
@@ -38,6 +40,11 @@ class ReviewType extends AbstractType
                 'attr' => ['class' => "button_base button_validation"],
                 'label' => 'Ajouter un avis'
             ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'review',
+                'locale' => 'fr',
+            ]);
 
             // ->add('user')
             // ->add('product')
