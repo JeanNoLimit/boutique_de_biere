@@ -28,6 +28,8 @@ security:
                 path: /
                 always_remember_me: true
 
+            login_throttling:
+                max_attempts: 3   
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
