@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,7 +34,11 @@ class UpdatePasswordType extends AbstractType
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'required' => true,
                 'first_options' => ['label' => 'Nouveau mot de passe',
-                                    'attr' => ['class' => 'input']
+                                    'attr' => ['class' => 'input'],
+                                    'help' => 'Votre mot de passe doit contenir au moins <span>8 caractères</span> 
+                                    et au minimum : 1 majuscule, 1 minusule, 1 chiffre et 1 caractère spécial',
+                                    'help_attr' => ['class' => 'help_message_password'],
+                                    'help_html' => true,
                 ],
                 'second_options' => ['label' => 'Répétez le mot de passe',
                                     'attr' => ['class' => 'input']
@@ -44,9 +49,13 @@ class UpdatePasswordType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez rentrer un mot de passe',
                     ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
+                        'message' => 'Votre mot de passe n\'est pas valide'
+                    ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
+                        'min' => 8,
+                        'minMessage' => 'votre mot de passe doit contenir au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
