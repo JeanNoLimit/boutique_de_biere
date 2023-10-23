@@ -39,7 +39,9 @@ class ProductRepository extends ServiceEntityRepository
 
         if (!empty($filters->searchProduct)) {
             $query
+                ->join('p.provider', 'pr')
                 ->andWhere('p.designation LIKE :searchProduct')
+                ->orWhere('pr.name LIKE :searchProduct')
                 ->setParameter('searchProduct', "%{$filters->searchProduct}%");
         }
 

@@ -10,12 +10,13 @@ use App\Repository\BeerTypeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FiltersType extends AbstractType
 {
@@ -27,7 +28,7 @@ class FiltersType extends AbstractType
     {
 
         $builder
-            ->add('searchProduct', TextType::class, [
+            ->add('searchProduct', SearchType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [

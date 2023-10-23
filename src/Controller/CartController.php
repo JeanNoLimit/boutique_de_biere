@@ -163,7 +163,7 @@ class CartController extends AbstractController
 
     /************************************ VERIFICATION ADRESSE DE FACTURATION AVANT VALIDATION COMMANDE *********************************/
 
-    #[Route('/cart/check_Address', name: 'checkBillingAddress')]
+    #[Route('/cart/check_address', name: 'checkBillingAddress')]
     #[IsGranted('ROLE_USER')]
     public function checkBillingAddress(
         Request $request,
