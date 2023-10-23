@@ -33,8 +33,11 @@ class FiltersType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Rechercher',
-                    'class' => 'searchProducts'
-                ]
+                    'class' => 'searchProducts',
+                    'maxlength' => '30',
+                    'error_bubbling' => true,
+                ],
+                'sanitize_html' => true,
             ])
             ->add('providers', EntityType::class, [
                'class' => Provider::class,
@@ -43,7 +46,11 @@ class FiltersType extends AbstractType
                'expanded' => true,
                'multiple' => true,
                'required' => false,
-               'attr' => ['class' => 'filters_checkbox']
+               'attr' => [
+                    'class' => 'filters_checkbox'
+               ],
+               'error_bubbling' => true,
+               
             ])
             ->add('beerTypes', EntityType::class, [
                 'class' => BeerType::class,
@@ -57,31 +64,32 @@ class FiltersType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
-                'label' => false
+                'label' => false,
+                'error_bubbling' => true,
             ])
             ->add('min', MoneyType::class, [
                 'required' => false,
                 'currency' => false,
                 'label' => false,
                 'divisor' => 100,
-                'attr' => ['min' => '0', 'max' => '100'],
+                'error_bubbling' => true,
             ])
             ->add('max', MoneyType::class, [
                 'required' => false,
                 'currency' => false,
                 'label' => false,
                 'divisor' => 100,
-                'attr' => ['min' => '0', 'max' => '100']
+                'error_bubbling' => true,
             ])
             ->add('tauxMin', NumberType::class, [
                 'required' => false,
                 'label' => false,
-                'attr' => ['min' => '0', 'max' => '90']
+                'error_bubbling' => true,
             ])
             ->add('tauxMax', NumberType::class, [
                 'required' => false,
                 'label' => false,
-                'attr' => ['min' => '0', 'max' => '90']
+                'error_bubbling' => true,
             ])
 
             ->add('envoyer', SubmitType::class, [
@@ -95,7 +103,8 @@ class FiltersType extends AbstractType
                 'disabled' => true,
                 'label' => false,
                 'mapped' => false,
-                'attr' => ['style' => 'display:none']
+                'attr' => ['style' => 'display:none'],
+                'error_bubbling' => true,
             ])
 
             ->add('sort', TextType::class, [
@@ -103,7 +112,8 @@ class FiltersType extends AbstractType
                 'disabled' => true,
                 'label' => false,
                 'mapped' => false,
-                'attr' => ['style' => 'display:none']
+                'attr' => ['style' => 'display:none'],
+                'error_bubbling' => true,
             ])
 
             ->add('direction', TextType::class, [
@@ -111,7 +121,8 @@ class FiltersType extends AbstractType
                 'disabled' => true,
                 'label' => false,
                 'mapped' => false,
-                'attr' => ['style' => 'display:none']
+                'attr' => ['style' => 'display:none'],
+                'error_bubbling' => true,
             ])
         ;
     }
@@ -125,6 +136,8 @@ class FiltersType extends AbstractType
         ]);
     }
 
+    //Sans l'ajout de cette fonction le résultat du formulaire serait contenu dans un tableau filters (le nom du modèle).
+    //On remplace cela par une chaine de caractère vide pour ne pas surcharger l'URL. 
     public function getBlockPrefix(): string
     {
         return '';

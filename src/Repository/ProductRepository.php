@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Mapping\OrderBy;
+use Knp\Component\Pager\Event\PaginationEvent;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -28,38 +30,52 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
+    public function findWithoutCriteria($page):PaginationInterface
+    {
+        $query = $this->createQueryBuilder('p')
+                ->select('p', 'AVG(r.rating) AS averageRating', 'COUNT(r) AS reviewCount' )
+                ->leftjoin('p.reviews', 'r')
+                ->groupBy('p.id')
+                ->orderBy('p.designation', 'ASC')
+                ->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            12
+        );
+    }
+
     //Cherche les produits en fonction des critères renseignés dnas le formulaire produits
     public function findByCriteria(Filters $filters): PaginationInterface
     {
         //On cherche à récupérer les produits et la moyenne de leur note si celle-ci existe
         $query = $this->createQueryBuilder('p')
-            ->select('p', 'AVG(r.rating) AS averageRating')
+            ->select('p', 'AVG(r.rating) AS averageRating', 'COUNT(r) AS reviewCount')
+            ->join('p.provider', 'pr')
             ->leftjoin('p.reviews', 'r')
-            ->groupBy('p.id');
+            ->groupBy('p.id')
+            ->orderBy('p.designation', 'ASC');
 
         if (!empty($filters->searchProduct)) {
-            $query
-                ->join('p.provider', 'pr')
+            $query = $query
                 ->andWhere('p.designation LIKE :searchProduct')
                 ->orWhere('pr.name LIKE :searchProduct')
                 ->setParameter('searchProduct', "%{$filters->searchProduct}%");
         }
 
         if (!empty($filters->providers)) {
-            $query
-                ->select('pr', 'p', 'AVG(r.rating) AS averageRating')
-                ->join('p.provider', 'pr')
+            $query = $query
                 ->andWhere('pr.id IN (:provider)')
                 ->setParameter('provider', $filters->providers);
         }
 
         if (!empty($filters->beerTypes)) {
-            $query
-                ->select('bt', 'p', 'AVG(r.rating) AS averageRating')
+            $query = $query
                 ->join('p.beerTypes', 'bt')
                 ->andWhere('bt.id IN (:beerTypes)')
                 ->setParameter('beerTypes', $filters->beerTypes)
-                ->groupBy('p.id', 'bt.id');
+                ->groupBy('p.id');
         }
 
         if (!empty($filters->min)) {

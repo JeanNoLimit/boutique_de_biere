@@ -20,21 +20,21 @@
 </div>
 <div class="products_list_wrapper">
     <div id="filters_container">
-
+        
         {{ form_start(formFilter)}}
-            {{ form_errors(formFilter) }}
-            
-            {{ form_row(formFilter.searchProduct) }}
+        {{ form_errors(formFilter) }}
 
-            <p class="title_section_filter">Brasseries</p>
-                {% for provider in formFilter.providers %}
-                    <div class="filters_checkbox">
-                        {{ form_widget(provider) }}
-                        {{ form_label(provider)}}
-                    </div>
-                {% endfor %}
-
-            <p class="title_section_filter">Styles de bières</p>       
+        {{ form_row(formFilter.searchProduct) }}
+        
+        <p class="title_section_filter">Brasseries</p>
+        {% for provider in formFilter.providers %}
+        <div class="filters_checkbox">
+            {{ form_widget(provider) }}
+            {{ form_label(provider)}}
+        </div>
+        {% endfor %}
+        
+        <p class="title_section_filter">Styles de bières</p>       
                 {% for beerType in formFilter.beerTypes %}
                 <div class="filters_checkbox">
                     {{ form_widget(beerType) }}
@@ -113,7 +113,7 @@
                         </a>
                     
                     <p class="product_price">{{ (product[0].price ?? 0 / 100)|number_format(2, ',', '.' ) }} € T.T.C.</p>
-                    <p>{{ product.averageRating|stars }} <span class="count_rating"> {{ product[0].reviews|length > 0 ? "(" ~ product[0].reviews|length ~ ")" : "" }}</span></p>
+                    <p>{{ product.averageRating|stars }} <span class="count_rating"> {{ product.reviewCount > 0 ? "(" ~ product.reviewCount ~ ")" : "" }}</span> </p>
                 </div>
             </article>
         {% endif %}
