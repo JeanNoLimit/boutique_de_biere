@@ -38,12 +38,13 @@ class ProductController extends AbstractController
 
         $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
         $products = $entityManager->getRepository(Product::class)->findWithoutCriteria($filters->page);
-        
 
         $formFilter->handleRequest($request);
 
-        if($formFilter->isSubmitted() && $formFilter->isValid()) {
-            $products = $entityManager->getRepository(Product::class)->findByCriteria($filters);
+        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
+            $products = $entityManager
+                ->getRepository(Product::class)
+                ->findByCriteria($filters);
         }
 
         return $this->render('product/index.html.twig', [

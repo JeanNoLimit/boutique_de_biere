@@ -50,7 +50,7 @@ class FiltersType extends AbstractType
                     'class' => 'filters_checkbox'
                ],
                'error_bubbling' => true,
-               
+
             ])
             ->add('beerTypes', EntityType::class, [
                 'class' => BeerType::class,
@@ -137,7 +137,7 @@ class FiltersType extends AbstractType
     }
 
     //Sans l'ajout de cette fonction le résultat du formulaire serait contenu dans un tableau filters (le nom du modèle).
-    //On remplace cela par une chaine de caractère vide pour ne pas surcharger l'URL. 
+    //On remplace cela par une chaine de caractère vide pour ne pas surcharger l'URL.
     public function getBlockPrefix(): string
     {
         return '';

@@ -73,6 +73,13 @@ label{
     color: red;
 }
 
+.errors-messages ul li{
+    list-style: none;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: red;
+}
+
 .aggreeTerms div{
     display: flex;
     flex-direction: row;

@@ -22,35 +22,38 @@
     <div id="filters_container">
         
         {{ form_start(formFilter)}}
-        {{ form_errors(formFilter) }}
 
-        {{ form_row(formFilter.searchProduct) }}
-        
-        <p class="title_section_filter">Brasseries</p>
-        {% for provider in formFilter.providers %}
-        <div class="filters_checkbox">
-            {{ form_widget(provider) }}
-            {{ form_label(provider)}}
-        </div>
-        {% endfor %}
-        
-        <p class="title_section_filter">Styles de bières</p>       
-                {% for beerType in formFilter.beerTypes %}
+            <div class="errors-messages">
+                {{ form_errors(formFilter) }}
+            </div>
+            
+            {{ form_row(formFilter.searchProduct) }}
+            
+            <p class="title_section_filter">Brasseries</p>
+            {% for provider in formFilter.providers %}
+                <div class="filters_checkbox">
+                    {{ form_widget(provider) }}
+                    {{ form_label(provider)}}
+                </div>
+            {% endfor %}
+            
+            <p class="title_section_filter">Styles de bières</p>       
+            {% for beerType in formFilter.beerTypes %}
                 <div class="filters_checkbox">
                     {{ form_widget(beerType) }}
                     {{ form_label(beerType)}}
                 </div>
-                {% endfor %}
+            {% endfor %}
 
             <p class="title_section_filter">Prix ( € )</p>
-                <div class="filters_range">
-                    <div>
-                        <span>Min. </span>{{ form_widget(formFilter.min) }}
-                    </div>
-                    <div>
-                        <span>Max. </span>{{ form_widget(formFilter.max) }}
-                    </div>
+            <div class="filters_range">
+                <div>
+                    <span>Min. </span>{{ form_widget(formFilter.min) }}
                 </div>
+                <div>
+                    <span>Max. </span>{{ form_widget(formFilter.max) }}
+                </div>
+            </div>
                
             <p class="title_section_filter">Degré d'alcool ( %vol )</p>
             <div class="filters_range">
@@ -61,6 +64,7 @@
                     <span>Max. </span>{{ form_widget(formFilter.tauxMax) }}
                 </div>
             </div>
+            
             <div class="btn_form_filter">
                 {{ form_row(formFilter.envoyer) }}
             </div>

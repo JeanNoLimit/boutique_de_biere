@@ -30,10 +30,10 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-    public function findWithoutCriteria($page):PaginationInterface
+    public function findWithoutCriteria($page): PaginationInterface
     {
         $query = $this->createQueryBuilder('p')
-                ->select('p', 'AVG(r.rating) AS averageRating', 'COUNT(r) AS reviewCount' )
+                ->select('p', 'AVG(r.rating) AS averageRating', 'COUNT(r) AS reviewCount')
                 ->leftjoin('p.reviews', 'r')
                 ->groupBy('p.id')
                 ->orderBy('p.designation', 'ASC')
@@ -49,7 +49,8 @@ class ProductRepository extends ServiceEntityRepository
     //Cherche les produits en fonction des critères renseignés dnas le formulaire produits
     public function findByCriteria(Filters $filters): PaginationInterface
     {
-        //On cherche à récupérer les produits et la moyenne de leur note si celle-ci existe
+        //On cherche à récupérer les produits et la moyenne de leur note
+        //si celle-ci existe ainsi que le nombre de note par produit
         $query = $this->createQueryBuilder('p')
             ->select('p', 'AVG(r.rating) AS averageRating', 'COUNT(r) AS reviewCount')
             ->join('p.provider', 'pr')
@@ -74,8 +75,7 @@ class ProductRepository extends ServiceEntityRepository
             $query = $query
                 ->join('p.beerTypes', 'bt')
                 ->andWhere('bt.id IN (:beerTypes)')
-                ->setParameter('beerTypes', $filters->beerTypes)
-                ->groupBy('p.id');
+                ->setParameter('beerTypes', $filters->beerTypes);
         }
 
         if (!empty($filters->min)) {
