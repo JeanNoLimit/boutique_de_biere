@@ -7,14 +7,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Filters
 {
 
-
-
     #[Assert\Length(
         max: 30,
         maxMessage: 'Votre recherche ne peut pas contenir plus de {{ limit }} caractères',
     )]
     public ?string $searchProduct = '';
-
 
     public ?array $providers = [];
 

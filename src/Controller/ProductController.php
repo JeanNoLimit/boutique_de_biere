@@ -32,12 +32,13 @@ class ProductController extends AbstractController
         Request $request,
     ): Response {
 
-        $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
-
         $filters = new Filters();
         $filters->page = $request->query->get('page', 1);
-        $products = $entityManager->getRepository(Product::class)->findWithoutCriteria($filters->page);
         $formFilter = $this ->createForm(FiltersType::class, $filters);
+
+        $parameters = $entityManager->getRepository(ShopParameters::class)->findAll()[0];
+        $products = $entityManager->getRepository(Product::class)->findWithoutCriteria($filters->page);
+        
 
         $formFilter->handleRequest($request);
 
