@@ -57,7 +57,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Veuillez rentrer un mot de passe',
                     ]),
                     new Regex([
-                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-~"\'`[]£¤²]).{8,}$/',
+                        'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*~"\'\/.\-_`£¤²]).{8,}$/',
                         'message' => 'Votre mot de passe n\'est pas valide'
                     ]),
                     new Length([
