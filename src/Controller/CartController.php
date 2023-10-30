@@ -34,7 +34,7 @@ class CartController extends AbstractController
         $total = null;
         $elements = [];
 
-        //On récupère le panier avec les produits....
+        //On récupère le panier avec les produits.
         foreach ($panier as $id => $quantity) {
             $product = $entityManager->getRepository(Product::class)->find($id);
             $SsTotal = $product->getPrice() * $quantity;
@@ -82,25 +82,22 @@ class CartController extends AbstractController
         // le panier n'existe pas, on en récupère un en créant un tableau vide
         $panier = $session->get('panier', []);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // On récupère la quantité soumise dans le formulaire // dd($quantity = $form->getData()['quantity']);
+            // On récupère la quantité soumise dans le formulaire
             $quantity = $form->getData()['quantity'];
             // On ajoute la quantité du produit au panier
-
             if (!empty($panier[$id])) {
                 $panier[$id] = $panier[$id] + $quantity;
             } else {
                 $panier[$id] = $quantity;
             }
-            $message = '<span style="font-weight:600";>' . $quantity . '</span> ' . $product->getDesignation() .
+            $message = '<span style="font-weight:600";>' . $quantity .
+                        '</span> ' . $product->getDesignation() .
                         ' - ' . $product->getVolume() . 'cl <br> ajouté au panier';
             $this->addFlash('add_cart', $message);
         }
         // On sauvegarde le panier en session pour continuer nos achats en boutique
         $session->set('panier', $panier);
-
-        // dd($session->get('panier'));
 
         return new RedirectResponse($this->generateUrl('detail_product', ['slug' => $slug]));
     }
@@ -185,7 +182,7 @@ class CartController extends AbstractController
         $cotisation = $membershipContribution->checkContribution();
         $idUser = $this->getUser()->getId();
         $user = $userRepository->find($idUser);
-
+        
         //On vérifie que l'utilisateur a bien validé son adresse email
         if ($user->isVerified()) {
             if ($panier !== []) {

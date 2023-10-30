@@ -24,14 +24,13 @@ class MembershipContributionService
     public function checkContribution(): array
     {
 
-        // $request = $this->requestStack->getCurrentRequest();
-        // $session = $request->getSession();
+        $request = $this->requestStack->getCurrentRequest();
+        $session = $request->getSession();
         $userSession = $this->security->getUser();
         $today = new \DateTimeImmutable();
         $shopParameters = $this->shopParametersRepository->findAll()[0];
         $cotisationPrice = $shopParameters->getContribution();
         $cotisation = [];
-
         if ($userSession) {
             $user = $this->userRepository->find($userSession->getId());
             $userCotisationEndDate = $user->getMembershipContributionEndDate();
@@ -42,13 +41,14 @@ class MembershipContributionService
                 'endDate' => $userCotisationEndDate,
                 'price' => 0
             ];
+            $session->set('cotisation', $cotisation);
         } else {
             $newEndDate = $today->modify('+1 year');
             $cotisation = [
                 'endDate' => $newEndDate,
                 'price' => $cotisationPrice,
             ];
-            // $session->set('cotisation', $cotisation);
+            $session->set('cotisation', $cotisation);
         }
 
         return $cotisation;

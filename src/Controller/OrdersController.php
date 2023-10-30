@@ -25,103 +25,98 @@ class OrdersController extends AbstractController
         EntityManagerInterface $em,
         MembershipContributionService $MCS
     ): Response {
-
+        
         // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
         $stripe = new StripeClient($_ENV["STRIPE_SECRET"]);
         $session_id = $request->query->get('session_id');
-        $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        $session_stripe = $stripe->checkout->sessions->retrieve($session_id);
         //On vérifie si le ID stripe existe déjà dans une entité commande
         $orderVerification = $em
             ->getRepository(Order::class)
             ->findOneBy(["stripeId" => $session_stripe["payment_intent"]]);
 
-        try {
-            if (!empty($session_id)) {
-                $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        //La vérification ne fonctionne pas pour l'instant.
+        // try {
+        //     if (!empty($session_id)) {
+        //         $session_stripe = $stripe->checkout->sessions->retrieve($_GET['session_id']);
 
-                //Si la session stripe n'est pas retrouvé, renvoie vers une erreur 500.
-                //IL faudra régler ce problème avec une page erreur 500 personnalisée.
-            }
-        } catch (\Error $e) {
-            http_response_code(500);
-            echo json_encode(['error' => $e->getMessage()]);
-        }
+        //         //Si la session stripe n'est pas retrouvé, renvoie vers une erreur 500.
+        //         //IL faudra régler ce problème avec une page erreur 500 personnalisée.
+        //     }
+        // } catch (\Error $e) {
+        //     http_response_code(500);
+        //     echo json_encode(['error' => $e->getMessage()]);
+        // }
 
 
         //On récupère le panier, la cotisation et l'utilisateur
-        $cotisation = $MCS->checkContribution();
         $session = $request->getSession();
+        $cotisation = $session->get('cotisation');
         $panier = $session->get('panier', []);
         $userSession = $this->getUser();
         $user = $em->getRepository(User::class)->find($userSession->getId());
 
         if (!$orderVerification) {
-            if ($user->isVerified()) {
-                if ($panier !== []) {
-                    //Création objet commande et insertion des données
-                    $order = new Order();
-                    //Va nous servir à créer la référence (id de l'utilisateur + date, heure, minute)
-                    $time = new \DateTimeImmutable();
-                    $reference = $user->getId() . $time->format('Ymdhis');
+            if ($panier !== []) {
+                //Création objet commande et insertion des données
+                $order = new Order();
+                //On créer la référence au format : id de l'utilisateur,date,heure,minutes,secondes
+                $time = new \DateTimeImmutable();
+                $reference = $user->getId() . $time->format('Ymdhis');
 
-                    $order->setUser($user);
-                    $order->setReference($reference);
-                    $order->setStripeId($session_stripe["payment_intent"]);
-                    // /!\ Attention, la validation du paiement est automatisé pour les tests en local,
-                    // mais de devra être supprimé lorsque les webhhooks seront fonctionnels.
-                    $order->setIsPaid(true);
+                $order->setUser($user);
+                $order->setReference($reference);
+                $order->setStripeId($session_stripe["payment_intent"]);
+                /*
+                * /!\ Attention, la validation du paiement est automatisée pour les tests en local,
+                * mais elle devra être supprimée lorsque les webhhooks seront fonctionnels.
+                */
+                $order->setIsPaid(true);
 
-                    //Création du détail de commande insertion des données
-                    foreach ($panier as $id => $qte) {
-                        $orderDetails = new OrderDetails();
-                        //On récupère le produit
-                        $product = $productRepository->find($id);
-                        if (!$product) {
-                            throw $this->createNotFoundException(
-                                'No product found for id ' . $id
-                            );
-                        }
-
-                        $price = $product->getPrice();
-
-                        //On remplit orderDetails
-                        $orderDetails->setProduct($product);
-                        $orderDetails->setPrice($price);
-                        $orderDetails->setQuantity($qte);
-                        //On rajoute OrderDetails à la commande
-                        $order->addOrderDetail($orderDetails);
-                        //On retire du stock la quantité commandé
-                        $newStock = $product->getStock() - $qte;
-                        $product->setStock($newStock);
+                //Création du détail de commande insertion des données
+                foreach ($panier as $id => $qte) {
+                    $orderDetails = new OrderDetails();
+                    //On récupère le produit
+                    $product = $productRepository->find($id);
+                    if (!$product) {
+                        throw $this->createNotFoundException(
+                            'No product found for id ' . $id
+                        );
                     }
-
-                    //Ajout cotisation à la commande et mise à jour nouvelle date à l'utilisateur
-                    $endDate = $user->getMembershipContributionEndDate();
-                    if (!isset($endDate) || $cotisation['endDate']->format('Y-m-d') != $endDate->format('Y-m-d')) {
-                        $order->setContribution($cotisation['price']);
-                        $user->setMembershipContributionEndDate($cotisation['endDate']);
-                    }
-
-                    $em->persist($order);
-                    $em->flush();
-
-                    $session->remove('panier');
-                } else {
-                    $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
-
-                    return $this->redirectToRoute('cart_index');
+                    $price = $product->getPrice();
+                    //On remplit orderDetails
+                    $orderDetails->setProduct($product);
+                    $orderDetails->setPrice($price);
+                    $orderDetails->setQuantity($qte);
+                    //On rajoute OrderDetails à la commande
+                    $order->addOrderDetail($orderDetails);
+                    //On retire du stock la quantité commandé.
+                    $newStock = $product->getStock() - $qte;
+                    $product->setStock($newStock);
                 }
+
+                //Ajout cotisation à la commande et mise à jour nouvelle date à l'utilisateur
+                $endDate = $user->getMembershipContributionEndDate();
+                if (!isset($endDate) || $cotisation['endDate']->format('Y-m-d') != $endDate->format('Y-m-d')) {
+                    $order->setContribution($cotisation['price']);
+                    $user->setMembershipContributionEndDate($cotisation['endDate']);
+                }
+
+                $em->persist($order);
+                $em->flush();
+
+                $session->remove('panier');
+                $session->remove('cotisation');
             } else {
-                $this->addFlash('alert', 'Veuillez vérifier votre adresse mail avant de continuer!');
+                $this->addFlash('alert', 'Votre panier est vide, impossible de passer commande!');
 
                 return $this->redirectToRoute('cart_index');
-            }
+            }   
         } else {
             $this->addFlash('alert', 'Erreur lors du traitement de la commande! celle-ci existe déjà!');
 
             return $this->redirectToRoute('cart_index');
         }
-
 
         return $this->render('orders/success.html.twig', [
             'reference' => $reference
