@@ -6,10 +6,12 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 
 use Twig\Environment;
+use App\Entity\Invoice;
 use App\Repository\UserRepository;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\ShopParametersRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -25,6 +27,7 @@ class PdfGenerator {
         private OrderRepository $orderRepository,
         private ShopParametersRepository $shopParametersRepository,
         private Environment $twig,
+        private EntityManagerInterface $em
     ) {
         $this->requestStack = $requestStack;
         $this->userRepository = $userRepository;
@@ -32,8 +35,17 @@ class PdfGenerator {
         $this->security = $security;
         $this->shopParametersRepository = $shopParametersRepository;
         $this->twig = $twig;
+        $this->em = $em;
     }
 
+
+    /**
+     * Sauvegarde de la facture au format PDF moment de la création de la commande.
+     * On créé également une nouvelle instance de facture pour récupérer le fichier dans le B.O.
+     *
+     * @param string|null $reference
+     * @return void
+     */
     public function saveInvoice(
         string $reference= null,
     )  {
@@ -70,6 +82,8 @@ class PdfGenerator {
                     $total += $order->getContribution();
                 }
 
+               
+
                 $data = [
                     'user' => $user,
                     'order' => $order,
@@ -78,8 +92,17 @@ class PdfGenerator {
                     'total' => $total
                 ];
 
-                $html = $this->twig->render('pdf/invoice.html.twig', $data);
+                //Création de la facture
+                $invoice = new Invoice();
+                $invoice->setCreatedAt(new \DateTimeImmutable());
+                $invoice->setReference($reference);
+                $file= $reference.'.pdf';
+                $invoice->setFile($file);
+                $this->em->persist($invoice);
+                $this->em->flush();
                 
+                //Génération du PDF
+                $html = $this->twig->render('pdf/invoice.html.twig', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->setPaper('A4', 'portrait');
                 $dompdf->render();
@@ -96,8 +119,9 @@ class PdfGenerator {
 
             // return $this->redirectToRoute('app_home');
         }
-        $filePath = '../invoice/'.$reference.'.pdf';
+        $filePath = '../invoice/'.$file;
         $output = $dompdf->output();
+
         return  file_put_contents($filePath, $output);
     }
 }

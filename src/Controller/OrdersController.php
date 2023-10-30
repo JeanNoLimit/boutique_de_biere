@@ -20,6 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrdersController extends AbstractController
 {
+
+    /**
+     * Création d'une commande après paiement
+     */
     #[Route('/order/add_order', name: 'add_order')]
     public function index(
         Request $request,
@@ -110,6 +114,7 @@ class OrdersController extends AbstractController
                 $em->persist($order);
                 $em->flush();
 
+                //Sauvegarde de la facture au format pdf pour archivage. 
                 $pdfGenerator->saveInvoice($reference);
 
                 $session->remove('panier');
@@ -130,7 +135,9 @@ class OrdersController extends AbstractController
         ]);
     }
 
-
+    /**
+     * Affichage du détail de la commande
+     */
     #[Route('/order/order_detail/{reference}', name: 'order_detail')]
     public function show(
         OrderRepository $orderRepository,
@@ -184,7 +191,9 @@ class OrdersController extends AbstractController
         ]);
     }
 
-
+    /**
+     * Affichage de la facture au format pdf
+     */
     #[Route('/order/order_detail/pdf/{reference}', name: 'pdf_order_detail')]
     public function showPDF(
         EntityManagerInterface $em,
@@ -236,7 +245,6 @@ class OrdersController extends AbstractController
                 $dompdf->loadHtml($html);
                 $dompdf->setPaper('A4', 'portrait');
                 $dompdf->render();
-                // $dompdf->stream();
 
             } else {
                 $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
@@ -248,7 +256,7 @@ class OrdersController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
-        
+
         return new Response (
             $dompdf->stream('resume', ["Attachment" => false]),
             Response::HTTP_OK,

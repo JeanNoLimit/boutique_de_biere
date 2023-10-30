@@ -27,7 +27,8 @@
         }
 
         p {
-            line-height: 0.5;
+            padding: 0;
+            margin: 0;
         }
     
         .total_commande p{
@@ -102,5 +103,10 @@
         <p> Nombre d'acticles : {{ order.contribution ? elements|length +1 : elements|length }} </p>
         <p class="total">Total T.T.C. : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
     </div>
+
+
+    <p style="margin-top:60px">
+        Association exonérée des impôts commerciaux <br>TVA non applicable, article 293 B du CGI.
+    </p>
 </body>
 </html>
