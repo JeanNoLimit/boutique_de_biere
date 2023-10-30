@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
 use App\Entity\User;
 use App\Entity\Order;
 use Stripe\StripeClient;
 use Stripe\PaymentIntent;
 use App\Entity\OrderDetails;
+use App\Service\PdfGenerator;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +25,7 @@ class OrdersController extends AbstractController
         Request $request,
         ProductRepository $productRepository,
         EntityManagerInterface $em,
-        MembershipContributionService $MCS
+        PdfGenerator $pdfGenerator,
     ): Response {
         
         // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
@@ -55,6 +57,9 @@ class OrdersController extends AbstractController
         $panier = $session->get('panier', []);
         $userSession = $this->getUser();
         $user = $em->getRepository(User::class)->find($userSession->getId());
+
+        //On initialise la reference de la commande pour la création de la facture format pdf
+        $reference = null;
 
         if (!$orderVerification) {
             if ($panier !== []) {
@@ -105,6 +110,8 @@ class OrdersController extends AbstractController
                 $em->persist($order);
                 $em->flush();
 
+                $pdfGenerator->saveInvoice($reference);
+
                 $session->remove('panier');
                 $session->remove('cotisation');
             } else {
@@ -130,11 +137,11 @@ class OrdersController extends AbstractController
         string $reference = null
     ): Response {
 
-            $order = $orderRepository->findOneByReference($reference);
-            $user = $this->getUser();
-            $SsTotal = null;
-            $total = null;
-            $elements = [];
+        $order = $orderRepository->findOneByReference($reference);
+        $user = $this->getUser();
+        $SsTotal = null;
+        $total = null;
+        $elements = [];
 
         if (!empty($order)) {
             if ($user == $order->getUser()) {
@@ -175,5 +182,77 @@ class OrdersController extends AbstractController
            'elements' => $elements,
            'total' => $total
         ]);
+    }
+
+
+    #[Route('/order/order_detail/pdf/{reference}', name: 'pdf_order_detail')]
+    public function showPDF(
+        EntityManagerInterface $em,
+        string $reference= null,
+    ) :Response {
+
+        $dompdf = new Dompdf();
+        $data = [];
+        $order = $em->getRepository(Order::class)->findOneByReference($reference);
+        $userSession = $this->getUser();
+        $user = $em->getRepository(User::class)->find($userSession);
+        $SsTotal = null;
+        $total = null;
+        $elements = [];
+
+        if (!empty($order)) {
+            if ($userSession == $order->getUser()) {
+                $orderDetails = $order->getOrderDetails();
+                foreach ($orderDetails as $orderDetail) {
+                    $product = $orderDetail->getProduct();
+                    $quantity = $orderDetail->getQuantity();
+                    $price = $orderDetail->getPrice();
+                    $SsTotal = $price * $quantity;
+
+                    $elements[] = [
+                        'product' => $product,
+                        'quantity' => $quantity,
+                        'price' => $price,
+                        'SsTotal' => $SsTotal
+                    ];
+
+                    $total += $SsTotal ;
+                }
+                $contribution = $order->getContribution();
+                if (isset($contribution)) {
+                    $total += $order->getContribution();
+                }
+
+                $data = [
+                    'user' => $user,
+                    'order' => $order,
+                    'elements' => $elements,
+                    'contribution' => $contribution,
+                    'total' => $total
+                ];
+
+                $html = $this->renderView('pdf/invoice.html.twig', $data);
+                
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A4', 'portrait');
+                $dompdf->render();
+                // $dompdf->stream();
+
+            } else {
+                $this->addFlash('alert', 'Vous ne pouvez pas accéder à cette commande');
+
+                return $this->redirectToRoute('app_home');
+            }
+        } else {
+            $this->addFlash('alert', 'Cette commande n\'existe pas!');
+
+            return $this->redirectToRoute('app_home');
+        }
+        
+        return new Response (
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
     }
 }

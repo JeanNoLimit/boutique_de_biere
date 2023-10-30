@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture N°{{ order.reference }}</title>
+
+</head>
+<body>
+    <style>
+
+        table {
+            table-layout: auto;
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        th {
+            border: 1px solid black;
+            background-color: gray;
+        }
+
+        td {
+            padding:5px 10px;
+            border-right: 1px solid black;
+        }
+
+        p {
+            line-height: 0.5;
+        }
+    
+        .total_commande p{
+            display: inline;
+        }
+
+        .total {
+            float: right;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+
+    </style>
+    <div>
+        <div class="information">
+            <h3>Association l'échoppe<h3>
+            <p>01, rue du Paradis du Houblon</p>
+            <p>67000 Strasbourg</p>
+            <p>SIRET : XXX XXX XXX XXX</p>
+        </div>
+    
+        <div class="destinataire">
+            <h3>Destinataire</h3>
+            <p>{{ user.firstName }} {{ user.lastName }}</p>
+            <p>{{ user.adress }}</p>
+            <p> {{ user.zipCode }} {{ user.city }}</p>
+        </div>
+
+    </div>
+
+
+    <h1>Facture N°{{ order.reference }} du {{ order.createdAt|date("d/m/Y") }} à {{ order.createdAt|format_time(locale='fr') }} </h1>
+
+    {# Détail commande #}
+
+    <table style="margin:40px auto">
+
+        <tr>
+            <th>Désignation</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+            <th>sous-total</th>
+        </tr>
+
+        {% for element in elements %}
+    
+           <tr>
+                <td>{{ element.product.designation }} {{ element.product.volume|number_format }}cl - {{element.product.provider}}</td>
+                <td>{{element.quantity }}</td>
+                <td>{{ (element.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                <td>{{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+           </tr>
+
+        {% endfor %}
+
+        {% if order.contribution is not null %}
+
+
+           <tr style="font-weight:700">
+                <td >Cotisation valable jusqu'au {{ order.createdAt|date_modify("+1 year")|date("d/m/Y") }}</td>
+                <td>1</td>
+                <td>{{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                <td>{{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+
+           </tr>
+
+        {% endif %}
+    </table>
+    
+    <div class="total_commande">
+        <p> Nombre d'acticles : {{ order.contribution ? elements|length +1 : elements|length }} </p>
+        <p class="total">Total T.T.C. : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
+    </div>
+</body>
+</html>

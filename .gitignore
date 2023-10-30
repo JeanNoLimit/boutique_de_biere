@@ -27,3 +27,6 @@
 
 ### images uploaded ###
 /public/upload
+
+### invoices ###
+/invoice

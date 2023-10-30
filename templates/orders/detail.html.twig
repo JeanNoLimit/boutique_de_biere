@@ -55,4 +55,7 @@
     <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
 </div>
 
+<div style="text-align:center">
+    <a href="{{ path('pdf_order_detail', { 'reference' : order.reference })}}" class="button_base button_links"> Télécharger la facture </a>
+</div>
 {% endblock %}
