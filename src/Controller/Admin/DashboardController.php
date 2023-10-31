@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\Review;
+use App\Entity\Invoice;
 use App\Entity\Product;
 use App\Entity\BeerType;
 use App\Entity\Provider;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             MenuItem::linkToCrud('Gestion des commandes', 'fa-solid fa-sack-dollar', Order::class),
+            MenuItem::linkToCrud('Gestion des factures', 'fa-solid fa-sack-dollar', Invoice::class),
             MenuItem::linkToCrud('Liste des Utilisateurs', 'fa-solid fa-users', User::class),
             MenuItem::linkToCrud('Modération des commentaires', 'fa-solid fa-ban', Review::class),
             MenuItem::subMenu('Catalogues', 'fa fa-book')->setSubItems([

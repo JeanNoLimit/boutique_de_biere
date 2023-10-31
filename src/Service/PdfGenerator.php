@@ -97,7 +97,7 @@ class PdfGenerator {
                 $invoice->setCreatedAt(new \DateTimeImmutable());
                 $invoice->setReference($reference);
                 $file= $reference.'.pdf';
-                $invoice->setFile($file);
+                $invoice->setFileName($file);
                 $this->em->persist($invoice);
                 $this->em->flush();
                 
@@ -106,7 +106,7 @@ class PdfGenerator {
                 $dompdf->loadHtml($html);
                 $dompdf->setPaper('A4', 'portrait');
                 $dompdf->render();
-                $filePath = 'invoice/'.$reference.'.pdf';
+                $filePath = '../var/storage/invoices/'.$file;
                 $output = $dompdf->output();
                
             } else {
@@ -119,8 +119,6 @@ class PdfGenerator {
 
             // return $this->redirectToRoute('app_home');
         }
-        $filePath = '../invoice/'.$file;
-        $output = $dompdf->output();
 
         return  file_put_contents($filePath, $output);
     }

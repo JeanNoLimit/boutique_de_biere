@@ -1,0 +1,5 @@
+{% if field.value %}
+    <a href="{{ path( "invoice_download", {'filename':field.value})  }}">Télécharger la facture</a>
+{% else %}
+    --
+{% endif %}

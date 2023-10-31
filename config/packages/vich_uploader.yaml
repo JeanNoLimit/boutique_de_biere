@@ -1,0 +1,9 @@
+vich_uploader:
+    db_driver: orm
+    storage: flysystem
+
+    mappings:
+       invoice:
+        #    uri_prefix: '/var/storage/invoices'
+           upload_destination: default.storage
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
