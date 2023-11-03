@@ -52,9 +52,23 @@
         <h2 class="secondary_title_profile">Actions supplémentaires</h2>
 
         <a href="{{ path('app_updatePassword')}}" class="button_base button_links btn_updateProfil">Modifier mon mot de passe</a>
-        <a href="" class="button_base button_links btn_updateProfil"> Supprimer mon compte</a>
+        <button class="button_base button_links btn_updateProfil btn_delete" onclick="deleteWarning()"> Supprimer mon compte</button>
     </div>
 
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src=" {{ asset('js/script.js')}}"></script>
+    <script>
+        function deleteWarning() {
+            let text = "Voulez vous supprimmer votre compte? Action irreversible! Pour pouvoir supprimer votre compte vous devez attendre que vos commandes soient toutes traitées.  Pour plus d'informations, veuillez contacter l'administrateur du site.";
+            if (confirm(text) == true)  {
+                window.location.href = "{{ path('app_deleteProfil') }}";
+            }
+        }
+
+    </script>
 
 {% endblock %}

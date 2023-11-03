@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Order;
 use App\Form\UpdateProfilType;
+use Doctrine\ORM\EntityManager;
 use App\Form\UpdatePasswordType;
 use App\Repository\OrderRepository;
 use Symfony\Component\Mime\Address;
@@ -119,4 +121,33 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+    #[Route('/user/deleteProfil', name: 'app_deleteProfil')]
+    public function deleteProfil(
+        EntityManagerInterface $em,
+        Request $request
+    ) : Response {
+
+        //On récupère l'utilisateur
+        $userId = $this->getUser()->getId();
+        $user = $em->getRepository(User::class)->find($userId);
+        //On vérifie si l'utilisateur possède des commandes en attente
+        $ordersInProcess = $em->getRepository(Order::class)->findOrdersInProccessByUserId($userId);
+
+        if (isset($ordersInProcess) && !empty($ordersInProcess)) {
+            $this->addFlash('alert', 'vous ne pouvez pas supprimer votre compte pour l\'instant, commande(s) en cours de traitement...');
+            return $this->redirectToRoute('app_updateProfile');
+        } else {
+            $this->container->get('security.token_storage')->setToken(null);
+            
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre compte à été supprimé avec succès!');
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+    
 }

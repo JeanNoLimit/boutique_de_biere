@@ -75,6 +75,10 @@
 }
 /*************** Update profil *********************/
 
+.btn_delete {
+    border: unset;
+    width: 100%;
+}
 
 .btn_updateProfil {
     display: block;
