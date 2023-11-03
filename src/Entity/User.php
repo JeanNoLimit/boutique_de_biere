@@ -163,7 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, cascade: ["remove"])]
     private Collection $orders;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class)]

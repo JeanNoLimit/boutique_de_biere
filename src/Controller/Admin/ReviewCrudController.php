@@ -55,7 +55,12 @@ class ReviewCrudController extends AbstractCrudController
             AssociationField::new('user', 'pseudo')
                 ->formatValue(function ($value, $entity) {
                     $user = $entity->getUser();
-                    $value = $user->getPseudo();
+                    if(!$user) {
+                        $value = "Utilisateur supprimé";
+                    }else {
+                        $value = $user->getPseudo();
+                    }
+                    
                     return $value;
                 }),
             AssociationField::new('product', 'Désignation du produit'),

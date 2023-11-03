@@ -149,10 +149,15 @@
 
       {% for review in reviews %}
       
-      <div class="review_content">
+        <div class="review_content">
           <hr class="review_separator">
           <div class="review_informations">
-            <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
+            {% if review.user is not null %}
+              <p class="review_pseudo">{{ review.user.pseudo|capitalize }}</p>
+            {% else %}
+              <p style="font-style:italic">Utilisateur Supprimé</p>
+            {% endif %}
+            
             <div class="right_review_informations">
               {% if review.updatedAt is not empty and review.updatedAt is not null %}
                 <p class="dateTime_review">Modifié le {{ review.updatedAt|format_date('short', locale='fr')}} à {{ review.updatedAt|format_time('short', locale='fr', timezone='Europe/Paris') }}</p>
