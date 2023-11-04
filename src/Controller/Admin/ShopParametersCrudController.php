@@ -39,11 +39,11 @@ class ShopParametersCrudController extends AbstractCrudController
             ImageField::new('logoFile', 'Logo du site')
                 ->setUploadDir('public/upload/images/site/')
                 ->setBasePath('upload/images/site/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]'),
+                ->setUploadedFileNamePattern('[slug].[extension]'),
             ImageField::new('defaultImageProduct', 'Image produit par défaut')
                 ->setUploadDir('public/upload/images/site/')
                 ->setBasePath('upload/images/site/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]'),
+                ->setUploadedFileNamePattern('[slug].[extension]'),
             MoneyField::new('contribution', 'prix de la cotisation')
                 ->setCurrency('EUR')
                 ->setNumDecimals(2),
