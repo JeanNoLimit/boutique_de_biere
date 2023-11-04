@@ -12,21 +12,21 @@
                 <p class="section_footer_title">Notre association</p>
                 <ul>
                     <li><i class="fa-solid fa-chevron-right"></i><a href="{{ path('app_mentions') }}"> Mentions légales</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i><a href=""> Conditions générales de vente</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i><a href=""> Conditions d'utilisation</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i><a href=""> Protection des données et vie privée</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i><a href=""> Plan du site</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i><a href="{{ path('app_cgv') }}"> Conditions générales de vente</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i><a href="{{ path('app_cgu') }}"> Conditions d'utilisation</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i><a href="{{ path('app_rgpd')}}"> Protection des données et vie privée</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i><a href="{{ path('app_sitemap')}}"> Plan du site</a></li>
                 </ul>
             </section>
 
             <section class="social_networks_links">
                 <p class="section_footer_title">Suivez nous</p>
                 <div class="logos_social_networks">
-                    <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-brands fa-square-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a>
                     <a href="https://www.youtube.com/watch?v=O91DT1pR1ew"><i class="fa-brands fa-x-twitter"></i></a>
                 </div>
-                <a href=""><i class="fa-solid fa-envelope"></i> Nous contacter</a>
+                <a href="{{ path('app_contact')}}"><i class="fa-solid fa-envelope"></i> Nous contacter</a>
             </section>
 
             <section class="asso_informations">
