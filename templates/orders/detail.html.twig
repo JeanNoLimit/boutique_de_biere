@@ -4,58 +4,53 @@
 
 {% block body %}
 
-<div class="action_back">
-    <a href="{{path('app_userProfile')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour profil</a>
-</div>
+    <div class="action_back">
+        <a href="{{path('app_userProfile')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour profil</a>
+    </div>
 
-<h1>Commande N°{{ order.reference }} du {{ order.createdAt|date("d/m/Y") }} à {{ order.createdAt|format_time(locale='fr') }} </h1>
+    <h1 style="text-align:center;margin:40px 5px">Commande N°{{ order.reference }} du {{ order.createdAt|date("d/m/Y") }} à {{ order.createdAt|format_time(locale='fr') }} </h1>
+
+    <div class="table_cart_container">
+        <table class="cart_table zebra">
+            <thead>
+                <tr>
+                    <th>Désignation du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Sous-total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for element in elements %}
+                {# ELEMENTS DE LA COMMANDE #}
+                    <tr>
+                        <td  data-title='Désignation du produit'> {{ element.product.designation }} {{ element.product.volume|number_format }}cl </td>
+                        <td data-title='Quantité'> {{ element.quantity }}</td>
+                        <td data-title='Prix'> {{ (element.product.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                        <td data-title='Sous-total'> {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} € </td>
+                    </tr>    
+                    
+                {% endfor %}
+                {% if order.contribution is not null %}
+                    {# COTISATION #}
+                    <tr style="font-weight: 600;">
+                        <td><span >Cotisation annuelle valable jusqu'au {{ order.createdAt|date_modify("+1 year")|date("d/m/Y") }}  </span> </td>
+                        <td>1</td>
+                        <td>{{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                        <td>{{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 
 
-<table style="min-width: 600px;margin:40px auto">
-    {% for element in elements %}
+    <div class="total_order" style="display: flex;justify-content: space-around;margin-bottom:40px;">
+        <p> Nombre d'acticles : {{ order.contribution ? elements|length +1 : elements|length }} </p>
+        <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
+    </div>
 
-        <tr>
-            <th colspan="3" style="text-align: left;font-size:1.3rem;">{{ element.product.designation }} {{ element.product.volume|number_format }}cl - {{element.product.provider}}</th>
-        </tr>
-        <tr style="height:30px;">
-            <td>
-                Quantité : {{element.quantity }}
-            </td>
-            <td>
-                Prix : {{ (element.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-            </td>
-            <td>
-                Sous-Total : {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-            </td>
-        </tr>
-      
-    {% endfor %}
-    {% if order.contribution is not null %}
-        <tr>
-            <th colspan="3" style="text-align: left;font-size:1.3rem;">Cotisation valable jusqu'au {{ order.createdAt|date_modify("+1 year")|date("d/m/Y") }}</th>
-        </tr>
-        <tr style="height:30px;">
-            <td>
-                Quantité : 1
-            </td>
-            <td>
-                Prix : {{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-            </td>
-            <td>
-                Sous-Total : {{ (order.contribution ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-            </td>
-        </tr>
-    {% endif %}
-</table>
-{# br à supprimer #}
-<br><br><br>
-
-<div class="total_commande" style="display: flex;justify-content: space-around;margin-bottom:40px;">
-    <p> Nombre d'acticles : {{ order.contribution ? elements|length +1 : elements|length }} </p>
-    <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
-</div>
-
-<div style="text-align:center">
-    <a href="{{ path('pdf_order_detail', { 'reference' : order.reference })}}" class="button_base button_links"> Télécharger la facture </a>
-</div>
+    <div style="text-align:center">
+        <a href="{{ path('pdf_order_detail', { 'reference' : order.reference })}}" class="button_base button_links"> Télécharger la facture </a>
+    </div>
 {% endblock %}

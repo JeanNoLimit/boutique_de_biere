@@ -10,63 +10,62 @@
         <a href="{{path('cart_index')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour Panier</a>
     </div>
     
-    <h1>Vérification des informations</h1>
+    <h1  class="cart_title">Vérification des informations</h1>
 
-    <h2>Récapitulatif de la commande</h2>
+    <h2 class="cart_title_secondary">Récapitulatif de la commande</h2>
 
     {# ICI TABLEAU RECAPITULATIF COMMANDE (ne pouvant être modifié) #}
-    <table style="min-width: 600px;margin:40px auto">
-        {% for element in elements %}
-   
-            <tr>
-                <th colspan="3" style="text-align: left;font-size:1.3rem;">{{ element.product.designation }} {{ element.product.volume|number_format }}cl - {{element.product.provider}}</th>
-            </tr>
-            <tr style="height:30px;">
-                <td>
-                    Quantité : {{element.quantity }}
-                </td>
-                <td>
-                    Prix : {{ (element.product.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-                </td>
-                <td>
-                    Sous-Total : {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} €
-                </td>
-            </tr>
-            {% if element.product.stock <= 0 %}
+    <div class="table_cart_container">
+        <table class="cart_table zebra">
+            <thead>
                 <tr>
-                    <td colspan="3" style="font-size:0.7rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                    <th>Désignation du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Sous-total</th>
                 </tr>
-            {% elseif element.stockTemp < 0 %}
-                <tr>
-                    <td colspan="3" style="font-size:0.7rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
-                </tr>
-            {% endif %}
-
-        {% endfor %}
-
-        {% if cotisation is defined and cotisation is not empty %}
-        {# COTISATION #}
-        <tr>
-            <td colspan="3" style="text-align: left;font-size:1.3rem;"><span style="font-weight: 600;">Cotisation annuelle valable jusqu'au {{cotisation.endDate |date("d/m/Y", "Europe/Paris") }}  </span> </td> 
-        </tr>
-            {% if cotisation.price > 0 %}
-                <tr>
-                    <td>Quantité : 1 </td>
-                    <td>Prix : {{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
-                    <td>Sous-Total : {{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
-                </tr>
-            {% endif %}
-    {% endif %}
-    </table>
-{# br à supprimer #}
-<br><br><br>
-
-    <div class="total_commande" style="display: flex;justify-content: space-around;margin-bottom:40px;">
+            </thead>
+            <tbody>
+                {% for element in elements %}
+                {# ELEMENTS DU PANIER #}
+                    <tr>
+                        <td  data-title='Désignation du produit'> {{ element.product.designation }} {{ element.product.volume|number_format }}cl </td>
+                        <td data-title='Quantité'> {{ element.quantity }}</td>
+                        <td data-title='Prix'> {{ (element.product.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                        <td data-title='Sous-total'> {{ (element.SsTotal ?? 0 / 100) | number_format(2, ',', '.' ) }} € </td>
+                    </tr>    
+                    
+                        {% if element.product.stock <= 0 %}
+                            <tr class="cart-more-infos">
+                                <td colspan="5" style="font-size:0.8rem;color:red;font-style:italic;"> Rupture de stock : le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                            </tr>
+                        {% elseif element.stockTemp < 0 %}
+                            <tr>
+                                <td colspan="5" style="font-size:0.8rem;color:red;font-style:italic;"> Avertissement : La quantité commandé dépasse la quantité en stock, le délais de préparation de votre commande peut-être ralongé de quelques jours</td>
+                            </tr>
+                        {% endif %}
+                    
+                {% endfor %}
+                {% if cotisation is defined and cotisation is not empty %}
+                    {# COTISATION #}
+                    <tr style="font-weight: 600;">
+                        <td colspan="2"><span >Cotisation annuelle valable jusqu'au {{cotisation.endDate |date("d/m/Y", "Europe/Paris") }}  </span> </td>
+                        {% if cotisation.price > 0 %}
+                            <td data-title='Prix'>{{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>
+                            <td data-title='Sous-total' colspan="2"> {{ (cotisation.price ?? 0 / 100) | number_format(2, ',', '.' ) }} € </td>
+                        {% endif %}
+                       
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="total_order">
         <p> Nombre d'acticles : {{ cotisation.price == 0 ? elements|length : elements|length +1 }} </p>
         <p>Total : {{ (total ?? 0 / 100) | number_format(2, ',', '.' ) }} €</p>
     </div>
 
-    <h2>Mes informations de facturation </h2>
+    <h2 class="cart_title_secondary">Mes informations de facturation </h2>
 
     {# ICI LE FORMULAIRE UTILISATEUR #}
     <div class="formContainer">

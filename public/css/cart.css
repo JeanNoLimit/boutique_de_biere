@@ -153,13 +153,24 @@
 }
 /**************** CHECK ADDRESS***********************/
 
+.cart_title_secondary {
+  text-align: center;
+  margin: 70px 5px 50px 5px ;  
+}
+
 .before_redirect {
     width: 100%;
     text-align: center;
     margin-top: 25px;
 }
 
-
+.total_order {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom:40px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
 /**************** SUCCESS AND CANCEL ******************/
 
 .stripe_redirect_container {
