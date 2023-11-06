@@ -52,7 +52,8 @@
             {{ form_row(registrationForm.tel) }}
         </div>
         <div class="row aggreeTerms">
-            {{ form_row(registrationForm.agreeTerms) }}
+            <p>J'accepte les <a href="{{ path('app_cgu')}}" style="text-decoration:underline">conditions générales d'utilisation</a> du site et sa <a href="{{ path('app_rgpd')}}" style="text-decoration:underline">politique de confidentialité</a></p>
+            {{ form_widget(registrationForm.agreeTerms) }}
         </div>
 
         <div>

@@ -80,7 +80,7 @@ label{
     color: red;
 }
 
-.aggreeTerms div{
+.aggreeTerms{
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -160,8 +160,10 @@
 
 .before_redirect {
     width: 100%;
+    box-sizing: border-box;
     text-align: center;
     margin-top: 25px;
+    padding: 0 5px;
 }
 
 .total_order {

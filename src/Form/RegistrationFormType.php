@@ -101,8 +101,8 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['class' => 'input', 'min' => '10', 'maxlength' => '14']
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'J\'accepte les conditions générales d\'utilisation du site
-                            et sa politique de confidentialité',
+                // 'label' => 'J\'accepte les conditions générales d\'utilisation du site
+                //             et sa politique de confidentialité',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
