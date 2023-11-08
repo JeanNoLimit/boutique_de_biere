@@ -89,7 +89,7 @@
     transition:0.2s;
 }
 
-.dropdown_sortBy_content a:hover {
+.dropdown_sortBy_content:hover {
     background-color: var(--tertiary-color-shade);
 }
 
