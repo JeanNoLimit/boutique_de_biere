@@ -1,9 +1,7 @@
-
-
 // Fonction affichage menu responsive -- navbar --
 function myNavBarFunction() {
-    let y = document.getElementById("nav1");
-    let x = document.getElementById("left_nav");
+    const y = document.getElementById("nav1");
+    const x = document.getElementById("left_nav");
     if (x.className === "left_navBar") {
     x.className += " responsive";
     y.className += " responsive";
@@ -16,30 +14,37 @@ function myNavBarFunction() {
 
 //  Fonction affichage sous menu profil -- navbar --
 function myNavBarFunctionProfil() {
-    let x = document.getElementById("contentProfil");
-    if (x.style.display === "none") {
-        x.style.display = "block";
+    const z = document.getElementById("contentProfil");
+    if (z.style.display === "none") {
+        z.style.display = "block";
     }else{
-        x.style.display = "none";
+        z.style.display = "none";
     }
 }
 
 // Fonction incrémentation et décrémentation de la quantité -- formulaire détail produit --  
-let input = document.getElementById("cart_quantity");
+const cart_qty = document.getElementById("cart_quantity");
 const minus = document.getElementById("minusForm");
 const plus = document.getElementById("plusForm");
 
-if (minus && plus) {
+if (minus && plus && cart_qty) {
     minus.addEventListener("click", function(){
-        if (input.value>1){
-            input.value--;
+        if (cart_qty.value>1){
+            cart_qty.value--;
         } 
     })
     plus.addEventListener("click", function(){
-        if (input.value<99){
-            input.value++;
+        if (cart_qty.value<99){
+            cart_qty.value++;
         }
         
     })
 } 
+
+
+// Affichage modal détail produit
+const flash = document.getElementById('flash_#1');
+if(flash) {
+  flash.addEventListener("click", function(){ flash.style.display ="none";});
+}
 

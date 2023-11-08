@@ -10,9 +10,10 @@
       <div class="close_flash">
         <a href="javascript:void(0);" style="color: var(--dark-grey)" onclick="closeFlash()" aria-label="Fermer la fenêtre"> <i class="fa-solid fa-square-xmark"></i></a>
       </div>
-      <p>{{ message|raw }}</p>
+      <p class="message_modal">{{ message|raw }}</p>
       <div class="links_flash">
-        <a href="{{path('cart_index')}}" class="button_base button_links"> Voir le panier</a>
+        <a href="{{path('products_index')}}" class="button_base button_links">Continuer mes achats</a>
+        <a href="{{path('cart_index')}}" class="button_base button_links">Voir le panier</p></a>
       </div>
     </div>
   </div>         
@@ -179,16 +180,4 @@
     {% endif %}
   </div>
 
-
-  {% block javascripts %}
-    <script src=" {{ asset('js/script.js')}}"></script>
-    <script>
-      function closeFlash() {
-        let flash = document.getElementById('flash_#1');
-        flash.style.display ="none";
-      }
-
-    
-    </script>
-  {% endblock %}
 {% endblock %}

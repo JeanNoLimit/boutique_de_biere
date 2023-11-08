@@ -44,31 +44,48 @@
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 1;
-    padding: 5px;
+    padding: 20px;
 }
 
-.flash_add_cart p {
+.message_modal {
     text-align: center;
+    padding-top: 15px;
 }
 
 .close_flash {
     display: flex;
     flex-direction: row;
     justify-content: right;
-    padding: 10px;
+    padding-top: 10px;
 }
 
 .links_flash {
+    display:flex;
+    flex-direction: column;
     text-align: center;
-    padding: 45px 0;
+    padding: 25px 0;
+}
+
+.links_flash a {
+    margin: 5px;
 }
 
 .fa-square-xmark {
     font-size: 1.6rem;
 }
-@media screen and (max-width:390px) {
+@media screen and (max-width:420px) {
     .flash_add_cart {
-        width: 95%;
+        box-sizing: border-box;
+        max-width: 95%;
+        padding: 10px;
+    }
+
+    .message_modal {
+        font-size: 1rem;
+    }
+
+    .links_flash a {
+        font-size: 1rem;
     }
     
 }
