@@ -26,9 +26,9 @@
                     {# ELEMENTS DU PANIER #}
                         <tr>
                             <td  data-title='Désignation du produit'> {{ element.product.designation }} {{ element.product.volume|number_format }}cl </td>
-                            <td data-title='Quantité'> 
+                            <td data-title='Quantité'>
                                 <a href="{{ path('decrement_product_cart', {'id' : element.product.id})}}" class="cart-minus"><i class="fa-solid fa-square-minus"></i></a>
-                                {{ element.quantity }}
+                                <span>{{ element.quantity }}</span>
                                 <a href="{{ path('increment_product_cart', {'id' : element.product.id})}}" class="cart-plus"><i class="fa-solid fa-square-plus"></i></a>
                             </td>
                             <td data-title='Prix'> {{ (element.product.price ?? 0 / 100) | number_format(2, ',', '.' ) }} €</td>

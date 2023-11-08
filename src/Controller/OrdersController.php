@@ -10,10 +10,12 @@ use Stripe\PaymentIntent;
 use App\Entity\OrderDetails;
 use App\Service\PdfGenerator;
 use App\Repository\OrderRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
-use App\Service\MembershipContributionService;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +32,7 @@ class OrdersController extends AbstractController
         ProductRepository $productRepository,
         EntityManagerInterface $em,
         PdfGenerator $pdfGenerator,
+        MailerInterface $mailer
     ): Response {
         
         // On vérifie que l'utilisateur a bien payé sa commande sur Stripe avant de valider sa commande
@@ -116,6 +119,19 @@ class OrdersController extends AbstractController
 
                 //Sauvegarde de la facture au format pdf pour archivage. 
                 $pdfGenerator->saveInvoice($reference);
+
+                //Envoie email confirmation
+                $email = (new TemplatedEmail())
+                    ->from(new Address('admin@exemple.com', 'Admin - Boutique l\'échoppe'))
+                    ->to($user->getEmail())
+                    ->subject('Boutique l\'échoppe - Validation de votre commande')
+                    ->htmlTemplate('orders/email_confirmation.html.twig')
+                    ->context([
+                        'reference' => $reference
+                    ]);
+
+                $mailer->send($email);
+
 
                 $session->remove('panier');
                 $session->remove('cotisation');
