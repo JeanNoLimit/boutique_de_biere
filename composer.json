@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.16",
         "dompdf/dompdf": "^2.0",
         "easycorp/easyadmin-bundle": "^4.7",
+        "friendsofsymfony/ckeditor-bundle": "^2.4",
         "karser/karser-recaptcha3-bundle": "^0.1.24",
         "knplabs/knp-paginator-bundle": "^6.2",
         "league/flysystem-bundle": "^3.2",
@@ -83,7 +84,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "ckeditor:install --tag=4.22.1": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

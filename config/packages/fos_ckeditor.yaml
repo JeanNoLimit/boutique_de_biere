@@ -1,0 +1,23 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+# Attention : version CK editor 4.22.1. Les plus récentes ne fonctionnent pas gratuitement : https://github.com/FriendsOfSymfony/FOSCKEditorBundle/issues/253
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+fos_ck_editor:
+    configs:
+        my_config:
+             toolbar:
+                - {
+                    name: "styles",
+                    items: 
+                      [
+                        "Bold",
+                        "Italic",
+                        "Underline",
+                        "Undo",
+                        "Redo"
+                      ]
+                        
+
+                }

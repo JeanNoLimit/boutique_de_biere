@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Review;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,11 +31,12 @@ class ReviewType extends AbstractType
                 'invalid_message' => "La note doit être comprise entre 1 et 5",
                 'required' => true,
             ])
-            ->add('description', TextareaType::class, [
-                'attr' => ['class' => "",'min' => "10", 'max' => "1000"],
-                'label' => 'Détaillez votre avis',
-                'required' => false,
-            ])
+            // ->add('description', TextareaType::class, [
+            //     'attr' => ['class' => "",'min' => "10", 'max' => "1000"],
+            //     'label' => 'Détaillez votre avis',
+            //     'required' => false,
+            // ])
+            ->add('description', CKEditorType::class, [])
             ->add('envoyer', SubmitType::class, [
                 'row_attr' => ['class' => 'submit_review'],
                 'attr' => ['class' => "button_base button_validation"],
