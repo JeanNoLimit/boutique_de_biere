@@ -86,6 +86,10 @@ label{
     align-items: center;
 }
 
+.aggreeTerms p{
+    padding-right: 5px;
+}
+
 @media screen and (max-Width: 520px) {
     .formContainer{
         width: 95%;

@@ -31,7 +31,12 @@
             <input type="password" name="password" id="inputPassword" class="form-control input" autocomplete="current-password" required>
             <a href="{{ path('app_forgot_password_request')}}" style="text-decoration: underline;padding-left:10px;">Mot de passe oublié? </a>
         </div>
-
+        <div class="row" style="display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+            <label>
+                Rester connecté
+            </label>
+            <input type="checkbox" name="_remember_me" style="height:1.8rem;width:1.8rem;border: solid 1px #d1d1d1;">
+        </div>
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
             >
