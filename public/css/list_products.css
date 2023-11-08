@@ -311,9 +311,9 @@
         top:-12px;
         z-index: 98;
         background-color: var(--tertiary-color);
-        transition: 
+        /* transition: 
             all 1s;
-            opacity: 0;
+            opacity: 0; */
     }
 
     #filters_container.filterMenuResponsive {
