@@ -3,3 +3,4 @@ karser_recaptcha3:
     secret_key: '%env(RECAPTCHA3_SECRET)%'
     score_threshold: 0.5
     enabled: true
+    host: 'www.recaptcha.net'
