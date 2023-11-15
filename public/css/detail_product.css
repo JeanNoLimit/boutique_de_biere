@@ -277,6 +277,13 @@ input::-webkit-inner-spin-button {
     }
 
 }
+@media screen and (min-width: 1080px) {
+    .img_detail_product img {
+        min-width: 350px;
+        min-height: 350px;
+    }
+
+}
 
 @media screen and (max-width: 790px) {
     .table_futher_informations{
