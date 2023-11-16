@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Erreur Serveur</h1>
+
+    <p>Erreur HTTP 500</p>
+    <p>
+        Le serveur ne parvient pas à afficher cette page.
+    </p>
+    <p>
+        Vous pouvez <a href="{{app.request.headers.get('referer')}}" style="text-decoration: underline;">retourner sur la page précédente</a>
+    </p>
+    <p>
+        Tenter de contacter l'administrateur du site.
+    </p>
+
+    
+    
+    <div class="action_back">
+        <a href="{{path('app_home')}}" class="button_base button_back"><i class="fa-solid fa-chevron-left"></i> Retour à la page d'accueil</a>
+    </div>
+{% endblock %}
