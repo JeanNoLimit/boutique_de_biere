@@ -1,4 +1,4 @@
-# Boutique de bières en ligne
+# Boutique de bières
 
 La boutique "l'échoppe" est un projet factice que j'ai développé dans le cadre de ma formation de développeur web et web mobile.
 Ce site m'a permis de soutenir mon titre professionnel.
